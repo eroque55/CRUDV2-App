@@ -29,6 +29,7 @@ const StyledLink = styled(Link)<StyledLinkProps>`
 const Texto = styled.p`
    font-size: 1rem;
    font-weight: 400;
+   white-space: nowrap;
 `;
 
 interface Props {
