@@ -1,38 +1,34 @@
 import Image from "next/image";
-import styled from "styled-components";
 
 import ItemNavegacao from "@/src/components/NavBar/ItemNavegacao";
 import logo from "@/public/images/logo.svg";
+import logoX from "@/public/images/logoX.svg";
+import { StyledMenuList, StyledNav } from "./index.styles";
+import { useState } from "react";
 
-const NavBarConatiner = styled.nav`
-   display: flex;
-   flex-direction: column;
-   background-color: ${({ theme }) => theme.colors.neutros.cor};
-   border-radius: 0.5rem;
-   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
-   padding: 1.5rem 0.75rem;
-   width: fit-content;
-   height: 100%;
-   gap: 1.5rem;
-   align-items: center;
-`;
+export default function NavBar() {
+   const [menuAtivo, setMenuAtivo] = useState(false);
 
-const ListaDeItens = styled.ul`
-   display: flex;
-   flex-direction: column;
-   gap: 0.5rem;
-   height: 100%;
-`;
+   function toggleMenu(e: React.MouseEvent<HTMLDivElement>) {
+      e.stopPropagation();
+      setMenuAtivo(!menuAtivo);
+      console.log("Menu ativo: ", menuAtivo);
+   }
 
-const NavBar = () => {
    return (
-      <NavBarConatiner>
-         <Image src={logo} alt="Logo" width="114" height="36" />
-         <ListaDeItens>
+      <StyledNav onClick={toggleMenu}>
+         <Image
+            src={menuAtivo ? logo : logoX}
+            alt="Logo"
+            width={menuAtivo ? 114 : 38}
+            height="36"
+         />
+         <StyledMenuList>
             <ItemNavegacao
                href="/"
                icone="icons/clientesInativo.svg"
                iconeAtivo="icons/clientesAtivo.svg"
+               menuAtivo={menuAtivo}
             >
                Lista de clientes
             </ItemNavegacao>
@@ -41,15 +37,14 @@ const NavBar = () => {
                icone="icons/clientesInativo.svg"
                iconeAtivo="icons/clientesAtivo.svg"
                ativo
+               menuAtivo={menuAtivo}
             >
                Lista de clientes
             </ItemNavegacao>
-         </ListaDeItens>
+         </StyledMenuList>
          <ItemNavegacao href="/" icone="icons/sair.svg">
-            Sair
+            {menuAtivo ? "Sair" : ""}
          </ItemNavegacao>
-      </NavBarConatiner>
+      </StyledNav>
    );
-};
-
-export default NavBar;
+}

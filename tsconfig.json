@@ -15,6 +15,7 @@
       "incremental": true,
       "noImplicitAny": true,
       "strictNullChecks": true,
+      "noEmitOnError": true,
       "paths": {
          "@/*": ["./*"]
       },

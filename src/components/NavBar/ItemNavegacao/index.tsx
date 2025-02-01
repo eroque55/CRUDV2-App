@@ -1,36 +1,5 @@
-import styled from "styled-components";
-
 import Image from "next/image";
-import Link from "next/link";
-
-interface StyledLinkProps {
-   $ativo: boolean;
-}
-
-const StyledLink = styled(Link)<StyledLinkProps>`
-   background-color: ${(props) =>
-      props.$ativo ? props.theme.colors.principal.cor3 : ""};
-   color: ${(props) =>
-      props.$ativo
-         ? props.theme.colors.neutros.cor
-         : props.theme.colors.neutros.cor6};
-   display: flex;
-   padding: 0.75rem;
-   gap: 0.5rem;
-   border-radius: 0.5rem;
-   min-width: 100%;
-
-   &:hover {
-      background-color: ${(props) =>
-         props.$ativo ? "" : "rgba(0, 0, 0, 0.05)"};
-   }
-`;
-
-const Texto = styled.p`
-   font-size: 1rem;
-   font-weight: 400;
-   white-space: nowrap;
-`;
+import { StyledLink, StyledText } from "./index.styles";
 
 interface Props {
    children: React.ReactNode;
@@ -38,15 +7,17 @@ interface Props {
    icone: string;
    iconeAtivo?: string;
    ativo?: boolean;
+   menuAtivo?: boolean;
 }
 
-const ItemNavegacao = ({
+export default function ItemNavegacao({
    children,
    href,
    icone,
    iconeAtivo = icone,
    ativo = false,
-}: Props) => {
+   menuAtivo = false,
+}: Props) {
    return (
       <StyledLink href={href} $ativo={ativo}>
          <Image
@@ -55,9 +26,7 @@ const ItemNavegacao = ({
             width={20}
             height={20}
          />
-         <Texto>{children}</Texto>
+         {menuAtivo ? <StyledText>{children}</StyledText> : null}
       </StyledLink>
    );
-};
-
-export default ItemNavegacao;
+}
