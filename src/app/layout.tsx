@@ -6,7 +6,7 @@ import ClientLayout from "@/src/themes/client-layout";
 
 const roboto = Roboto({
    weight: ["400", "700"],
-   variable: "--font-roboto",
+   variable: "--Roboto",
    subsets: ["latin"],
 });
 

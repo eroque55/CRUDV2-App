@@ -6,32 +6,33 @@ import EstilosGlobais from "./EstilosGlobais";
 
 const theme: DefaultTheme = {
    colors: {
-      principal: {
-         cor: "#468FAF",
-         cor2: "#2A6F97",
-         cor3: "#01497C",
-         cor4: "#012A4A",
-         cor5: "#01182B",
+      primary: {
+         color: "#468FAF",
+         color2: "#2A6F97",
+         color3: "#01497C",
+         color4: "#012A4A",
+         color5: "#01182B",
       },
-      neutros: {
-         cor: "#fff",
-         cor2: "#f5f5f5",
-         cor3: "#d1d1d1",
-         cor4: "#a2a2a2",
-         cor5: "#747474",
-         cor6: "#454545",
-         cor7: "#2d2d2d",
-         cor8: "#161616",
+      neutral: {
+         color: "#fff",
+         color2: "#f5f5f5",
+         color3: "#d1d1d1",
+         color4: "#a2a2a2",
+         color5: "#747474",
+         color6: "#454545",
+         color7: "#2d2d2d",
+         color8: "#161616",
       },
-      alertas: {
-         verde: "#008000",
-         vermelho: "#A4161A",
+      alerts: {
+         success: "#008000",
+         fail: "#A4161A",
       },
    },
    fonts: {
       roboto: {
-         regular: "Roboto, sans-serif 400",
-         bold: "Roboto, sans-serif 700",
+         fontFamily: "--Roboto, sans-serif",
+         regular: "400",
+         bold: "700",
       },
    },
 };

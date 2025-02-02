@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const StyledNav = styled.nav`
    display: flex;
    flex-direction: column;
-   background-color: ${({ theme }) => theme.colors.neutros.cor};
+   background-color: ${({ theme }) => theme.colors.neutral.color};
    border-radius: 0.5rem;
    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
    padding: 1.5rem 0.75rem;

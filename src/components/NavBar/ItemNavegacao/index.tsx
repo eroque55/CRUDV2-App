@@ -10,7 +10,7 @@ interface Props {
    menuAtivo?: boolean;
 }
 
-export default function ItemNavegacao({
+export default function NavBarItem({
    children,
    href,
    icone,

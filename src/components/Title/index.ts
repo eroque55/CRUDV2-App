@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-const StyledTitle = styled.h1`
+export const StyledTitle = styled.h1`
    font-weight: 700;
-   color: ${({ theme }) => theme.colors.principal.cor3};
+   color: ${({ theme }) => theme.colors.primary.color3};
 `;
-
-export default StyledTitle;

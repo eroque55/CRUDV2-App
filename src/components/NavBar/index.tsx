@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import ItemNavegacao from "@/src/components/NavBar/ItemNavegacao";
+import NavBarItem from "@/src/components/NavBar/ItemNavegacao";
 import logo from "@/public/images/logo.svg";
 import logoX from "@/public/images/logoX.svg";
 import { StyledMenuList, StyledNav } from "./index.styles";
@@ -24,15 +24,7 @@ export default function NavBar() {
             height="36"
          />
          <StyledMenuList>
-            <ItemNavegacao
-               href="/"
-               icone="icons/clientesInativo.svg"
-               iconeAtivo="icons/clientesAtivo.svg"
-               menuAtivo={menuAtivo}
-            >
-               Lista de clientes
-            </ItemNavegacao>
-            <ItemNavegacao
+            <NavBarItem
                href="/"
                icone="icons/clientesInativo.svg"
                iconeAtivo="icons/clientesAtivo.svg"
@@ -40,11 +32,11 @@ export default function NavBar() {
                menuAtivo={menuAtivo}
             >
                Lista de clientes
-            </ItemNavegacao>
+            </NavBarItem>
          </StyledMenuList>
-         <ItemNavegacao href="/" icone="icons/sair.svg">
-            {menuAtivo ? "Sair" : ""}
-         </ItemNavegacao>
+         <NavBarItem href="/" icone="icons/sair.svg" menuAtivo={menuAtivo}>
+            Sair
+         </NavBarItem>
       </StyledNav>
    );
 }

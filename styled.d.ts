@@ -1,28 +1,36 @@
+import { fail } from "assert";
 import "styled-components";
 
 declare module "styled-components" {
    export interface DefaultTheme {
       colors: {
-         principal: {
-            cor: string;
-            cor2: string;
-            cor3: string;
-            cor4: string;
-            cor5: string;
+         primary: {
+            color: string;
+            color2: string;
+            color3: string;
+            color4: string;
+            color5: string;
          };
-         neutros: {
-            cor: string;
-            cor2: string;
-            cor3: string;
-            cor4: string;
-            cor5: string;
-            cor6: string;
-            cor7: string;
-            cor8: string;
+         neutral: {
+            color: string;
+            color2: string;
+            color3: string;
+            color4: string;
+            color5: string;
+            color6: string;
+            color7: string;
+            color8: string;
          };
-         alertas: {
-            verde: string;
-            vermelho: string;
+         alerts: {
+            success: string;
+            fail: string;
+         };
+      };
+      fonts: {
+         roboto: {
+            fontFamily: string;
+            regular: string;
+            bold: string;
          };
       };
    }
