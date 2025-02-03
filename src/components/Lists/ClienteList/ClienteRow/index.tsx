@@ -14,12 +14,14 @@ import ActionButton from "../../common/ActionButton";
 import lixeira from "@/public/icons/lixeira.svg";
 import detalhes from "@/public/icons/detalhes.svg";
 import Switch from "../../common/Switch";
+import { useDeleteModalStore } from "@/src/store/ClienteStore";
 
 interface Props {
    cliente: Cliente;
 }
 
 export default function ClienteRow({ cliente }: Props) {
+   const { deleteOpenModal } = useDeleteModalStore();
    const [status, setStatus] = useState(cliente._status);
 
    async function toggleStatus() {
@@ -42,8 +44,12 @@ export default function ClienteRow({ cliente }: Props) {
          </StyledRowBodyContent>
          <StyledRowBodyActions>
             <Switch status={status} onToggle={toggleStatus}></Switch>
-            <ActionButton icon={lixeira} onClick={() => {}} />
-            <ActionButton icon={detalhes} onClick={() => {}} />
+            <ActionButton
+               id={cliente._id}
+               icon={lixeira}
+               onClick={() => deleteOpenModal(cliente._id)}
+            />
+            <ActionButton id={cliente._id} icon={detalhes} onClick={() => {}} />
          </StyledRowBodyActions>
       </StyledRow>
    );

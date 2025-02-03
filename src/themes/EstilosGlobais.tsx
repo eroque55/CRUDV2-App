@@ -3,7 +3,6 @@ import { createGlobalStyle } from "styled-components";
 const EstilosGlobais = createGlobalStyle`
   html,
   body {
-    color: ${({ theme }) => theme.colors.neutral.color8};
     font-family: ${({ theme }) => theme.fonts.roboto.fontFamily};
     background-color: ${({ theme }) => theme.colors.neutral.color2};
     width: 100vw;

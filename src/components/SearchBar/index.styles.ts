@@ -5,7 +5,7 @@ export const StyledSearchBar = styled.input`
    padding: 0.75rem 0.75rem 0.75rem 2rem;
    border-radius: 0.75rem;
    background: ${({ theme }) => theme.colors.neutral.color};
-   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+   box-shadow: ${({ theme }) => theme.colors.outers.shadow};
    border: none;
    background-image: url("/icons/lupa.svg");
    background-repeat: no-repeat;

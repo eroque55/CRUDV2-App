@@ -1,26 +1,26 @@
 import Image from "next/image";
 
-import NavBarItem from "@/src/components/NavBar/ItemNavegacao";
+import NavBarItem from "@/src/components/NavBar/NavItem";
 import logo from "@/public/images/logo.svg";
 import logoX from "@/public/images/logoX.svg";
 import { StyledMenuList, StyledNav } from "./index.styles";
-import { useState } from "react";
+import ExitItem from "./ExitItem";
+import { useNavBarStore } from "@/src/store/NavBarStore";
 
 export default function NavBar() {
-   const [menuAtivo, setMenuAtivo] = useState(false);
+   const { navBarClose, navBarOpen, navBarIsOpen } = useNavBarStore();
 
    function toggleMenu(e: React.MouseEvent<HTMLDivElement>) {
       e.stopPropagation();
-      setMenuAtivo(!menuAtivo);
-      console.log("Menu ativo: ", menuAtivo);
+      navBarIsOpen ? navBarClose() : navBarOpen();
    }
 
    return (
       <StyledNav onClick={toggleMenu}>
          <Image
-            src={menuAtivo ? logo : logoX}
+            src={navBarIsOpen ? logo : logoX}
             alt="Logo"
-            width={menuAtivo ? 114 : 38}
+            width={navBarIsOpen ? 114 : 38}
             height="36"
          />
          <StyledMenuList>
@@ -29,14 +29,11 @@ export default function NavBar() {
                icone="icons/clientesInativo.svg"
                iconeAtivo="icons/clientesAtivo.svg"
                ativo
-               menuAtivo={menuAtivo}
             >
                Lista de clientes
             </NavBarItem>
          </StyledMenuList>
-         <NavBarItem href="/" icone="icons/sair.svg" menuAtivo={menuAtivo}>
-            Sair
-         </NavBarItem>
+         <ExitItem />
       </StyledNav>
    );
 }

@@ -1,5 +1,5 @@
 interface Cliente {
-   _id: string;
+   _id: number;
    _nome: string;
    _dataNascimento: Date;
    _cpf: string;

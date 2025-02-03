@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { StyledLink, StyledText } from "./index.styles";
+import { useNavBarStore } from "@/src/store/NavBarStore";
 
 interface Props {
    children: React.ReactNode;
@@ -7,7 +8,6 @@ interface Props {
    icone: string;
    iconeAtivo?: string;
    ativo?: boolean;
-   menuAtivo?: boolean;
 }
 
 export default function NavBarItem({
@@ -16,8 +16,9 @@ export default function NavBarItem({
    icone,
    iconeAtivo = icone,
    ativo = false,
-   menuAtivo = false,
 }: Props) {
+   const { navBarIsOpen } = useNavBarStore();
+
    return (
       <StyledLink href={href} $ativo={ativo}>
          <Image
@@ -26,7 +27,7 @@ export default function NavBarItem({
             width={20}
             height={20}
          />
-         {menuAtivo ? <StyledText>{children}</StyledText> : null}
+         {navBarIsOpen && <StyledText>{children}</StyledText>}
       </StyledLink>
    );
 }

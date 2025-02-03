@@ -5,12 +5,13 @@ export const StyledNav = styled.nav`
    flex-direction: column;
    background-color: ${({ theme }) => theme.colors.neutral.color};
    border-radius: 0.5rem;
-   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+   box-shadow: ${({ theme }) => theme.colors.outers.shadow};
    padding: 1.5rem 0.75rem;
    width: fit-content;
    height: 100%;
    gap: 1.5rem;
    align-items: center;
+   cursor: pointer;
 `;
 
 export const StyledMenuList = styled.ul`

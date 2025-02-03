@@ -25,6 +25,12 @@ declare module "styled-components" {
             success: string;
             fail: string;
          };
+         outers: {
+            hoverBackground: string;
+            hoverFilter: string;
+            shadow: string;
+            modalBackground: string;
+         };
       };
       fonts: {
          roboto: {

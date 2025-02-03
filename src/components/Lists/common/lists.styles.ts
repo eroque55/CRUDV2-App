@@ -13,12 +13,12 @@ export const StyledRow = styled.li<StyledRowProps>`
    width: 100%;
    border-radius: 0.75rem;
    background: ${({ theme }) => theme.colors.neutral.color};
-   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
-   ${({ $header }) => ($header ? "cursor: default;" : "cursor: pointer;")}
+   box-shadow: ${({ theme }) => theme.colors.outers.shadow};
+   ${({ $header }) => !$header && "cursor: pointer;"}
 
    &:hover {
-      background-color: ${({ $header }) =>
-         $header ? "" : "rgba(0, 0, 0, 0.05)"};
+      background-color: ${({ $header, theme }) =>
+         !$header && theme.colors.outers.hoverBackground};
    }
 `;
 

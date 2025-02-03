@@ -7,7 +7,6 @@ export const StyledAddButton = styled.button`
    gap: 0.5rem;
    border-radius: 0.75rem;
    background: ${({ theme }) => theme.colors.primary.color3};
-   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
    border: none;
    cursor: pointer;
 
@@ -15,4 +14,8 @@ export const StyledAddButton = styled.button`
    font-family: ${({ theme }) => theme.fonts.roboto.fontFamily};
    font-weight: ${({ theme }) => theme.fonts.roboto.regular};
    font-size: 1rem;
+
+   &:hover {
+      filter: ${({ theme }) => theme.colors.outers.hoverFilter};
+   }
 `;

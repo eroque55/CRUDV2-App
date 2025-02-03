@@ -11,3 +11,7 @@ export const getClientes = async (): Promise<Cliente[]> => {
 export const updateClienteStatus = async (cliente: Cliente) => {
    return axios.put(API_URL, cliente);
 };
+
+export const deleteCliente = async (id: number) => {
+   return axios.delete(`${API_URL}/${id}`);
+};

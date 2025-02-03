@@ -27,6 +27,12 @@ const theme: DefaultTheme = {
          success: "#008000",
          fail: "#A4161A",
       },
+      outers: {
+         hoverBackground: "rgba(0, 0, 0, 0.05)",
+         hoverFilter: "brightness(0.85)",
+         shadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25)",
+         modalBackground: "rgba(0, 0, 0, 0.25)",
+      },
    },
    fonts: {
       roboto: {

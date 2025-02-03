@@ -6,8 +6,8 @@ interface StyledLinkProps {
 }
 
 export const StyledLink = styled(Link)<StyledLinkProps>`
-   background-color: ${(props) =>
-      props.$ativo ? props.theme.colors.primary.color3 : ""};
+   background-color: ${({ $ativo, theme }) =>
+      $ativo && theme.colors.primary.color3};
    color: ${(props) =>
       props.$ativo
          ? props.theme.colors.neutral.color
@@ -17,11 +17,11 @@ export const StyledLink = styled(Link)<StyledLinkProps>`
    gap: 0.5rem;
    border-radius: 0.5rem;
    min-width: 100%;
+   ${({ $ativo }) => $ativo && "pointer-events: none;"};
 
    &:hover {
-      background-color: ${(props) =>
-         props.$ativo ? "" : "rgba(0, 0, 0, 0.05)"};
-      pointer-events: ${(props) => (props.$ativo ? "none" : "auto")};
+      background-color: ${({ $ativo, theme }) =>
+         !$ativo && theme.colors.outers.hoverBackground};
    }
 `;
 
