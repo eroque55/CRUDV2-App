@@ -26,12 +26,18 @@ export default function ClienteRow({ cliente }: Props) {
 
    async function toggleStatus() {
       try {
-         const response = cliente;
-         response._status = !cliente._status;
-         await updateClienteStatus(response);
-         setStatus(response._status);
+         const novoStatus = !status;
+
+         setStatus(novoStatus);
+
+         await updateClienteStatus(cliente._id, {
+            ...cliente,
+            _status: novoStatus,
+         });
       } catch (error: any) {
          console.error("Erro ao atualizar status do cliente", error);
+
+         setStatus(status);
       }
    }
 
