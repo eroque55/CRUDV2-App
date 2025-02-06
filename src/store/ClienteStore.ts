@@ -33,3 +33,15 @@ export const useDeleteModalStore = create<DeleteModalState>((set) => ({
       set({ deleteIsOpen: true, selecedItemId: id }),
    deleteCloseModal: () => set({ deleteIsOpen: false, selecedItemId: null }),
 }));
+
+interface CreateModalState {
+   createIsOpen: boolean;
+   createOpenModal: () => void;
+   createCloseModal: () => void;
+}
+
+export const useCreateModalStore = create<CreateModalState>((set) => ({
+   createIsOpen: false,
+   createOpenModal: () => set({ createIsOpen: true }),
+   createCloseModal: () => set({ createIsOpen: false }),
+}));

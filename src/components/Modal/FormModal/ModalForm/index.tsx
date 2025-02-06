@@ -11,6 +11,7 @@ export default function ModalForm({ fields }: Props) {
       <StyledModalForm>
          {fields.map((field) => (
             <TextField
+               key={field.children?.toString()}
                value={field.value}
                placeholder={field.placeholder}
                type={field.type}

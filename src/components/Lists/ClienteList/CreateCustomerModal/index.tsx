@@ -1,11 +1,13 @@
 import FormModal from "@/src/components/Modal/FormModal";
+import { useCreateModalStore } from "@/src/store/ClienteStore";
 
 export default function CreateCustomerModal() {
+   const { createIsOpen, createCloseModal } = useCreateModalStore();
    return (
       <FormModal
          actionButton="Salvar"
-         closeModal={() => {}}
-         isOpen
+         closeModal={createCloseModal}
+         isOpen={createIsOpen}
          submitModal={() => {}}
          title="Cadastrar cliente"
          fields={[
