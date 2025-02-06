@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledAddButton = styled.button`
    display: flex;
-   padding: 0.75rem 3rem;
+   padding: 0.75rem 2rem;
    align-items: center;
    gap: 0.5rem;
    border-radius: 0.75rem;
@@ -12,7 +12,7 @@ export const StyledAddButton = styled.button`
 
    color: ${({ theme }) => theme.colors.neutral.color};
    font-family: ${({ theme }) => theme.fonts.roboto.fontFamily};
-   font-weight: ${({ theme }) => theme.fonts.roboto.regular};
+   font-weight: ${({ theme }) => theme.fonts.roboto.bold};
    font-size: 1rem;
 
    &:hover {

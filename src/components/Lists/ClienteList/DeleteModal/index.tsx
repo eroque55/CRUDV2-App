@@ -1,5 +1,5 @@
 import { useClienteStore, useDeleteModalStore } from "@/src/store/ClienteStore";
-import Modal from "../../../Modal";
+import Modal from "../../../Modal/AttentionModal";
 import { deleteCliente } from "@/src/services/ClienteService";
 
 export default function DeleteModal() {

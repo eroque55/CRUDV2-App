@@ -12,6 +12,10 @@ export const StyledSearchBar = styled.input`
    background-position-y: 50%;
    background-position-x: 0.5rem;
 
+   &::placeholder {
+      color: ${({ theme }) => theme.colors.neutral.color3};
+   }
+
    &:focus {
       outline: none;
    }
