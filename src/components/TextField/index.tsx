@@ -10,15 +10,19 @@ export default function TextField({
    type,
    maxLength,
    required,
+   register,
+   registerName,
 }: ITextField) {
    return (
       <StyledTextField>
          <Label>{children}</Label>
          <Input
+            registerName={registerName}
             placeholder={placeholder}
             type={type}
             maxLength={maxLength}
             required={required}
+            register={register}
          >
             {value}
          </Input>

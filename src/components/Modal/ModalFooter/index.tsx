@@ -2,15 +2,15 @@ import { StyledModalFooter, StyledModalFooterButton } from "./index.styles";
 
 interface Props {
    children: React.ReactNode;
-   closeModal: () => void;
-   submitModal: () => void;
+   onCancel: () => void;
+   onSubmit: () => void;
    colors?: "blue" | "red" | "green";
 }
 
 export default function ModalFooter({
    children,
-   closeModal,
-   submitModal,
+   onCancel: closeModal,
+   onSubmit: submitModal,
    colors = "blue",
 }: Props) {
    return (

@@ -7,6 +7,8 @@ export default function Input({
    children,
    required,
    maxLength,
+   register,
+   registerName,
 }: ITextField) {
    return (
       <StyledInput
@@ -14,6 +16,7 @@ export default function Input({
          type={type}
          required={required}
          maxLength={maxLength}
+         {...(register && register(registerName))}
       >
          {children}
       </StyledInput>

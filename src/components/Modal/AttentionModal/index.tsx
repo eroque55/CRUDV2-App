@@ -31,8 +31,8 @@ export default function Modal({
             <ModalHeader>{title}</ModalHeader>
             <ModalBody notice={notice}>{children}</ModalBody>
             <ModalFooter
-               closeModal={closeModal}
-               submitModal={submitModal}
+               onCancel={closeModal}
+               onSubmit={submitModal}
                colors="red"
             >
                {actionButton}

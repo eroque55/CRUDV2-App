@@ -1,6 +1,13 @@
 import { create } from "zustand";
 import { getClientes } from "../services/ClienteService";
 import Cliente from "../@types/ICliente";
+import {
+   FieldValues,
+   useForm,
+   UseFormHandleSubmit,
+   UseFormRegister,
+   UseFormReturn,
+} from "react-hook-form";
 
 interface ClienteStore {
    clientes: Cliente[];
