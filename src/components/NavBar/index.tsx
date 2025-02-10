@@ -26,8 +26,8 @@ export default function NavBar() {
          <StyledMenuList>
             <NavBarItem
                href="/"
-               icone="icons/clientesInativo.svg"
-               iconeAtivo="icons/clientesAtivo.svg"
+               icone="/icons/clientesInativo.svg"
+               iconeAtivo="/icons/clientesAtivo.svg"
                ativo
             >
                Lista de clientes

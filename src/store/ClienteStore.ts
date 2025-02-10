@@ -1,16 +1,9 @@
 import { create } from "zustand";
-import { getClientes } from "../services/ClienteService";
-import Cliente from "../@types/ICliente";
-import {
-   FieldValues,
-   useForm,
-   UseFormHandleSubmit,
-   UseFormRegister,
-   UseFormReturn,
-} from "react-hook-form";
+import { getCustomers } from "../services/CustomerService";
+import ICustomer from "../@types/ICustomer";
 
 interface ClienteStore {
-   clientes: Cliente[];
+   clientes: ICustomer[];
    carregarClientes: () => Promise<void>;
 }
 
@@ -18,7 +11,7 @@ export const useClienteStore = create<ClienteStore>((set) => ({
    clientes: [],
    carregarClientes: async () => {
       try {
-         const data = await getClientes();
+         const data = await getCustomers();
          set({ clientes: data });
       } catch (error) {
          console.error("Erro ao buscar os clientes: ", error);
@@ -45,10 +38,16 @@ interface CreateModalState {
    createIsOpen: boolean;
    createOpenModal: () => void;
    createCloseModal: () => void;
+   modalNumber: number;
+   modalNext: () => void;
+   modalBack: () => void;
 }
 
 export const useCreateModalStore = create<CreateModalState>((set) => ({
    createIsOpen: false,
    createOpenModal: () => set({ createIsOpen: true }),
    createCloseModal: () => set({ createIsOpen: false }),
+   modalNumber: 1,
+   modalNext: () => set((state) => ({ modalNumber: state.modalNumber + 1 })),
+   modalBack: () => set((state) => ({ modalNumber: state.modalNumber - 1 })),
 }));

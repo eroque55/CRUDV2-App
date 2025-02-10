@@ -10,6 +10,8 @@ export default function ExitModal() {
          title="Sair da conta"
          actionButton="Sair"
          closeModal={closeModal}
+         submitModal={() => {}}
+         color="red"
       >
          Tem certeza que deseja sair da conta?
       </Modal>

@@ -9,9 +9,11 @@ interface Props {
    title: string;
    children: React.ReactNode;
    notice?: string;
+   uniqueButton?: boolean;
    actionButton: string;
-   closeModal: () => void;
+   closeModal?: () => void;
    submitModal: () => void;
+   color?: "red" | "green" | "blue";
 }
 
 export default function Modal({
@@ -22,6 +24,8 @@ export default function Modal({
    actionButton,
    closeModal,
    submitModal,
+   color = "blue",
+   uniqueButton = false,
 }: Props) {
    if (!isOpen) return null;
 
@@ -31,9 +35,10 @@ export default function Modal({
             <ModalHeader>{title}</ModalHeader>
             <ModalBody notice={notice}>{children}</ModalBody>
             <ModalFooter
-               onCancel={closeModal}
+               onCancel={closeModal ? closeModal : () => {}}
                onSubmit={submitModal}
-               colors="red"
+               color={color}
+               uniqueButton={uniqueButton}
             >
                {actionButton}
             </ModalFooter>

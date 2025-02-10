@@ -12,6 +12,7 @@ export const StyledNav = styled.nav`
    gap: 1.5rem;
    align-items: center;
    cursor: pointer;
+   z-index: 1;
 `;
 
 export const StyledMenuList = styled.ul`

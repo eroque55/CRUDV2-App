@@ -4,25 +4,29 @@ interface Props {
    children: React.ReactNode;
    onCancel: () => void;
    onSubmit: () => void;
-   colors?: "blue" | "red" | "green";
+   color?: "red" | "green" | "blue";
+   uniqueButton?: boolean;
 }
 
 export default function ModalFooter({
    children,
    onCancel: closeModal,
    onSubmit: submitModal,
-   colors = "blue",
+   color = "blue",
+   uniqueButton = false,
 }: Props) {
    return (
       <StyledModalFooter>
-         <StyledModalFooterButton
-            $color={colors}
-            $transparent
-            onClick={closeModal}
-         >
-            Cancelar
-         </StyledModalFooterButton>
-         <StyledModalFooterButton onClick={submitModal} $color={colors}>
+         {!uniqueButton && (
+            <StyledModalFooterButton
+               $color={color}
+               $transparent
+               onClick={closeModal}
+            >
+               Cancelar
+            </StyledModalFooterButton>
+         )}
+         <StyledModalFooterButton onClick={submitModal} $color={color}>
             {children}
          </StyledModalFooterButton>
       </StyledModalFooter>

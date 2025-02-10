@@ -1,20 +1,20 @@
 "use client";
 
-import NavBar from "../components/NavBar";
-import ListaClientes from "../components/Lists/ClienteList";
-import ContentHeader from "../components/ContentHeader";
+import NavBar from "@/src/components/NavBar";
+import ListaClientes from "@/src/components/Lists/CustomersList";
+import ContentHeader from "@/src/components/ContentHeader";
 
 import { StyledMain, StyledContent } from "./page.styles";
-import ExitModal from "../components/NavBar/ExitModal";
-import DeleteModal from "../components/Lists/ClienteList/DeleteModal";
-import CreateCustomerModal from "../components/Lists/ClienteList/CreateCustomerModal";
+import ExitModal from "@/src/components/NavBar/ExitModal";
+import DeleteModal from "@/src/components/Lists/CustomersList/DeleteModal";
+import CreateCustomerFlow from "../components/Lists/CustomersList/CreateCustomerFlow";
 
 export default function Home() {
    return (
       <>
          <DeleteModal />
          <ExitModal />
-         <CreateCustomerModal />
+         <CreateCustomerFlow />
          <StyledMain>
             <NavBar />
             <StyledContent>
