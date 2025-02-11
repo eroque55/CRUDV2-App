@@ -89,7 +89,6 @@ export const StyledPage = styled.section`
 
    &::-webkit-scrollbar-track {
       margin-top: 1rem;
-      background-color: ${({ theme }) => theme.colors.neutral.color};
       border-radius: 1rem;
    }
 `;

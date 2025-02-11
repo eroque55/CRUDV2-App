@@ -13,6 +13,11 @@ export const getPhones = async (): Promise<IPhone[]> => {
    return response.data;
 };
 
+export const getPhoneByCustomer = async (id: number): Promise<IPhone> => {
+   const response = await axios.get(`${API_URL}/customer/${id}`);
+   return response.data;
+};
+
 export const updateCustomerStatus = async (id: number, customer: IPhone) => {
    return axios.put(`${API_URL}/${id}`, customer);
 };

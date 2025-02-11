@@ -21,10 +21,12 @@ import BackButton from "@/src/components/BackButton";
 import PersonalData from "@/src/components/CustomerDetails/PersonalData";
 import AddressesPage from "@/src/components/CustomerDetails/Addresses";
 import IAddress from "@/src/@types/IAddress";
-import {
-   getAddresses,
-   getAddressesByCustomer,
-} from "@/src/services/AddressService";
+import { getAddressesByCustomer } from "@/src/services/AddressService";
+import IPhone from "@/src/@types/IPhone";
+import { getPhoneByCustomer } from "@/src/services/PhoneService";
+import CardsPage from "@/src/components/CustomerDetails/Cards";
+import ICard from "@/src/@types/ICard";
+import { getCardByCustomer } from "@/src/services/CardService";
 
 export default function Customer() {
    const params = useParams();
@@ -43,7 +45,16 @@ export default function Customer() {
       _status: false,
    });
 
+   const [phone, setPhone] = useState<IPhone>({
+      _id: 0,
+      _ddd: "",
+      _number: "",
+      _customerId: 0,
+      _phoneType: "OUTRO",
+   });
+
    const [addresses, setAddresses] = useState<IAddress[]>([]);
+   const [cards, setCards] = useState<ICard[]>([]);
 
    const [loading, setLoading] = useState(true);
    const [page, setPage] = useState(0);
@@ -52,9 +63,14 @@ export default function Customer() {
       async function fetchData() {
          try {
             const customerData = await getCustomer(id);
+            const phoneData = await getPhoneByCustomer(id);
             const addressesData = await getAddressesByCustomer(id);
+            const cardsData = await getCardByCustomer(id);
+
             setCustomer(customerData);
+            setPhone(phoneData);
             setAddresses(addressesData);
+            setCards(cardsData);
          } catch (error) {
             console.error("Erro ao buscar cliente:", error);
          } finally {
@@ -103,7 +119,7 @@ export default function Customer() {
                      </StyledTabs>
                      <StyledTabs
                         onClick={(e) => {
-                           setPage(1);
+                           setPage(2);
                         }}
                         $active={page === 2}
                      >
@@ -112,8 +128,11 @@ export default function Customer() {
                   </TabsContainer>
                </StyledHeader>
 
-               {page === 0 && <PersonalData customer={customer} />}
+               {page === 0 && (
+                  <PersonalData customer={customer} phone={phone} />
+               )}
                {page === 1 && <AddressesPage addresses={addresses} />}
+               {page === 2 && <CardsPage cards={cards} />}
             </StyledContent>
          </StyledMain>
       </>
