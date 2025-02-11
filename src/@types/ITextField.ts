@@ -1,5 +1,5 @@
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
-import { ICustomerSchema } from "../validations/Customer";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { ICustomerSchema } from "../validations/customerSchema";
 
 interface ITextField {
    children: React.ReactNode;

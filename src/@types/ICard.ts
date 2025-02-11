@@ -13,7 +13,7 @@ interface ICard {
       | "DISCOVER"
       | "DINERS_CLUB"
       | "JCB"
-      | "OUTRAS";
+      | "OUTRA";
 }
 
 export default ICard;

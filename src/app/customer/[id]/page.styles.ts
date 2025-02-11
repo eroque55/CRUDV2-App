@@ -92,3 +92,10 @@ export const StyledPage = styled.section`
       border-radius: 1rem;
    }
 `;
+
+export const StyledActions = styled.div`
+   display: flex;
+   justify-content: space-between;
+   align-items: flex-end;
+   height: 2rem;
+`;
