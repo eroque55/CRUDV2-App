@@ -13,7 +13,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ICard from "@/src/@types/ICard";
 
-export default function CreateCard() {
+interface Props {
+   fetchData: () => void;
+}
+
+export default function CreateCard({ fetchData }: Props) {
    const { isOpen, closeModal, customerId } = useCreateCard();
 
    const {
@@ -27,7 +31,7 @@ export default function CreateCard() {
       mode: "onBlur",
    });
 
-   const onSubmit = (data: ICardSchema) => {
+   const onSubmit = async (data: ICardSchema) => {
       const cardBrand = data.cardBrand as
          | "VISA"
          | "MASTERCARD"
@@ -36,6 +40,7 @@ export default function CreateCard() {
          | "DINERS_CLUB"
          | "JCB"
          | "OUTRA";
+
       const card: ICard = {
          _id: 0,
          _customerId: customerId,
@@ -49,6 +54,7 @@ export default function CreateCard() {
       createCard(card);
       reset();
       closeModal();
+      fetchData();
    };
 
    if (!isOpen) return null;
@@ -62,7 +68,7 @@ export default function CreateCard() {
                onCancel={closeModal}
                onSubmit={handleSubmit(onSubmit)}
             >
-               Próximo
+               Cadastrar
             </ModalFooter>
          </StyledDialog>
       </StyledOverlay>

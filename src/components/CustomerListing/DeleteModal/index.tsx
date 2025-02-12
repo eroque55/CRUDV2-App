@@ -1,7 +1,7 @@
 import {
    useCustomerStore,
    useDeleteModalStore,
-} from "@/src/store/CustomerStore";
+} from "@/src/store/CustomerListingStore";
 import Modal from "../../commom/Modal/AttentionModal";
 import { deleteCustomer } from "@/src/services/CustomerService";
 

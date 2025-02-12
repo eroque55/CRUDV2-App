@@ -5,7 +5,7 @@ import {
    StyledContentHeaderOptions,
    StyledContentHeader,
 } from "./index.styles";
-import { useCreateModalStore } from "@/src/store/CustomerStore";
+import { useCreateModalStore } from "@/src/store/CustomerListingStore";
 
 interface Props {
    children: React.ReactNode;

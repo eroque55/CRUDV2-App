@@ -28,13 +28,14 @@ import PersonalDataPage from "@/src/components/CustomerDetails/PersonalDataPage"
 import AddButton from "@/src/components/commom/AddButton";
 import IPhone from "@/src/@types/IPhone";
 import IAddress from "@/src/@types/IAddress";
-import ICard from "@/src/@types/ICard";
 
 import {
    useCreateAddress,
    useCreateCard,
 } from "@/src/store/CustomerDetailsStore";
 import CreateCard from "@/src/components/CustomerDetails/Modals/CreateCard";
+import ICard from "@/src/@types/ICard";
+import CreateAddress from "@/src/components/CustomerDetails/Modals/CreateAddress";
 
 export default function Customer() {
    const params = useParams();
@@ -44,35 +45,36 @@ export default function Customer() {
    const [phone, setPhone] = useState<IPhone | null>(null);
    const [addresses, setAddresses] = useState<IAddress[]>([]);
    const [cards, setCards] = useState<ICard[]>([]);
+
    const [loading, setLoading] = useState(true);
    const [page, setPage] = useState(0);
 
    const { openModal: openCreateAddress } = useCreateAddress();
    const { openModal: openCreateCard } = useCreateCard();
 
+   async function fetchData() {
+      try {
+         const [customerData, phoneData, addressesData, cardsData] =
+            await Promise.all([
+               getCustomer(id),
+               getPhoneByCustomer(id),
+               getAddressesByCustomer(id),
+               getCardByCustomer(id),
+            ]);
+
+         setCustomer(customerData);
+         setPhone(phoneData);
+         setAddresses(addressesData);
+         setCards(cardsData);
+      } catch (error) {
+         console.error("Erro ao buscar cliente:", error);
+      } finally {
+         setLoading(false);
+      }
+   }
+
    useEffect(() => {
       if (isNaN(id)) return;
-
-      async function fetchData() {
-         try {
-            const [customerData, phoneData, addressesData, cardsData] =
-               await Promise.all([
-                  getCustomer(id),
-                  getPhoneByCustomer(id),
-                  getAddressesByCustomer(id),
-                  getCardByCustomer(id),
-               ]);
-
-            setCustomer(customerData);
-            setPhone(phoneData);
-            setAddresses(addressesData);
-            setCards(cardsData);
-         } catch (error) {
-            console.error("Erro ao buscar cliente:", error);
-         } finally {
-            setLoading(false);
-         }
-      }
 
       fetchData();
    }, [id]);
@@ -84,7 +86,8 @@ export default function Customer() {
    return (
       <>
          <ExitModal />
-         <CreateCard />
+         <CreateCard fetchData={fetchData} />
+         <CreateAddress fetchData={fetchData} />
          <StyledMain>
             <StyledBackgroud />
             <NavBar />

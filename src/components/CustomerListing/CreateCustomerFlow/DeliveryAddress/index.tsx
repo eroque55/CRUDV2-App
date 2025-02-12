@@ -4,7 +4,7 @@ import ModalFooter from "@/src/components/commom/Modal/ModalFooter";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "../AddressForm";
-import { IAddressSchema, addressSchema } from "@/src/validations";
+import { IAddressSchema, addressSchema } from "@/src/validations/addressSchema";
 import { Dispatch, SetStateAction } from "react";
 import IAddress from "@/src/@types/IAddress";
 

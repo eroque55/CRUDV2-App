@@ -1,4 +1,4 @@
-import { useCustomerStore } from "@/src/store/CustomerStore";
+import { useCustomerStore } from "@/src/store/CustomerListingStore";
 import TableBody from "../CustomerRow";
 import TableHeader from "../../commom/TableHeader";
 import { StyledTable } from "../index.styles";
