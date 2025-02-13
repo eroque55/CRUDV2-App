@@ -11,10 +11,14 @@ export const StyledOverlay = styled.div`
    justify-content: center;
 `;
 
-export const StyledDialog = styled.dialog`
+interface StyledDialogProps {
+   $width?: string;
+}
+
+export const StyledDialog = styled.dialog<StyledDialogProps>`
    display: flex;
    flex-direction: column;
-   width: 40rem;
+   width: ${($props) => ($props.$width ? $props.$width : "40rem")};
    box-shadow: ${({ theme }) => theme.colors.outers.shadow};
    border-radius: 0.5rem;
    border: none;

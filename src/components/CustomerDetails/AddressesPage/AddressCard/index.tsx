@@ -9,6 +9,7 @@ import IState from "@/src/@types/IState";
 import ICountry from "@/src/@types/ICountry";
 import { capitalizeFirstLetter } from "@/src/util";
 import { getCountry } from "@/src/services/ContryService";
+import DetailsActionButtons from "@/src/components/commom/DetailsActionButtons";
 
 interface Props {
    address: IAddress;
@@ -35,6 +36,9 @@ export default function AddressCard({ address }: Props) {
       fetchData();
    }, []);
 
+   function deleteCard() {}
+   function editCard() {}
+
    const cep = address._cep.replace(/(\d{5})(\d{3})/, "$1-$2");
    const street = `${address._street}, ${address._number}`;
    const streetType = capitalizeFirstLetter(address._streetType);
@@ -44,6 +48,10 @@ export default function AddressCard({ address }: Props) {
    return (
       <StyledCard>
          <InfoContainer title="Tipo de endereço">{addressType}</InfoContainer>
+         <DetailsActionButtons
+            handleDelete={deleteCard}
+            handleEdit={editCard}
+         />
          <InfoContainer title="Apelido">{address._nickname}</InfoContainer>
          <InfoContainer title="CEP">{cep}</InfoContainer>
          <InfoContainer title="Tipo de residência">

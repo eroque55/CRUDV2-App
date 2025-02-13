@@ -12,6 +12,8 @@ import { IAddressSchema, addressSchema } from "@/src/validations/addressSchema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import IAddress from "@/src/@types/IAddress";
+import { toast } from "react-toastify";
+import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
 
 interface Props {
    fetchData: () => void;
@@ -67,7 +69,17 @@ export default function CreateAddress({ fetchData }: Props) {
       await createAddress(address);
       reset();
       closeModal();
-      fetchData();
+      await fetchData();
+      toast(SuccesToast, {
+         data: {
+            title: "Endereço cadastrado",
+            message: "Endereço cadastrado com sucesso!",
+         },
+         autoClose: false,
+         position: "top-center",
+         closeButton: false,
+         hideProgressBar: true,
+      });
    };
 
    if (!isOpen) return null;

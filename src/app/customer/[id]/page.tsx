@@ -36,6 +36,7 @@ import {
 import CreateCard from "@/src/components/CustomerDetails/Modals/CreateCard";
 import ICard from "@/src/@types/ICard";
 import CreateAddress from "@/src/components/CustomerDetails/Modals/CreateAddress";
+import { StyledToastContainer } from "@/src/components/commom/Toastify/ToastContainer/index.styles";
 
 export default function Customer() {
    const params = useParams();
@@ -85,6 +86,7 @@ export default function Customer() {
 
    return (
       <>
+         <StyledToastContainer />
          <ExitModal />
          <CreateCard fetchData={fetchData} />
          <CreateAddress fetchData={fetchData} />

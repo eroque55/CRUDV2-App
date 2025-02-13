@@ -13,7 +13,6 @@ const roboto = Roboto({
 export const metadata: Metadata = {
    title: "Crud V2",
    description: "Crud de engenharia de software 3 em nextjs",
-   icons: "icons/favicon.ico",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

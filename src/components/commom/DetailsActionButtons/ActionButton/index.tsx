@@ -2,18 +2,15 @@ import Image from "next/image";
 import { StyledActionButton } from "./index.styles";
 
 interface Props {
+   src: string;
+   alt: string;
    onClick: () => void;
 }
 
-export default function DeleteButton({ onClick }: Props) {
+export default function ActionButtons({ onClick, alt, src }: Props) {
    return (
       <StyledActionButton onClick={onClick}>
-         <Image
-            alt="Botão de deleta"
-            src={"/icons/DeleteButton.svg"}
-            width={18}
-            height={18}
-         />
+         <Image alt={alt} src={src} width={20} height={20} />
       </StyledActionButton>
    );
 }

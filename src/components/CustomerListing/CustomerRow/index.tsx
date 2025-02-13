@@ -10,7 +10,7 @@ import {
    StyledRow,
    StyledRowBodyText,
 } from "../../commom/lists.styles";
-import ActionButton from "../../commom/ActionButton";
+import ActionButton from "../../commom/RowActionButton";
 import lixeira from "@/public/icons/lixeira.svg";
 import Switch from "../../commom/Switch";
 import { useDeleteModalStore } from "@/src/store/CustomerListingStore";

@@ -12,6 +12,8 @@ import { ICardSchema, cardSchema } from "@/src/validations/cardSchema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ICard from "@/src/@types/ICard";
+import { toast } from "react-toastify";
+import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
 
 interface Props {
    fetchData: () => void;
@@ -55,6 +57,16 @@ export default function CreateCard({ fetchData }: Props) {
       reset();
       closeModal();
       await fetchData();
+      toast(SuccesToast, {
+         data: {
+            title: "Cartão cadastrado",
+            message: "Cartão cadastrado com sucesso!",
+         },
+         autoClose: false,
+         position: "top-center",
+         closeButton: false,
+         hideProgressBar: true,
+      });
    };
 
    if (!isOpen) return null;
