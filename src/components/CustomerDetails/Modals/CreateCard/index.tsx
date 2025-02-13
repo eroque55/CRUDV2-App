@@ -51,10 +51,10 @@ export default function CreateCard({ fetchData }: Props) {
          _cardBrand: cardBrand,
          _preferential: false,
       };
-      createCard(card);
+      await createCard(card);
       reset();
       closeModal();
-      fetchData();
+      await fetchData();
    };
 
    if (!isOpen) return null;

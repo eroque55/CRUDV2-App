@@ -64,7 +64,7 @@ export default function CreateAddress({ fetchData }: Props) {
          _residenceType: residenceType,
          _streetType: streetType,
       };
-      createAddress(address);
+      await createAddress(address);
       reset();
       closeModal();
       fetchData();
