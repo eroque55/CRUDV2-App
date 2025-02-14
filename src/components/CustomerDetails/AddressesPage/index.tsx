@@ -4,13 +4,18 @@ import AddressCard from "./AddressCard";
 
 interface Props {
    addresses: IAddress[];
+   fetchData: () => void;
 }
 
-export default function AddressesPage({ addresses }: Props) {
+export default function AddressesPage({ addresses, fetchData }: Props) {
    return (
       <StyledPage>
          {addresses.map((address) => (
-            <AddressCard key={address._id} address={address} />
+            <AddressCard
+               fetchData={fetchData}
+               key={address._id}
+               address={address}
+            />
          ))}
       </StyledPage>
    );

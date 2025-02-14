@@ -11,4 +11,8 @@ export const StyledActionButton = styled.button`
    border: none;
    justify-content: center;
    align-items: center;
+
+   &:hover {
+      background-color: ${({ theme }) => theme.colors.outers.modalBackground};
+   }
 `;

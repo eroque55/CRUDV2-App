@@ -4,13 +4,14 @@ import ICard from "@/src/@types/ICard";
 
 interface Props {
    cards: ICard[];
+   fetchData: () => void;
 }
 
-export default function CardsPage({ cards }: Props) {
+export default function CardsPage({ cards, fetchData }: Props) {
    return (
       <StyledPage>
          {cards.map((card) => (
-            <CardCard key={card._id} card={card} />
+            <CardCard fetchData={fetchData} key={card._id} card={card} />
          ))}
       </StyledPage>
    );

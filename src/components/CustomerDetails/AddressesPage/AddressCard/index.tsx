@@ -1,6 +1,6 @@
 import IAddress from "@/src/@types/IAddress";
-import InfoContainer from "../../common/InfoContainer";
-import { StyledCard } from "../../common/StyledCard/index.styles";
+import InfoContainer from "../../Common/InfoContainer";
+import { StyledCard } from "../../Common/StyledCard/index.styles";
 import { useEffect, useState } from "react";
 import { getCity } from "@/src/services/CityService";
 import { getState } from "@/src/services/StateService";
@@ -10,12 +10,17 @@ import ICountry from "@/src/@types/ICountry";
 import { capitalizeFirstLetter } from "@/src/util";
 import { getCountry } from "@/src/services/ContryService";
 import DetailsActionButtons from "@/src/components/commom/DetailsActionButtons";
+import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
+import { toast } from "react-toastify";
+import { deleteAddress } from "@/src/services/AddressService";
+import EditAddress from "@/src/components/commom/Toastify/EditModal";
 
 interface Props {
    address: IAddress;
+   fetchData: () => void;
 }
 
-export default function AddressCard({ address }: Props) {
+export default function AddressCard({ address, fetchData }: Props) {
    const [city, setCity] = useState<ICity>();
    const [state, setState] = useState<IState>();
    const [country, setCountry] = useState<ICountry>();
@@ -36,8 +41,40 @@ export default function AddressCard({ address }: Props) {
       fetchData();
    }, []);
 
-   function deleteCard() {}
-   function editCard() {}
+   async function handleDeleteAddress() {
+      try {
+         await deleteAddress(address._id);
+         toast(SuccesToast, {
+            data: {
+               title: "Sucesso!",
+               message: "Endereço excluido com sucesso!",
+            },
+            autoClose: false,
+            position: "top-center",
+            closeButton: false,
+            hideProgressBar: true,
+         });
+         await fetchData();
+      } catch (error) {
+         alert("Erro ao excluir endereço: " + error);
+      }
+   }
+
+   async function handleEditAddress() {
+      try {
+         toast(EditAddress, {
+            data: {
+               addressId: address._id,
+               fetchData,
+            },
+            position: "top-center",
+            closeButton: false,
+            hideProgressBar: true,
+         });
+      } catch (error) {
+         alert("Erro ao editar endereço: " + error);
+      }
+   }
 
    const cep = address._cep.replace(/(\d{5})(\d{3})/, "$1-$2");
    const street = `${address._street}, ${address._number}`;
@@ -49,8 +86,8 @@ export default function AddressCard({ address }: Props) {
       <StyledCard>
          <InfoContainer title="Tipo de endereço">{addressType}</InfoContainer>
          <DetailsActionButtons
-            handleDelete={deleteCard}
-            handleEdit={editCard}
+            handleDelete={handleDeleteAddress}
+            handleEdit={handleEditAddress}
          />
          <InfoContainer title="Apelido">{address._nickname}</InfoContainer>
          <InfoContainer title="CEP">{cep}</InfoContainer>

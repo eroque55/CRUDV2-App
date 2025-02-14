@@ -130,8 +130,10 @@ export default function Customer() {
                {page === 0 && (
                   <PersonalDataPage customer={customer} phone={phone} />
                )}
-               {page === 1 && <AddressesPage addresses={addresses} />}
-               {page === 2 && <CardsPage cards={cards} />}
+               {page === 1 && (
+                  <AddressesPage fetchData={fetchData} addresses={addresses} />
+               )}
+               {page === 2 && <CardsPage fetchData={fetchData} cards={cards} />}
             </StyledContent>
          </StyledMain>
       </>
