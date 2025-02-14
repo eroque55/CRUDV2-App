@@ -23,7 +23,7 @@ import AddressesPage from "@/src/components/CustomerDetails/AddressesPage";
 import { getAddressesByCustomer } from "@/src/services/AddressService";
 import { getPhoneByCustomer } from "@/src/services/PhoneService";
 import CardsPage from "@/src/components/CustomerDetails/CardsPage";
-import { getCardByCustomer } from "@/src/services/CardService";
+import { getCardsByCustomer } from "@/src/services/CardService";
 import PersonalDataPage from "@/src/components/CustomerDetails/PersonalDataPage";
 import AddButton from "@/src/components/commom/AddButton";
 import IPhone from "@/src/@types/IPhone";
@@ -37,15 +37,20 @@ import CreateCard from "@/src/components/CustomerDetails/Modals/CreateCard";
 import ICard from "@/src/@types/ICard";
 import CreateAddress from "@/src/components/CustomerDetails/Modals/CreateAddress";
 import { StyledToastContainer } from "@/src/components/commom/Toastify/ToastContainer/index.styles";
+import UpdateAddressModal from "@/src/components/CustomerDetails/EditAddress";
+import { useCustomerStore } from "@/src/store/CustomerStore";
+import { useAddressesStore } from "@/src/store/AddressStore";
+import { useCardStore } from "@/src/store/CardsStore";
+import { usePhoneStore } from "@/src/store/PhoneStore";
 
 export default function Customer() {
    const params = useParams();
    const id = params.id ? parseInt(params.id as string) : NaN;
 
-   const [customer, setCustomer] = useState<ICustomer | null>(null);
-   const [phone, setPhone] = useState<IPhone | null>(null);
-   const [addresses, setAddresses] = useState<IAddress[]>([]);
-   const [cards, setCards] = useState<ICard[]>([]);
+   const { customer, getCustomer } = useCustomerStore();
+   const { addresses, getAddressesByCustomer } = useAddressesStore();
+   const { cards, getCardsByCustomer } = useCardStore();
+   const { phone, getPhoneByCustomer } = usePhoneStore();
 
    const [loading, setLoading] = useState(true);
    const [page, setPage] = useState(0);
@@ -55,18 +60,10 @@ export default function Customer() {
 
    async function fetchData() {
       try {
-         const [customerData, phoneData, addressesData, cardsData] =
-            await Promise.all([
-               getCustomer(id),
-               getPhoneByCustomer(id),
-               getAddressesByCustomer(id),
-               getCardByCustomer(id),
-            ]);
-
-         setCustomer(customerData);
-         setPhone(phoneData);
-         setAddresses(addressesData);
-         setCards(cardsData);
+         await getCustomer(id);
+         await getAddressesByCustomer(id);
+         await getCardsByCustomer(id);
+         await getPhoneByCustomer(id);
       } catch (error) {
          console.error("Erro ao buscar cliente:", error);
       } finally {
@@ -80,6 +77,7 @@ export default function Customer() {
       fetchData();
    }, [id]);
 
+   function vazia() {}
    if (loading) return <Loading />;
 
    const handlePageChange = (newPage: number) => setPage(newPage);
@@ -88,8 +86,9 @@ export default function Customer() {
       <>
          <StyledToastContainer />
          <ExitModal />
-         <CreateCard fetchData={fetchData} />
-         <CreateAddress fetchData={fetchData} />
+         <CreateCard />
+         <CreateAddress />
+         <UpdateAddressModal />
          <StyledMain>
             <StyledBackgroud />
             <NavBar />
@@ -131,9 +130,9 @@ export default function Customer() {
                   <PersonalDataPage customer={customer} phone={phone} />
                )}
                {page === 1 && (
-                  <AddressesPage fetchData={fetchData} addresses={addresses} />
+                  <AddressesPage fetchData={vazia} addresses={addresses} />
                )}
-               {page === 2 && <CardsPage fetchData={fetchData} cards={cards} />}
+               {page === 2 && <CardsPage />}
             </StyledContent>
          </StyledMain>
       </>

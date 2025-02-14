@@ -13,7 +13,7 @@ export const getCards = async (): Promise<ICard[]> => {
    return response.data;
 };
 
-export const getCardByCustomer = async (id: number): Promise<ICard[]> => {
+export const getCardsByCustomer = async (id: number): Promise<ICard[]> => {
    const response = await axios.get(`${API_URL}/customer/${id}`);
    return response.data;
 };

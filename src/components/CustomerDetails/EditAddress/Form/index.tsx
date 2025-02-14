@@ -24,9 +24,15 @@ interface Props {
    register: UseFormRegister<IAddressSchema>;
    errors: FieldErrors<IAddressSchema>;
    setValue: UseFormSetValue<IAddressSchema>;
+   cep: string;
 }
 
-export default function AddressForm({ register, errors, setValue }: Props) {
+export default function AddressForm({
+   register,
+   errors,
+   setValue,
+   cep,
+}: Props) {
    const { countries, getCountries } = useCountryStore();
    const { states, getStatesByCountry } = useStateStore();
    const { cities, getCitiesByState } = useCityStore();
@@ -58,8 +64,11 @@ export default function AddressForm({ register, errors, setValue }: Props) {
             </StyledFieldTitle>
             <StyledInputMask
                mask="00000-000"
+               defaultValue={cep}
                onAccept={(value) => {
-                  setValue("cep", value.replace(/[-]/g, ""));
+                  setValue("cep", value.replace(/[-]/g, ""), {
+                     shouldValidate: true,
+                  });
                }}
                {...register("cep")}
             />

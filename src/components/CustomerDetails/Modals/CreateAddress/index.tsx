@@ -14,13 +14,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import IAddress from "@/src/@types/IAddress";
 import { toast } from "react-toastify";
 import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
+import { useAddressesStore } from "@/src/store/AddressStore";
 
-interface Props {
-   fetchData: () => void;
-}
-
-export default function CreateAddress({ fetchData }: Props) {
+export default function CreateAddress() {
    const { isOpen, closeModal, customerId } = useCreateAddress();
+   const { getAddressesByCustomer } = useAddressesStore();
 
    const {
       register,
@@ -69,7 +67,7 @@ export default function CreateAddress({ fetchData }: Props) {
       await createAddress(address);
       reset();
       closeModal();
-      await fetchData();
+      await getAddressesByCustomer(customerId);
       toast(SuccesToast, {
          data: {
             title: "Endereço cadastrado",

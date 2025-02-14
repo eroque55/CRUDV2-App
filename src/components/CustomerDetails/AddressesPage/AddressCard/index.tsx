@@ -1,6 +1,4 @@
 import IAddress from "@/src/@types/IAddress";
-import InfoContainer from "../../Common/InfoContainer";
-import { StyledCard } from "../../Common/StyledCard/index.styles";
 import { useEffect, useState } from "react";
 import { getCity } from "@/src/services/CityService";
 import { getState } from "@/src/services/StateService";
@@ -13,14 +11,18 @@ import DetailsActionButtons from "@/src/components/commom/DetailsActionButtons";
 import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
 import { toast } from "react-toastify";
 import { deleteAddress } from "@/src/services/AddressService";
-import EditAddress from "@/src/components/commom/Toastify/EditModal";
+import { StyledCard } from "@/src/components/CustomerDetails/common/StyledCard/index.styles";
+import InfoContainer from "@/src/components/CustomerDetails/common/InfoContainer/";
+import { useUpdateAddress } from "@/src/store/CustomerDetailsStore";
+import { useAddressesStore } from "@/src/store/AddressStore";
 
 interface Props {
    address: IAddress;
-   fetchData: () => void;
 }
 
-export default function AddressCard({ address, fetchData }: Props) {
+export default function AddressCard({ address }: Props) {
+   const { getAddressesByCustomer } = useAddressesStore();
+   const { openModal } = useUpdateAddress();
    const [city, setCity] = useState<ICity>();
    const [state, setState] = useState<IState>();
    const [country, setCountry] = useState<ICountry>();
@@ -54,28 +56,15 @@ export default function AddressCard({ address, fetchData }: Props) {
             closeButton: false,
             hideProgressBar: true,
          });
-         await fetchData();
+         await getAddressesByCustomer(address._customerId);
       } catch (error) {
          alert("Erro ao excluir endereço: " + error);
       }
    }
 
-   async function handleEditAddress() {
-      try {
-         toast(EditAddress, {
-            data: {
-               addressId: address._id,
-               fetchData,
-            },
-            position: "top-center",
-            closeButton: false,
-            hideProgressBar: true,
-         });
-      } catch (error) {
-         alert("Erro ao editar endereço: " + error);
-      }
+   function handlUpdateAddress() {
+      openModal(address);
    }
-
    const cep = address._cep.replace(/(\d{5})(\d{3})/, "$1-$2");
    const street = `${address._street}, ${address._number}`;
    const streetType = capitalizeFirstLetter(address._streetType);
@@ -87,7 +76,7 @@ export default function AddressCard({ address, fetchData }: Props) {
          <InfoContainer title="Tipo de endereço">{addressType}</InfoContainer>
          <DetailsActionButtons
             handleDelete={handleDeleteAddress}
-            handleEdit={handleEditAddress}
+            handleEdit={handlUpdateAddress}
          />
          <InfoContainer title="Apelido">{address._nickname}</InfoContainer>
          <InfoContainer title="CEP">{cep}</InfoContainer>

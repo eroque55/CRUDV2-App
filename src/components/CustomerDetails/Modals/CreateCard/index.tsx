@@ -14,13 +14,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import ICard from "@/src/@types/ICard";
 import { toast } from "react-toastify";
 import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
+import { useCardStore } from "@/src/store/CardsStore";
 
-interface Props {
-   fetchData: () => void;
-}
-
-export default function CreateCard({ fetchData }: Props) {
+export default function CreateCard() {
    const { isOpen, closeModal, customerId } = useCreateCard();
+   const { getCardsByCustomer } = useCardStore();
 
    const {
       register,
@@ -56,7 +54,7 @@ export default function CreateCard({ fetchData }: Props) {
       await createCard(card);
       reset();
       closeModal();
-      await fetchData();
+      await getCardsByCustomer(customerId);
       toast(SuccesToast, {
          data: {
             title: "Cartão cadastrado",

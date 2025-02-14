@@ -1,21 +1,13 @@
 import { StyledPage } from "@/src/app/customer/[id]/page.styles";
-import IAddress from "@/src/@types/IAddress";
 import AddressCard from "./AddressCard";
+import { useAddressesStore } from "@/src/store/AddressStore";
 
-interface Props {
-   addresses: IAddress[];
-   fetchData: () => void;
-}
-
-export default function AddressesPage({ addresses, fetchData }: Props) {
+export default function AddressesPage() {
+   const { addresses } = useAddressesStore();
    return (
       <StyledPage>
          {addresses.map((address) => (
-            <AddressCard
-               fetchData={fetchData}
-               key={address._id}
-               address={address}
-            />
+            <AddressCard key={address._id} address={address} />
          ))}
       </StyledPage>
    );
