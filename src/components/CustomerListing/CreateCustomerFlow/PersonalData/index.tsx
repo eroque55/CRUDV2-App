@@ -44,23 +44,23 @@ export default function CreateCustomerModal({
          | "COMERCIAL"
          | "OUTRO";
       setPersonalData(() => ({
-         _id: 0,
-         _name: data.name,
-         _birthDate: data.birthDate,
-         _cpf: data.cpf,
-         _confPassword: data.confPassword,
-         _email: data.email,
-         _gender: gender,
-         _password: data.password,
-         _ranking: data.ranking,
-         _status: true,
+         id: 0,
+         name: data.name,
+         birthDate: data.birthDate,
+         cpf: data.cpf,
+         confPassword: data.confPassword,
+         email: data.email,
+         gender: gender,
+         password: data.password,
+         ranking: data.ranking,
+         status: true,
       }));
       setPhoneData(() => ({
-         _id: 0,
-         _customerId: 0,
-         _ddd: data.number.substring(0, 2),
-         _number: data.number.substring(2),
-         _phoneType: phoneType,
+         id: 0,
+         customerId: 0,
+         ddd: data.number.substring(0, 2),
+         number: data.number.substring(2),
+         phoneType: phoneType,
       }));
       modalNext();
    };

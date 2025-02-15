@@ -32,15 +32,15 @@ export default function UpdateAddressModal() {
 
    useEffect(() => {
       if (item) {
-         setValue("nickname", item._nickname || "");
-         setValue("street", item._street || "");
-         setValue("number", item._number || 0);
-         setValue("neighborhood", item._neighborhood || "");
-         setValue("cep", item._cep || "00000000");
-         setValue("complement", item._complement || "");
-         setValue("cityId", item._cityId || 0);
-         setValue("streetType", item._streetType || "OUTRO");
-         setValue("residenceType", item._residenceType || "OUTRO");
+         setValue("nickname", item.nickname || "");
+         setValue("street", item.street || "");
+         setValue("number", item.number || 0);
+         setValue("neighborhood", item.neighborhood || "");
+         setValue("cep", item.cep || "00000000");
+         setValue("complement", item.complement || "");
+         setValue("cityId", item.cityId || 0);
+         setValue("streetType", item.streetType || "OUTRO");
+         setValue("residenceType", item.residenceType || "OUTRO");
       }
    }, [item, setValue]);
 
@@ -62,21 +62,21 @@ export default function UpdateAddressModal() {
             | "OUTRO";
 
          const address: IAddress = {
-            _id: item._id,
-            _customerId: item._customerId,
-            _nickname: data.nickname,
-            _street: data.street,
-            _number: data.number,
-            _neighborhood: data.neighborhood,
-            _cep: data.cep,
-            _complement: data.complement,
-            _cityId: data.cityId,
-            _addressType: "ENTREGA",
-            _streetType: streetType,
-            _residenceType: residenceType,
+            id: item.id,
+            customerId: item.customerId,
+            nickname: data.nickname,
+            street: data.street,
+            number: data.number,
+            neighborhood: data.neighborhood,
+            cep: data.cep,
+            complement: data.complement,
+            cityId: data.cityId,
+            addressType: "ENTREGA",
+            streetType: streetType,
+            residenceType: residenceType,
          };
-         if (item?._id !== undefined) {
-            await updateAddress(item._id, address);
+         if (item?.id !== undefined) {
+            await updateAddress(item.id, address);
          } else {
             throw new Error("Id do endereço não encontrado");
          }
@@ -91,7 +91,7 @@ export default function UpdateAddressModal() {
             hideProgressBar: true,
          });
 
-         await getAddressesByCustomer(item._customerId);
+         await getAddressesByCustomer(item.customerId);
          closeModal();
       } catch (error) {
          alert("Erro ao editar endereço");
@@ -105,7 +105,7 @@ export default function UpdateAddressModal() {
          <StyledDialog>
             <ModalHeader>Editar endereço</ModalHeader>
             <Form
-               cep={item._cep}
+               cep={item.cep}
                setValue={setValue}
                register={register}
                errors={errors}

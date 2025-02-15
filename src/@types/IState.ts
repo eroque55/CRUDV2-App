@@ -1,7 +1,9 @@
+import ICountry from "./ICountry";
+
 interface IState {
-   _id: number;
-   _name: string;
-   _countryId: number;
+   id: number;
+   name: string;
+   country: ICountry;
 }
 
 export default IState;

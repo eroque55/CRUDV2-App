@@ -1,6 +1,6 @@
 interface ICountry {
-   _id: number;
-   _name: string;
+   id: number;
+   name: string;
 }
 
 export default ICountry;

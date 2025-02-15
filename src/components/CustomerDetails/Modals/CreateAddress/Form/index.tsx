@@ -161,8 +161,8 @@ export default function AddressForm({ register, errors, setValue }: Props) {
             >
                {countries.map((country: ICountry) => {
                   return (
-                     <option key={country._id} value={country._id}>
-                        {country._name}
+                     <option key={country.id} value={country.id}>
+                        {country.name}
                      </option>
                   );
                })}
@@ -184,8 +184,8 @@ export default function AddressForm({ register, errors, setValue }: Props) {
             >
                {states.map((state: IState) => {
                   return (
-                     <option key={state._id} value={state._id}>
-                        {state._name}
+                     <option key={state.id} value={state.id}>
+                        {state.name}
                      </option>
                   );
                })}
@@ -202,8 +202,8 @@ export default function AddressForm({ register, errors, setValue }: Props) {
             <StyledSelect {...register("cityId")}>
                {cities.map((city: ICity) => {
                   return (
-                     <option key={city._id} value={city._id}>
-                        {city._name}
+                     <option key={city.id} value={city.id}>
+                        {city.name}
                      </option>
                   );
                })}

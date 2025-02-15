@@ -22,7 +22,7 @@ interface Props {
 
 export default function CustomerRow({ customer }: Props) {
    const { deleteOpenModal } = useDeleteModalStore();
-   const [status, setStatus] = useState(customer._status);
+   const [status, setStatus] = useState(customer.status);
 
    async function toggleStatus() {
       try {
@@ -30,9 +30,9 @@ export default function CustomerRow({ customer }: Props) {
 
          setStatus(novoStatus);
 
-         await updateCustomerStatus(customer._id, {
+         await updateCustomerStatus(customer.id, {
             ...customer,
-            _status: novoStatus,
+            status: novoStatus,
          });
       } catch (error: any) {
          console.error("Erro ao atualizar status do cliente", error);
@@ -41,26 +41,26 @@ export default function CustomerRow({ customer }: Props) {
       }
    }
 
-   const formattedCPF = `${customer._cpf.slice(0, 3)}.${customer._cpf.slice(
+   const formattedCPF = `${customer.cpf.slice(0, 3)}.${customer.cpf.slice(
       3,
       6
-   )}.${customer._cpf.slice(6, 9)}-${customer._cpf.slice(9, 11)}`;
+   )}.${customer.cpf.slice(6, 9)}-${customer.cpf.slice(9, 11)}`;
 
    return (
       <StyledRow>
          <StyledRowBodyContent>
-            <StyledRowBodyText>{customer._name}</StyledRowBodyText>
+            <StyledRowBodyText>{customer.name}</StyledRowBodyText>
             <StyledRowBodyText>{formattedCPF}</StyledRowBodyText>
-            <StyledRowBodyText>{customer._email}</StyledRowBodyText>
+            <StyledRowBodyText>{customer.email}</StyledRowBodyText>
          </StyledRowBodyContent>
          <StyledRowBodyActions>
             <Switch status={status} onToggle={toggleStatus}></Switch>
             <ActionButton
-               id={customer._id}
+               id={customer.id}
                icon={lixeira}
-               onClick={() => deleteOpenModal(customer._id)}
+               onClick={() => deleteOpenModal(customer.id)}
             />
-            <DetailsButton href={`/customer/${customer._id}`} />
+            <DetailsButton href={`/customer/${customer.id}`} />
          </StyledRowBodyActions>
       </StyledRow>
    );

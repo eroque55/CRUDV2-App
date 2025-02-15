@@ -1,9 +1,9 @@
 interface IPhone {
-   _id: number;
-   _customerId: number;
-   _ddd: string;
-   _number: string;
-   _phoneType: "CELULAR" | "RESIDENCIAL" | "COMERCIAL" | "OUTRO";
+   id: number;
+   customerId: number;
+   ddd: string;
+   number: string;
+   phoneType: "CELULAR" | "RESIDENCIAL" | "COMERCIAL" | "OUTRO";
 }
 
 export default IPhone;

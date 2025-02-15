@@ -51,18 +51,18 @@ export default function CreateAddress() {
          | "OUTRO";
 
       const address: IAddress = {
-         _id: 0,
-         _customerId: customerId,
-         _nickname: data.nickname,
-         _cep: data.cep,
-         _street: data.street,
-         _number: data.number,
-         _complement: data.complement,
-         _neighborhood: data.neighborhood,
-         _cityId: data.cityId,
-         _addressType: addressType,
-         _residenceType: residenceType,
-         _streetType: streetType,
+         id: 0,
+         customerId: customerId,
+         nickname: data.nickname,
+         cep: data.cep,
+         street: data.street,
+         number: data.number,
+         complement: data.complement,
+         neighborhood: data.neighborhood,
+         cityId: data.cityId,
+         addressType: addressType,
+         residenceType: residenceType,
+         streetType: streetType,
       };
       await createAddress(address);
       reset();

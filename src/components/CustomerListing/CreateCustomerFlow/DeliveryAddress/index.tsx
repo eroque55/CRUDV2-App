@@ -44,18 +44,29 @@ export default function BillingAddress({
             | "OUTRO";
 
          setAddressData(() => ({
-            _id: 0,
-            _customerId: 0,
-            _nickname: data.nickname,
-            _street: data.street,
-            _number: data.number,
-            _neighborhood: data.neighborhood,
-            _cep: data.cep,
-            _complement: data.complement,
-            _cityId: data.cityId,
-            _addressType: "ENTREGA",
-            _streetType: streetType,
-            _residenceType: residenceType,
+            id: 0,
+            customerId: 0,
+            nickname: data.nickname,
+            street: data.street,
+            number: data.number,
+            neighborhood: data.neighborhood,
+            cep: data.cep,
+            complement: data.complement,
+            city: {
+               id: data.cityId,
+               name: "0",
+               state: {
+                  id: data.stateId,
+                  name: "0",
+                  country: {
+                     id: data.countryId,
+                     name: "0",
+                  },
+               },
+            },
+            addressType: "ENTREGA",
+            streetType: streetType,
+            residenceType: residenceType,
          }));
 
          onSubmit();

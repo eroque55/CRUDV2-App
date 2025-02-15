@@ -23,75 +23,96 @@ export default function CreateCustomerFlow() {
    const { fetchCustomers } = useCustomerStore();
 
    const [personalData, setPersonalData] = useState<ICustomer>({
-      _id: 0,
-      _name: "",
-      _birthDate: new Date(),
-      _cpf: "",
-      _confPassword: "",
-      _email: "",
-      _gender: "OUTRO",
-      _password: "",
-      _ranking: 0,
-      _status: true,
+      id: 0,
+      name: "",
+      birthDate: new Date(),
+      cpf: "",
+      confPassword: "",
+      email: "",
+      gender: "OUTRO",
+      password: "",
+      ranking: 0,
+      status: true,
    });
 
    const [phoneData, setPhoneData] = useState<IPhone>({
-      _id: 0,
-      _customerId: 0,
-      _ddd: "",
-      _number: "",
-      _phoneType: "OUTRO",
+      id: 0,
+      customerId: 0,
+      ddd: "",
+      number: "",
+      phoneType: "OUTRO",
    });
 
    const [billingAddressData, setBillingAddressData] = useState<IAddress>({
-      _id: 0,
-      _customerId: 0,
-      _nickname: "",
-      _street: "",
-      _number: 0,
-      _neighborhood: "",
-      _cep: "",
-      _complement: "",
-      _cityId: 0,
-      _addressType: "COBRANCA",
-      _streetType: "OUTRO",
-      _residenceType: "OUTRO",
+      id: 0,
+      customerId: 0,
+      nickname: "",
+      street: "",
+      number: 0,
+      neighborhood: "",
+      cep: "",
+      complement: "",
+      city: {
+         id: 0,
+         name: "",
+         state: {
+            id: 0,
+            name: "",
+            country: {
+               id: 0,
+               name: "",
+            },
+         },
+      },
+      addressType: "COBRANCA",
+      streetType: "OUTRO",
+      residenceType: "OUTRO",
    });
 
    const [deliveryAddressData, setDeliveryAddressData] = useState<IAddress>({
-      _id: 0,
-      _customerId: 0,
-      _nickname: "",
-      _street: "",
-      _number: 0,
-      _neighborhood: "",
-      _cep: "",
-      _complement: "",
-      _cityId: 0,
-      _addressType: "ENTREGA",
-      _streetType: "OUTRO",
-      _residenceType: "OUTRO",
+      id: 0,
+      customerId: 0,
+      nickname: "",
+      street: "",
+      number: 0,
+      neighborhood: "",
+      cep: "",
+      complement: "",
+      city: {
+         id: 0,
+         name: "",
+         state: {
+            id: 0,
+            name: "",
+            country: {
+               id: 0,
+               name: "",
+            },
+         },
+      },
+      addressType: "ENTREGA",
+      streetType: "OUTRO",
+      residenceType: "OUTRO",
    });
 
    const finalSubmit = async () => {
       try {
          const customerResponse = await createCustomer(personalData);
+         const customerId = customerResponse.id;
 
-         const customerId = customerResponse._id;
-
-         await createPhone({ ...phoneData, _customerId: customerId });
+         await createPhone({ ...phoneData, customerId: customerId });
          await createAddress({
             ...billingAddressData,
-            _customerId: customerId,
+            customerId: customerId,
          });
          await createAddress({
             ...deliveryAddressData,
-            _customerId: customerId,
+            customerId: customerId,
          });
 
          createCloseModal();
          await fetchCustomers();
-      } catch (error) {
+      } catch (error: any) {
          console.error("Erro ao criar cliente:", error);
          alert("Erro ao criar cliente");
       }

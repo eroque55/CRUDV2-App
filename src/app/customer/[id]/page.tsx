@@ -97,7 +97,7 @@ export default function Customer() {
                   <TitleContainer>
                      <BackButton href="/" />
                      <StyledTitle>
-                        Detalhes de cliente - id:{customer?._id}
+                        Detalhes de cliente - id:{customer?.id}
                      </StyledTitle>
                   </TitleContainer>
                   <StyledActions>

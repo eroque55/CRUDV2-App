@@ -8,7 +8,7 @@ export default function CardsPage() {
    return (
       <StyledPage>
          {cards.map((card) => (
-            <CardCard key={card._id} card={card} />
+            <CardCard key={card.id} card={card} />
          ))}
       </StyledPage>
    );

@@ -1,12 +1,12 @@
 interface ICard {
-   _id: number;
-   _customerId: number;
-   _number: string;
-   _cardholder: string;
-   _cvv: string;
-   _expirationDate: string;
-   _preferential: boolean;
-   _cardBrand:
+   id: number;
+   customerId: number;
+   number: string;
+   cardholder: string;
+   cvv: string;
+   expirationDate: string;
+   preferential: boolean;
+   cardBrand:
       | "VISA"
       | "MASTERCARD"
       | "AMERICAN_EXPRESS"

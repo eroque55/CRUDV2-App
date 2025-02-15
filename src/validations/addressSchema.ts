@@ -52,7 +52,7 @@ export const addressSchema = yup.object().shape({
       .min(3, "Bairro deve ter pelo menos 3 caracteres")
       .max(50, "Bairro pode ter no máximo 50 caracteres"),
 
-   contryId: yup.number().required("País é obrigatório"),
+   countryId: yup.number().required("País é obrigatório"),
 
    stateId: yup.number().required("Estado é obrigatório"),
 

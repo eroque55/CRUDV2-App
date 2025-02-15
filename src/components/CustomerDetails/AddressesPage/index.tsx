@@ -7,7 +7,7 @@ export default function AddressesPage() {
    return (
       <StyledPage>
          {addresses.map((address) => (
-            <AddressCard key={address._id} address={address} />
+            <AddressCard key={address.id} address={address} />
          ))}
       </StyledPage>
    );

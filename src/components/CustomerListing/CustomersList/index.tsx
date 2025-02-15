@@ -15,7 +15,7 @@ export default function CustomerList() {
       <StyledTable>
          <TableHeader colunas={["Nome", "CPF", "E-mail"]} />
          {customers.map((customer) => (
-            <TableBody key={customer._id} customer={customer} />
+            <TableBody key={customer.id} customer={customer} />
          ))}
       </StyledTable>
    );

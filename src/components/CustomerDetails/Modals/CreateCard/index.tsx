@@ -42,14 +42,14 @@ export default function CreateCard() {
          | "OUTRA";
 
       const card: ICard = {
-         _id: 0,
-         _customerId: customerId,
-         _number: data.number,
-         _cardholder: data.cardholder,
-         _cvv: data.cvv,
-         _expirationDate: data.expirationDate,
-         _cardBrand: cardBrand,
-         _preferential: false,
+         id: 0,
+         customerId: customerId,
+         number: data.number,
+         cardholder: data.cardholder,
+         cvv: data.cvv,
+         expirationDate: data.expirationDate,
+         cardBrand: cardBrand,
+         preferential: false,
       };
       await createCard(card);
       reset();

@@ -9,14 +9,14 @@ interface Props {
 
 export default function PhoneCard({ phone }: Props) {
    if (!phone) return null;
-   const phoneFormatted = `(${phone._ddd}) ${phone._number.substring(
+   const phoneFormatted = `(${phone.ddd}) ${phone.number.substring(
       0,
       5
-   )}-${phone._number.substring(5)}`;
+   )}-${phone.number.substring(5)}`;
    return (
       <StyledCard>
          <InfoContainer title="Tipo de telefone">
-            {capitalizeFirstLetter(phone._phoneType)}
+            {capitalizeFirstLetter(phone.phoneType)}
          </InfoContainer>
          <InfoContainer title="Telefone">{phoneFormatted}</InfoContainer>
       </StyledCard>

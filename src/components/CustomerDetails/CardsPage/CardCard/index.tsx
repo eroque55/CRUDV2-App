@@ -18,7 +18,7 @@ export default function CardCard({ card }: Props) {
 
    async function handleDeleteCard() {
       try {
-         await deleteCard(card._id);
+         await deleteCard(card.id);
          toast(SuccesToast, {
             data: {
                title: "Sucesso!",
@@ -29,20 +29,20 @@ export default function CardCard({ card }: Props) {
             closeButton: false,
             hideProgressBar: true,
          });
-         await getCardsByCustomer(card._customerId);
+         await getCardsByCustomer(card.customerId);
       } catch (error) {
          alert("Erro ao excluir cartão: " + error);
       }
    }
 
-   const cardBrand = capitalizeFirstLetter(card._cardBrand);
+   const cardBrand = capitalizeFirstLetter(card.cardBrand);
    const expirationDate =
-      card._expirationDate.slice(0, 2) + "/" + card._expirationDate.slice(2);
-   const preferential = card._preferential ? "Sim" : "Não";
+      card.expirationDate.slice(0, 2) + "/" + card.expirationDate.slice(2);
+   const preferential = card.preferential ? "Sim" : "Não";
 
    return (
       <StyledCard>
-         <InfoContainer title="Número do cartão">{card._number}</InfoContainer>
+         <InfoContainer title="Número do cartão">{card.number}</InfoContainer>
          <ButtonsContainer>
             <ActionButtons
                onClick={handleDeleteCard}
@@ -51,7 +51,7 @@ export default function CardCard({ card }: Props) {
             />
          </ButtonsContainer>
          <InfoContainer title="Titular do cartão">
-            {card._cardholder}
+            {card.cardholder}
          </InfoContainer>
          <InfoContainer title="Validade">{expirationDate}</InfoContainer>
          <InfoContainer title="Bandeira do cartão">{cardBrand}</InfoContainer>

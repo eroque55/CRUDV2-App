@@ -9,23 +9,23 @@ interface Props {
 
 export default function PersonalDataCard({ customer }: Props) {
    if (!customer) return null;
-   const birthDate = new Date(customer._birthDate).toLocaleDateString("pt-BR");
-   const cpf = customer._cpf
+   const birthDate = new Date(customer.birthDate).toLocaleDateString("pt-BR");
+   const cpf = customer.cpf
       .trim()
       .replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
 
-   const gender = capitalizeFirstLetter(customer._gender);
+   const gender = capitalizeFirstLetter(customer.gender);
 
    return (
       <StyledCard>
-         <InfoContainer title="Nome">{customer._name}</InfoContainer>
+         <InfoContainer title="Nome">{customer.name}</InfoContainer>
          <InfoContainer title="Data de nascimento">{birthDate}</InfoContainer>
          <InfoContainer title="CPF">{cpf}</InfoContainer>
          <InfoContainer title="Gênero">{gender}</InfoContainer>
-         <InfoContainer title="E-mail">{customer._email}</InfoContainer>
-         <InfoContainer title="Ranking">{customer._ranking}</InfoContainer>
+         <InfoContainer title="E-mail">{customer.email}</InfoContainer>
+         <InfoContainer title="Ranking">{customer.ranking}</InfoContainer>
          <InfoContainer title="Status">
-            {customer._status ? "Ativo" : "Inativo"}
+            {customer.status ? "Ativo" : "Inativo"}
          </InfoContainer>
       </StyledCard>
    );

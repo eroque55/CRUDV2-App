@@ -1,7 +1,9 @@
+import IState from "./IState";
+
 interface ICity {
-   _id: number;
-   _name: string;
-   _stateId: number;
+   id: number;
+   name: string;
+   state: IState;
 }
 
 export default ICity;
