@@ -9,7 +9,7 @@ import {
    StyledFieldTitle,
    StyledInputMask,
 } from "@/src/components/commom/Fields/index.styles";
-import { ICustomerSchema } from "@/src/validations/Customer";
+import { ICustomerSchema } from "@/src/validations/customerSchema";
 
 interface Props {
    register: UseFormRegister<ICustomerSchema>;

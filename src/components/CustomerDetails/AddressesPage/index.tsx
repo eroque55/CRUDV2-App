@@ -1,13 +1,21 @@
 import { StyledPage } from "@/src/app/customer/[id]/page.styles";
 import AddressCard from "./AddressCard";
-import { useAddressesStore } from "@/src/store/AddressStore";
+import { Address } from "@/src/@types/api";
 
-export default function AddressesPage() {
-   const { addresses } = useAddressesStore();
+interface Props {
+   customerId: number;
+   addresses: Address[];
+}
+
+export default function AddressesPage({ addresses, customerId }: Props) {
    return (
       <StyledPage>
          {addresses.map((address) => (
-            <AddressCard key={address.id} address={address} />
+            <AddressCard
+               customerId={customerId}
+               key={address.id}
+               address={address}
+            />
          ))}
       </StyledPage>
    );

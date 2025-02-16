@@ -1,6 +1,5 @@
 "use client";
 
-import ICustomer from "@/src/@types/ICustomer";
 import {
    StyledContent,
    StyledMain,
@@ -14,43 +13,30 @@ import {
 import NavBar from "@/src/components/NavBar";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getCustomer } from "@/src/services/CustomerService";
 import Loading from "@/src/components/commom/Loading";
 import ExitModal from "@/src/components/NavBar/ExitModal";
 import { StyledTitle } from "@/src/components/commom/Title";
 import BackButton from "@/src/components/commom/BackButton";
 import AddressesPage from "@/src/components/CustomerDetails/AddressesPage";
-import { getAddressesByCustomer } from "@/src/services/AddressService";
-import { getPhoneByCustomer } from "@/src/services/PhoneService";
 import CardsPage from "@/src/components/CustomerDetails/CardsPage";
-import { getCardsByCustomer } from "@/src/services/CardService";
 import PersonalDataPage from "@/src/components/CustomerDetails/PersonalDataPage";
 import AddButton from "@/src/components/commom/AddButton";
-import IPhone from "@/src/@types/IPhone";
-import IAddress from "@/src/@types/IAddress";
 
 import {
    useCreateAddress,
    useCreateCard,
+   useCustomerState,
 } from "@/src/store/CustomerDetailsStore";
 import CreateCard from "@/src/components/CustomerDetails/Modals/CreateCard";
-import ICard from "@/src/@types/ICard";
 import CreateAddress from "@/src/components/CustomerDetails/Modals/CreateAddress";
 import { StyledToastContainer } from "@/src/components/commom/Toastify/ToastContainer/index.styles";
-import UpdateAddressModal from "@/src/components/CustomerDetails/EditAddress";
-import { useCustomerStore } from "@/src/store/CustomerStore";
-import { useAddressesStore } from "@/src/store/AddressStore";
-import { useCardStore } from "@/src/store/CardsStore";
-import { usePhoneStore } from "@/src/store/PhoneStore";
+import UpdateAddressModal from "@/src/components/CustomerDetails/Modals/EditAddress";
 
-export default function Customer() {
+export default function CustomerDetails() {
    const params = useParams();
    const id = params.id ? parseInt(params.id as string) : NaN;
 
-   const { customer, getCustomer } = useCustomerStore();
-   const { addresses, getAddressesByCustomer } = useAddressesStore();
-   const { cards, getCardsByCustomer } = useCardStore();
-   const { phone, getPhoneByCustomer } = usePhoneStore();
+   const { customer, getCustomer } = useCustomerState();
 
    const [loading, setLoading] = useState(true);
    const [page, setPage] = useState(0);
@@ -61,9 +47,6 @@ export default function Customer() {
    async function fetchData() {
       try {
          await getCustomer(id);
-         await getAddressesByCustomer(id);
-         await getCardsByCustomer(id);
-         await getPhoneByCustomer(id);
       } catch (error) {
          console.error("Erro ao buscar cliente:", error);
       } finally {
@@ -77,10 +60,11 @@ export default function Customer() {
       fetchData();
    }, [id]);
 
-   function vazia() {}
-   if (loading) return <Loading />;
+   if (loading || !customer) return <Loading />;
 
    const handlePageChange = (newPage: number) => setPage(newPage);
+
+   const phone = customer.phones?.[0] ?? null;
 
    return (
       <>
@@ -130,9 +114,14 @@ export default function Customer() {
                   <PersonalDataPage customer={customer} phone={phone} />
                )}
                {page === 1 && (
-                  <AddressesPage fetchData={vazia} addresses={addresses} />
+                  <AddressesPage
+                     customerId={id}
+                     addresses={customer.addresses || []}
+                  />
                )}
-               {page === 2 && <CardsPage />}
+               {page === 2 && (
+                  <CardsPage customerId={id} cards={customer.cards || []} />
+               )}
             </StyledContent>
          </StyledMain>
       </>

@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { getCustomers } from "../services/CustomerService";
-import ICustomer from "../@types/ICustomer";
+import { Customer } from "@/src/@types/api";
 
 interface CustomerStore {
-   customers: ICustomer[];
+   customers: Customer[];
    fetchCustomers: () => Promise<void>;
 }
 

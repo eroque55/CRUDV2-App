@@ -11,14 +11,10 @@ import {
 } from "@/src/components/commom/Fields/index.styles";
 import { IAddressSchema } from "@/src/validations/addressSchema";
 
-import ICountry from "@/src/@types/ICountry";
-import IState from "@/src/@types/IState";
-import ICity from "@/src/@types/ICity";
+import { City, Country, State } from "@/src/@types/api";
 
-import { useCountryStore } from "@/src/store/CountryStore";
-import { useStateStore } from "@/src/store/StateStore";
-import { useCityStore } from "@/src/store/CityStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getCountries } from "@/src/services/CountryService";
 
 interface Props {
    register: UseFormRegister<IAddressSchema>;
@@ -27,15 +23,37 @@ interface Props {
 }
 
 export default function AddressForm({ register, errors, setValue }: Props) {
-   const { countries, getCountries } = useCountryStore();
-   const { states, getStatesByCountry } = useStateStore();
-   const { cities, getCitiesByState } = useCityStore();
+   const [countries, setCountries] = useState<Country[]>([]);
+   const [states, setStates] = useState<State[]>([]);
+   const [cities, setCities] = useState<City[]>([]);
 
    useEffect(() => {
-      getCountries();
-      getStatesByCountry(1);
-      getCitiesByState(1);
+      const fetchCountries = async () => {
+         const fetchedCountries = await getCountries();
+         setCountries(fetchedCountries);
+      };
+      fetchCountries();
    }, []);
+
+   const getStatesByCountry = (countryId: number) => {
+      const selectedCountry = countries.find(
+         (country) => country.id === countryId
+      );
+      if (selectedCountry) {
+         setStates(selectedCountry?.states ?? []);
+         setCities([]);
+         setValue("stateId", 0);
+         setValue("cityId", 0);
+      }
+   };
+
+   const getCitiesByState = (stateId: number) => {
+      const selectedState = states.find((state) => state.id === stateId);
+      if (selectedState) {
+         setCities(selectedState?.cities ?? []);
+         setValue("cityId", 0);
+      }
+   };
 
    return (
       <StyledModalForm>
@@ -143,13 +161,11 @@ export default function AddressForm({ register, errors, setValue }: Props) {
                   getStatesByCountry(parseInt(e.target.value));
                }}
             >
-               {countries.map((country: ICountry) => {
-                  return (
-                     <option key={country.id} value={country.id}>
-                        {country.name}
-                     </option>
-                  );
-               })}
+               {countries.map((country) => (
+                  <option key={country.id} value={country.id}>
+                     {country.name}
+                  </option>
+               ))}
             </StyledSelect>
          </StyledField>
 
@@ -165,14 +181,13 @@ export default function AddressForm({ register, errors, setValue }: Props) {
                onChange={(e) => {
                   getCitiesByState(parseInt(e.target.value));
                }}
+               disabled={states.length === 0}
             >
-               {states.map((state: IState) => {
-                  return (
-                     <option key={state.id} value={state.id}>
-                        {state.name}
-                     </option>
-                  );
-               })}
+               {states.map((state) => (
+                  <option key={state.id} value={state.id}>
+                     {state.name}
+                  </option>
+               ))}
             </StyledSelect>
          </StyledField>
 
@@ -183,14 +198,15 @@ export default function AddressForm({ register, errors, setValue }: Props) {
                   <StyledErrorSpan>{errors.cityId.message}</StyledErrorSpan>
                )}
             </StyledFieldTitle>
-            <StyledSelect {...register("cityId")}>
-               {cities.map((city: ICity) => {
-                  return (
-                     <option key={city.id} value={city.id}>
-                        {city.name}
-                     </option>
-                  );
-               })}
+            <StyledSelect
+               {...register("cityId")}
+               disabled={cities.length === 0}
+            >
+               {cities.map((city) => (
+                  <option key={city.id} value={city.id}>
+                     {city.name}
+                  </option>
+               ))}
             </StyledSelect>
          </StyledField>
 

@@ -8,17 +8,20 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "./Form";
 import { IAddressSchema, addressSchema } from "@/src/validations/addressSchema";
-import IAddress from "@/src/@types/IAddress";
 import { updateAddress } from "@/src/services/AddressService";
 import { toast } from "react-toastify";
-import { SuccesToast } from "../../commom/Toastify/ToastContainer";
-import { useUpdateAddress } from "@/src/store/CustomerDetailsStore";
+import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
+import {
+   useCustomerState,
+   useUpdateAddress,
+} from "@/src/store/CustomerDetailsStore";
 import { useEffect } from "react";
-import { useAddressesStore } from "@/src/store/AddressStore";
+import { Address } from "@/src/@types/api";
+import { AddressType, ResidenceType, StreetType } from "@/src/@types/enums";
 
 export default function UpdateAddressModal() {
    const { closeModal, isOpen, item } = useUpdateAddress();
-   const { getAddressesByCustomer } = useAddressesStore();
+   const { getCustomer } = useCustomerState();
 
    const {
       register,
@@ -38,7 +41,7 @@ export default function UpdateAddressModal() {
          setValue("neighborhood", item.neighborhood || "");
          setValue("cep", item.cep || "00000000");
          setValue("complement", item.complement || "");
-         setValue("cityId", item.cityId || 0);
+         setValue("cityId", item.city.id || 0);
          setValue("streetType", item.streetType || "OUTRO");
          setValue("residenceType", item.residenceType || "OUTRO");
       }
@@ -49,29 +52,29 @@ export default function UpdateAddressModal() {
          if (!item) {
             throw new Error("Endereço não encontrado");
          }
-         const streetType = data.streetType as
-            | "RUA"
-            | "AVENIDA"
-            | "TRAVESSA"
-            | "ALAMEDA"
-            | "ESTRADA"
-            | "OUTRO";
-         const residenceType = data.residenceType as
-            | "CASA"
-            | "APARTAMENTO"
-            | "OUTRO";
-
-         const address: IAddress = {
+         const streetType = data.streetType as unknown as StreetType;
+         const residenceType = data.residenceType as unknown as ResidenceType;
+         const addressType = data.addressType as unknown as AddressType;
+         const address: Address = {
             id: item.id,
-            customerId: item.customerId,
+            customer: item.customer,
             nickname: data.nickname,
             street: data.street,
             number: data.number,
             neighborhood: data.neighborhood,
             cep: data.cep,
             complement: data.complement,
-            cityId: data.cityId,
-            addressType: "ENTREGA",
+            city: {
+               id: data.cityId,
+               name: "",
+               state: {
+                  id: data.stateId,
+                  name: "",
+                  cities: [],
+                  country: { id: data.countryId, name: "", states: [] },
+               },
+            },
+            addressType: addressType,
             streetType: streetType,
             residenceType: residenceType,
          };
@@ -91,7 +94,11 @@ export default function UpdateAddressModal() {
             hideProgressBar: true,
          });
 
-         await getAddressesByCustomer(item.customerId);
+         if (!item?.customer?.id) {
+            throw new Error("Cliente não encontrado");
+         }
+
+         await getCustomer(item.customer.id);
          closeModal();
       } catch (error) {
          alert("Erro ao editar endereço");

@@ -9,11 +9,8 @@ import BillingAddress from "./BillingAddress";
 import DeliveryAddress from "./DeliveryAddress";
 import { useState } from "react";
 import { createCustomer } from "@/src/services/CustomerService";
-import { createPhone } from "@/src/services/PhoneService";
-import { createAddress } from "@/src/services/AddressService";
-import ICustomer from "@/src/@types/ICustomer";
-import IPhone from "@/src/@types/IPhone";
-import IAddress from "@/src/@types/IAddress";
+import { Customer } from "@/src/@types/api";
+import { Gender } from "@/src/@types/enums";
 import Modal from "@/src/components/commom/Modal/AttentionModal";
 
 export default function CreateCustomerFlow() {
@@ -22,94 +19,21 @@ export default function CreateCustomerFlow() {
 
    const { fetchCustomers } = useCustomerStore();
 
-   const [personalData, setPersonalData] = useState<ICustomer>({
-      id: 0,
+   const [customer, setCustomer] = useState<Customer>({
       name: "",
       birthDate: new Date(),
       cpf: "",
-      confPassword: "",
+      gender: "OUTRO" as Gender,
       email: "",
-      gender: "OUTRO",
       password: "",
-      ranking: 0,
+      confPassword: "",
       status: true,
-   });
-
-   const [phoneData, setPhoneData] = useState<IPhone>({
-      id: 0,
-      customerId: 0,
-      ddd: "",
-      number: "",
-      phoneType: "OUTRO",
-   });
-
-   const [billingAddressData, setBillingAddressData] = useState<IAddress>({
-      id: 0,
-      customerId: 0,
-      nickname: "",
-      street: "",
-      number: 0,
-      neighborhood: "",
-      cep: "",
-      complement: "",
-      city: {
-         id: 0,
-         name: "",
-         state: {
-            id: 0,
-            name: "",
-            country: {
-               id: 0,
-               name: "",
-            },
-         },
-      },
-      addressType: "COBRANCA",
-      streetType: "OUTRO",
-      residenceType: "OUTRO",
-   });
-
-   const [deliveryAddressData, setDeliveryAddressData] = useState<IAddress>({
-      id: 0,
-      customerId: 0,
-      nickname: "",
-      street: "",
-      number: 0,
-      neighborhood: "",
-      cep: "",
-      complement: "",
-      city: {
-         id: 0,
-         name: "",
-         state: {
-            id: 0,
-            name: "",
-            country: {
-               id: 0,
-               name: "",
-            },
-         },
-      },
-      addressType: "ENTREGA",
-      streetType: "OUTRO",
-      residenceType: "OUTRO",
+      ranking: 0,
    });
 
    const finalSubmit = async () => {
       try {
-         const customerResponse = await createCustomer(personalData);
-         const customerId = customerResponse.id;
-
-         await createPhone({ ...phoneData, customerId: customerId });
-         await createAddress({
-            ...billingAddressData,
-            customerId: customerId,
-         });
-         await createAddress({
-            ...deliveryAddressData,
-            customerId: customerId,
-         });
-
+         await createCustomer(customer);
          createCloseModal();
          await fetchCustomers();
       } catch (error: any) {
@@ -141,22 +65,21 @@ export default function CreateCustomerFlow() {
          )}
          {modalNumber === 1 && (
             <PersonalData
-               setPersonalData={setPersonalData}
-               setPhoneData={setPhoneData}
+               setCustomer={setCustomer}
                modalBack={modalBack}
                modalNext={modalNext}
             />
          )}
          {modalNumber === 2 && (
             <BillingAddress
-               setAddressData={setBillingAddressData}
+               setCustomer={setCustomer}
                onCancel={modalBack}
                onSubmit={modalNext}
             />
          )}
          {modalNumber === 3 && (
             <DeliveryAddress
-               setAddressData={setDeliveryAddressData}
+               setCustomer={setCustomer}
                onCancel={modalBack}
                onSubmit={modalNext}
             />

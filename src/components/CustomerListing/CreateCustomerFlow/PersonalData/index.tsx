@@ -9,19 +9,17 @@ import {
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Dispatch, SetStateAction } from "react";
-import ICustomer from "@/src/@types/ICustomer";
-import IPhone from "@/src/@types/IPhone";
+import { Customer, Phone } from "@/src/@types/api";
+import { Gender, PhoneType } from "@/src/@types/enums";
 
 interface Props {
-   setPersonalData: Dispatch<SetStateAction<ICustomer>>;
-   setPhoneData: Dispatch<SetStateAction<IPhone>>;
+   setCustomer: Dispatch<SetStateAction<Customer>>;
    modalNext: () => void;
    modalBack: () => void;
 }
 
 export default function CreateCustomerModal({
-   setPersonalData,
-   setPhoneData,
+   setCustomer,
    modalBack,
    modalNext,
 }: Props) {
@@ -29,7 +27,6 @@ export default function CreateCustomerModal({
       register,
       handleSubmit,
       setValue,
-      reset,
       formState: { errors },
    } = useForm<ICustomerSchema>({
       resolver: yupResolver(customerSchema),
@@ -37,31 +34,25 @@ export default function CreateCustomerModal({
    });
 
    const onSubmit: SubmitHandler<ICustomerSchema> = async (data) => {
-      const gender = data.gender as "MASCULINO" | "FEMININO" | "OUTRO";
-      const phoneType = data.phoneType as
-         | "CELULAR"
-         | "RESIDENCIAL"
-         | "COMERCIAL"
-         | "OUTRO";
-      setPersonalData(() => ({
-         id: 0,
+      const phone: Phone = {
+         ddd: data.number.substring(0, 2),
+         number: data.number.substring(2),
+         phoneType: data.phoneType as PhoneType,
+      };
+
+      setCustomer(() => ({
          name: data.name,
          birthDate: data.birthDate,
          cpf: data.cpf,
          confPassword: data.confPassword,
          email: data.email,
-         gender: gender,
+         gender: data.gender as Gender,
          password: data.password,
          ranking: data.ranking,
          status: true,
+         phones: [phone],
       }));
-      setPhoneData(() => ({
-         id: 0,
-         customerId: 0,
-         ddd: data.number.substring(0, 2),
-         number: data.number.substring(2),
-         phoneType: phoneType,
-      }));
+
       modalNext();
    };
 

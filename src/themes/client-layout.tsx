@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import { ThemeProvider, type DefaultTheme } from "styled-components";
-import EstilosGlobais from "./EstilosGlobais";
+import GlobalStyles from "./GlobalStyles";
 
 const theme: DefaultTheme = {
    colors: {
@@ -46,7 +46,7 @@ const theme: DefaultTheme = {
 export default function ClientLayout({ children }: { children: ReactNode }) {
    return (
       <ThemeProvider theme={theme}>
-         <EstilosGlobais />
+         <GlobalStyles />
          {children}
       </ThemeProvider>
    );

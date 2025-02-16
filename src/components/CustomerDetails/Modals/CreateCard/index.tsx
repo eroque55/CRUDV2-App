@@ -1,4 +1,7 @@
-import { useCreateCard } from "@/src/store/CustomerDetailsStore";
+import {
+   useCreateCard,
+   useCustomerState,
+} from "@/src/store/CustomerDetailsStore";
 import { createCard } from "@/src/services/CardService";
 
 import {
@@ -11,14 +14,14 @@ import CardForm from "./Form";
 import { ICardSchema, cardSchema } from "@/src/validations/cardSchema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import ICard from "@/src/@types/ICard";
 import { toast } from "react-toastify";
 import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
-import { useCardStore } from "@/src/store/CardsStore";
+import { Card } from "@/src/@types/api";
+import { CardBrand, Gender } from "@/src/@types/enums";
 
 export default function CreateCard() {
    const { isOpen, closeModal, customerId } = useCreateCard();
-   const { getCardsByCustomer } = useCardStore();
+   const { getCustomer } = useCustomerState();
 
    const {
       register,
@@ -32,29 +35,30 @@ export default function CreateCard() {
    });
 
    const onSubmit = async (data: ICardSchema) => {
-      const cardBrand = data.cardBrand as
-         | "VISA"
-         | "MASTERCARD"
-         | "AMERICAN_EXPRESS"
-         | "DISCOVER"
-         | "DINERS_CLUB"
-         | "JCB"
-         | "OUTRA";
-
-      const card: ICard = {
-         id: 0,
-         customerId: customerId,
+      const card: Card = {
+         customer: {
+            id: customerId,
+            name: "",
+            birthDate: new Date(),
+            cpf: "",
+            gender: "OUTRO" as Gender,
+            email: "",
+            password: "",
+            confPassword: "",
+            status: true,
+            ranking: 0,
+         },
          number: data.number,
          cardholder: data.cardholder,
          cvv: data.cvv,
          expirationDate: data.expirationDate,
-         cardBrand: cardBrand,
+         cardBrand: data.cardBrand as CardBrand,
          preferential: false,
       };
       await createCard(card);
       reset();
       closeModal();
-      await getCardsByCustomer(customerId);
+      await getCustomer(customerId);
       toast(SuccesToast, {
          data: {
             title: "Cartão cadastrado",

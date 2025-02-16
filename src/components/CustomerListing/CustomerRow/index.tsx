@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { updateCustomerStatus } from "@/src/services/CustomerService";
-import ICustomer from "@/src/@types/ICustomer";
 
 import {
    StyledRowBodyActions,
@@ -15,9 +14,10 @@ import lixeira from "@/public/icons/lixeira.svg";
 import Switch from "../../commom/Switch";
 import { useDeleteModalStore } from "@/src/store/CustomerListingStore";
 import DetailsButton from "../../commom/DetailsButton";
+import { Customer } from "@/src/@types/api";
 
 interface Props {
-   customer: ICustomer;
+   customer: Customer;
 }
 
 export default function CustomerRow({ customer }: Props) {

@@ -1,5 +1,8 @@
 import { createAddress } from "@/src/services/AddressService";
-import { useCreateAddress } from "@/src/store/CustomerDetailsStore";
+import {
+   useCreateAddress,
+   useCustomerState,
+} from "@/src/store/CustomerDetailsStore";
 
 import {
    StyledDialog,
@@ -11,14 +14,20 @@ import CardForm from "./Form";
 import { IAddressSchema, addressSchema } from "@/src/validations/addressSchema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import IAddress from "@/src/@types/IAddress";
 import { toast } from "react-toastify";
 import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
-import { useAddressesStore } from "@/src/store/AddressStore";
+
+import { Address } from "@/src/@types/api";
+import {
+   AddressType,
+   Gender,
+   ResidenceType,
+   StreetType,
+} from "@/src/@types/enums";
 
 export default function CreateAddress() {
    const { isOpen, closeModal, customerId } = useCreateAddress();
-   const { getAddressesByCustomer } = useAddressesStore();
+   const { getCustomer } = useCustomerState();
 
    const {
       register,
@@ -32,42 +41,42 @@ export default function CreateAddress() {
    });
 
    const onSubmit = async (data: IAddressSchema) => {
-      const addressType = data.addressType as
-         | "RESIDENCIAL"
-         | "COBRANCA"
-         | "ENTREGA";
-
-      const residenceType = data.residenceType as
-         | "CASA"
-         | "APARTAMENTO"
-         | "OUTRO";
-
-      const streetType = data.streetType as
-         | "RUA"
-         | "AVENIDA"
-         | "TRAVESSA"
-         | "ALAMEDA"
-         | "ESTRADA"
-         | "OUTRO";
-
-      const address: IAddress = {
-         id: 0,
-         customerId: customerId,
+      const address: Address = {
+         customer: {
+            id: customerId,
+            name: "",
+            birthDate: new Date(),
+            cpf: "",
+            gender: "OUTRO" as Gender,
+            email: "",
+            password: "",
+            confPassword: "",
+            status: true,
+            ranking: 0,
+         },
          nickname: data.nickname,
          cep: data.cep,
          street: data.street,
          number: data.number,
          complement: data.complement,
          neighborhood: data.neighborhood,
-         cityId: data.cityId,
-         addressType: addressType,
-         residenceType: residenceType,
-         streetType: streetType,
+         city: {
+            id: data.cityId,
+            name: "",
+            state: {
+               id: data.stateId,
+               name: "",
+               country: { id: data.countryId, name: "" },
+            },
+         },
+         addressType: data.addressType as AddressType,
+         residenceType: data.residenceType as ResidenceType,
+         streetType: data.streetType as StreetType,
       };
       await createAddress(address);
       reset();
       closeModal();
-      await getAddressesByCustomer(customerId);
+      await getCustomer(customerId);
       toast(SuccesToast, {
          data: {
             title: "Endereço cadastrado",

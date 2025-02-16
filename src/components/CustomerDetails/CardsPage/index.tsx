@@ -1,14 +1,18 @@
 import { StyledPage } from "@/src/app/customer/[id]/page.styles";
 import CardCard from "./CardCard";
-import { useCardStore } from "@/src/store/CardsStore";
 
-export default function CardsPage() {
-   const { cards } = useCardStore();
+import { Card } from "@/src/@types/api";
 
+interface Props {
+   customerId: number;
+   cards: Card[];
+}
+
+export default function CardsPage({ cards, customerId }: Props) {
    return (
       <StyledPage>
          {cards.map((card) => (
-            <CardCard key={card.id} card={card} />
+            <CardCard customerId={customerId} key={card.id} card={card} />
          ))}
       </StyledPage>
    );

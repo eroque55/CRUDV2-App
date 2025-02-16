@@ -1,6 +1,24 @@
 import { create } from "zustand";
-import IAddress from "../@types/IAddress";
-import ICard from "../@types/ICard";
+import { Card, Address } from "@/src/@types/api";
+import { Customer } from "@/src/@types/api";
+import { getCustomer } from "../services/CustomerService";
+
+interface CustomerState {
+   customer: Customer | null;
+   getCustomer: (id: number) => Promise<void>;
+}
+
+export const useCustomerState = create<CustomerState>((set) => ({
+   customer: null,
+   getCustomer: async (id: number) => {
+      try {
+         const data = await getCustomer(id);
+         set({ customer: data });
+      } catch (error) {
+         console.error("Erro ao buscar o cliente: ", error);
+      }
+   },
+}));
 
 interface DeleteState {
    isOpen: boolean;
@@ -23,14 +41,14 @@ interface UpdateState<T> {
    closeModal: () => void;
 }
 
-export const useUpdateAddress = create<UpdateState<IAddress>>((set) => ({
+export const useUpdateAddress = create<UpdateState<Address>>((set) => ({
    isOpen: false,
    item: null,
    openModal: (address) => set({ isOpen: true, item: address }),
    closeModal: () => set({ isOpen: false, item: null }),
 }));
 
-export const useUpdateCard = create<UpdateState<ICard>>((set) => ({
+export const useUpdateCard = create<UpdateState<Card>>((set) => ({
    isOpen: false,
    item: null,
    openModal: (card) => set({ isOpen: true, item: card }),

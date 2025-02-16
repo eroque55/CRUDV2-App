@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-const EstilosGlobais = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
   html,
   body {
     font-family: ${({ theme }) => theme.fonts.roboto.fontFamily};
@@ -37,4 +37,4 @@ const EstilosGlobais = createGlobalStyle`
 }
 `;
 
-export default EstilosGlobais;
+export default GlobalStyles;

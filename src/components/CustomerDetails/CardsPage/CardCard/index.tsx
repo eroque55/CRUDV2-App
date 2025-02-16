@@ -1,24 +1,25 @@
 import { capitalizeFirstLetter } from "@/src/util";
 import InfoContainer from "@/src/components/CustomerDetails/common/InfoContainer/";
-import ICard from "@/src/@types/ICard";
 import { toast } from "react-toastify";
 import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
 import { deleteCard } from "@/src/services/CardService";
 import { ButtonsContainer } from "@/src/components/commom/DetailsActionButtons/index.styles";
 import ActionButtons from "@/src/components/commom/DetailsActionButtons/ActionButton";
 import { StyledCard } from "../../common/StyledCard/index.styles";
-import { useCardStore } from "@/src/store/CardsStore";
+import { useCustomerState } from "@/src/store/CustomerDetailsStore";
+import { Card } from "@/src/@types/api";
 
 interface Props {
-   card: ICard;
+   customerId: number;
+   card: Card;
 }
 
-export default function CardCard({ card }: Props) {
-   const { getCardsByCustomer } = useCardStore();
+export default function CardCard({ card, customerId }: Props) {
+   const { getCustomer } = useCustomerState();
 
    async function handleDeleteCard() {
       try {
-         await deleteCard(card.id);
+         await deleteCard(card.id ?? 0);
          toast(SuccesToast, {
             data: {
                title: "Sucesso!",
@@ -29,7 +30,7 @@ export default function CardCard({ card }: Props) {
             closeButton: false,
             hideProgressBar: true,
          });
-         await getCardsByCustomer(card.customerId);
+         await getCustomer(customerId);
       } catch (error) {
          alert("Erro ao excluir cartão: " + error);
       }

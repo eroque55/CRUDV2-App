@@ -6,16 +6,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "../AddressForm";
 import { IAddressSchema, addressSchema } from "@/src/validations/addressSchema";
 import { Dispatch, SetStateAction } from "react";
-import IAddress from "@/src/@types/IAddress";
+import { Customer, Address } from "@/src/@types/api";
+import { AddressType, ResidenceType, StreetType } from "@/src/@types/enums";
 
 interface Props {
-   setAddressData: Dispatch<SetStateAction<IAddress>>;
+   setCustomer: Dispatch<SetStateAction<Customer>>;
    onCancel: () => void;
    onSubmit: () => void;
 }
 
 export default function BillingAddress({
-   setAddressData,
+   setCustomer,
    onCancel,
    onSubmit,
 }: Props) {
@@ -31,42 +32,30 @@ export default function BillingAddress({
 
    const submit: SubmitHandler<IAddressSchema> = async (data) => {
       try {
-         const streetType = data.streetType as
-            | "RUA"
-            | "AVENIDA"
-            | "TRAVESSA"
-            | "ALAMEDA"
-            | "ESTRADA"
-            | "OUTRO";
-         const residenceType = data.residenceType as
-            | "CASA"
-            | "APARTAMENTO"
-            | "OUTRO";
-
-         setAddressData(() => ({
-            id: 0,
-            customerId: 0,
+         const address: Address = {
             nickname: data.nickname,
             street: data.street,
             number: data.number,
             neighborhood: data.neighborhood,
             cep: data.cep,
-            complement: data.complement,
             city: {
                id: data.cityId,
-               name: "0",
+               name: "",
                state: {
                   id: data.stateId,
-                  name: "0",
-                  country: {
-                     id: data.countryId,
-                     name: "0",
-                  },
+                  name: "",
+                  country: { id: data.countryId, name: "" },
                },
             },
-            addressType: "ENTREGA",
-            streetType: streetType,
-            residenceType: residenceType,
+            complement: data.complement,
+            addressType: "ENTREGA" as AddressType,
+            residenceType: data.residenceType as ResidenceType,
+            streetType: data.streetType as StreetType,
+         };
+
+         setCustomer((prevCustomer) => ({
+            ...prevCustomer,
+            addresses: [...(prevCustomer.addresses || []), address],
          }));
 
          onSubmit();

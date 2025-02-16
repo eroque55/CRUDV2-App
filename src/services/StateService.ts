@@ -1,29 +1,29 @@
 import axios from "axios";
-import IState from "@/src/@types/IState";
+import { State } from "@/src/@types/api";
 
 const API_URL = "http://localhost:8000/states";
 
-export const createState = async (state: IState) => {
+export const createState = async (state: State) => {
    const response = await axios.post(API_URL, state);
    return response.data;
 };
 
-export const getStates = async (): Promise<IState[]> => {
+export const getStates = async (): Promise<State[]> => {
    const response = await axios.get(API_URL);
    return response.data;
 };
 
-export const getState = async (id: number): Promise<IState> => {
+export const getState = async (id: number): Promise<State> => {
    const response = await axios.get(`${API_URL}/${id}`);
    return response.data;
 };
 
-export const getStatesByContry = async (id: number): Promise<IState[]> => {
+export const getStatesByContry = async (id: number): Promise<State[]> => {
    const response = await axios.get(`${API_URL}/country/${id}`);
    return response.data;
 };
 
-export const updateState = async (id: number, state: IState) => {
+export const updateState = async (id: number, state: State) => {
    return axios.put(`${API_URL}/${id}`, state);
 };
 
