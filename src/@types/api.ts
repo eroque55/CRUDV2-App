@@ -8,7 +8,7 @@ import {
 } from "./enums";
 
 export interface Address {
-   id?: number;
+   id: number;
    customer?: Customer;
    nickname: string;
    street: string;
@@ -23,7 +23,7 @@ export interface Address {
 }
 
 export interface Card {
-   id?: number;
+   id: number;
    customer?: Customer;
    number: string;
    cardholder: string;
@@ -34,19 +34,19 @@ export interface Card {
 }
 
 export interface City {
-   id?: number;
+   id: number;
    name: string;
    state: State;
 }
 
 export interface Country {
-   id?: number;
+   id: number;
    name: string;
    states?: State[];
 }
 
 export interface Customer {
-   id?: number;
+   id: number;
    name: string;
    birthDate: Date;
    cpf: string;
@@ -62,7 +62,7 @@ export interface Customer {
 }
 
 export interface Phone {
-   id?: number;
+   id: number;
    customer?: Customer;
    ddd: string;
    number: string;

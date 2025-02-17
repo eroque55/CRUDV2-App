@@ -1,14 +1,20 @@
-import ICustomer from "@/src/@types/ICustomer";
-import InfoContainer from "../../common/InfoContainer";
+import InfoContainer from "../../../commom/InfoContainer";
 import { StyledCard } from "../../common/StyledCard/index.styles";
 import { capitalizeFirstLetter } from "@/src/util";
+import { ButtonsContainer } from "@/src/components/commom/DetailsActionButtons/index.styles";
+import ActionButtons from "@/src/components/commom/DetailsActionButtons/ActionButton";
+import { Customer } from "@/src/@types/api";
+import { useUpdateCustomer } from "@/src/store/CustomerDetailsStore";
 
 interface Props {
-   customer: ICustomer | null;
+   customer: Customer | null;
 }
 
 export default function PersonalDataCard({ customer }: Props) {
+   const { openModal } = useUpdateCustomer();
+
    if (!customer) return null;
+
    const birthDate = new Date(customer.birthDate).toLocaleDateString("pt-BR");
    const cpf = customer.cpf
       .trim()
@@ -19,6 +25,13 @@ export default function PersonalDataCard({ customer }: Props) {
    return (
       <StyledCard>
          <InfoContainer title="Nome">{customer.name}</InfoContainer>
+         <ButtonsContainer>
+            <ActionButtons
+               onClick={openModal}
+               src="/icons/EditButton.svg"
+               alt="Botão de editar"
+            />
+         </ButtonsContainer>
          <InfoContainer title="Data de nascimento">{birthDate}</InfoContainer>
          <InfoContainer title="CPF">{cpf}</InfoContainer>
          <InfoContainer title="Gênero">{gender}</InfoContainer>

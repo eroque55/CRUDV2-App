@@ -18,11 +18,6 @@ export const getState = async (id: number): Promise<State> => {
    return response.data;
 };
 
-export const getStatesByContry = async (id: number): Promise<State[]> => {
-   const response = await axios.get(`${API_URL}/country/${id}`);
-   return response.data;
-};
-
 export const updateState = async (id: number, state: State) => {
    return axios.put(`${API_URL}/${id}`, state);
 };

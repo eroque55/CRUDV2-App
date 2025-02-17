@@ -5,7 +5,7 @@ export const StyledMain = styled.main`
    align-items: center;
    justify-content: center;
    height: 100vh;
-   width: 100vh;
+   width: 100vw;
 `;
 
 export const StyledText = styled.h1`

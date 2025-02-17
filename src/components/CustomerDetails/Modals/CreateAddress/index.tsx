@@ -15,7 +15,7 @@ import { IAddressSchema, addressSchema } from "@/src/validations/addressSchema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
+import { SuccesToast } from "@/src/components/commom/Toastify/SuccesToast";
 
 import { Address } from "@/src/@types/api";
 import {
@@ -42,6 +42,7 @@ export default function CreateAddress() {
 
    const onSubmit = async (data: IAddressSchema) => {
       const address: Address = {
+         id: 0,
          customer: {
             id: customerId,
             name: "",
@@ -79,7 +80,7 @@ export default function CreateAddress() {
       await getCustomer(customerId);
       toast(SuccesToast, {
          data: {
-            title: "Endereço cadastrado",
+            title: "Sucesso!",
             message: "Endereço cadastrado com sucesso!",
          },
          autoClose: false,

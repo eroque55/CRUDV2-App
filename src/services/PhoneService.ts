@@ -13,13 +13,8 @@ export const getPhones = async (): Promise<Phone[]> => {
    return response.data;
 };
 
-export const getPhoneByCustomer = async (id: number): Promise<Phone> => {
-   const response = await axios.get(`${API_URL}/customer/${id}`);
-   return response.data;
-};
-
-export const updateCustomerStatus = async (id: number, customer: Phone) => {
-   return axios.put(`${API_URL}/${id}`, customer);
+export const updatePhone = async (id: number, phone: Phone) => {
+   return axios.put(`${API_URL}/${id}`, phone);
 };
 
 export const deletePhone = async (id: number) => {

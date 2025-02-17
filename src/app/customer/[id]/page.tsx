@@ -25,40 +25,22 @@ import AddButton from "@/src/components/commom/AddButton";
 import {
    useCreateAddress,
    useCreateCard,
-   useCustomerState,
 } from "@/src/store/CustomerDetailsStore";
 import CreateCard from "@/src/components/CustomerDetails/Modals/CreateCard";
 import CreateAddress from "@/src/components/CustomerDetails/Modals/CreateAddress";
-import { StyledToastContainer } from "@/src/components/commom/Toastify/ToastContainer/index.styles";
-import UpdateAddressModal from "@/src/components/CustomerDetails/Modals/EditAddress";
+import { StyledToastContainer } from "@/src/components/commom/Toastify/index.styles";
+import UpdateAddressModal from "@/src/components/CustomerDetails/Modals/UpdateAddress";
+import { useCustomerDetails } from "@/src/hooks/useCustomerDetails";
+import UpdatePersonalDataModal from "@/src/components/CustomerDetails/Modals/UpdatePersonalData";
 
 export default function CustomerDetails() {
    const params = useParams();
    const id = params.id ? parseInt(params.id as string) : NaN;
-
-   const { customer, getCustomer } = useCustomerState();
-
-   const [loading, setLoading] = useState(true);
+   const { customer, loading } = useCustomerDetails(id);
    const [page, setPage] = useState(0);
 
    const { openModal: openCreateAddress } = useCreateAddress();
    const { openModal: openCreateCard } = useCreateCard();
-
-   async function fetchData() {
-      try {
-         await getCustomer(id);
-      } catch (error) {
-         console.error("Erro ao buscar cliente:", error);
-      } finally {
-         setLoading(false);
-      }
-   }
-
-   useEffect(() => {
-      if (isNaN(id)) return;
-
-      fetchData();
-   }, [id]);
 
    if (loading || !customer) return <Loading />;
 
@@ -73,6 +55,7 @@ export default function CustomerDetails() {
          <CreateCard />
          <CreateAddress />
          <UpdateAddressModal />
+         <UpdatePersonalDataModal />
          <StyledMain>
             <StyledBackgroud />
             <NavBar />

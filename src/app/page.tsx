@@ -6,13 +6,13 @@ import ContentHeader from "@/src/components/CustomerListing/ContentHeader";
 
 import { StyledMain, StyledContent } from "./page.styles";
 import ExitModal from "@/src/components/NavBar/ExitModal";
-import DeleteModal from "@/src/components/CustomerListing/DeleteModal";
 import CreateCustomerFlow from "../components/CustomerListing/CreateCustomerFlow";
+import { StyledToastContainer } from "../components/commom/Toastify/index.styles";
 
 export default function Home() {
    return (
       <>
-         <DeleteModal />
+         <StyledToastContainer />
          <ExitModal />
          <CreateCustomerFlow />
          <StyledMain>

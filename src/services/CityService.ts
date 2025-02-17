@@ -18,11 +18,6 @@ export const getCity = async (id: number): Promise<City> => {
    return response.data;
 };
 
-export const getCitiesByState = async (id: number): Promise<City[]> => {
-   const response = await axios.get(`${API_URL}/state/${id}`);
-   return response.data;
-};
-
 export const updateCity = async (id: number, city: City) => {
    return axios.put(`${API_URL}/${id}`, city);
 };

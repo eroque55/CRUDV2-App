@@ -35,12 +35,14 @@ export default function CreateCustomerModal({
 
    const onSubmit: SubmitHandler<ICustomerSchema> = async (data) => {
       const phone: Phone = {
+         id: 0,
          ddd: data.number.substring(0, 2),
          number: data.number.substring(2),
          phoneType: data.phoneType as PhoneType,
       };
 
       setCustomer(() => ({
+         id: 0,
          name: data.name,
          birthDate: data.birthDate,
          cpf: data.cpf,

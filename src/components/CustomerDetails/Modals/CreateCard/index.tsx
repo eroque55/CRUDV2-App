@@ -15,7 +15,7 @@ import { ICardSchema, cardSchema } from "@/src/validations/cardSchema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
+import { SuccesToast } from "@/src/components/commom/Toastify/SuccesToast";
 import { Card } from "@/src/@types/api";
 import { CardBrand, Gender } from "@/src/@types/enums";
 
@@ -36,6 +36,7 @@ export default function CreateCard() {
 
    const onSubmit = async (data: ICardSchema) => {
       const card: Card = {
+         id: 0,
          customer: {
             id: customerId,
             name: "",

@@ -19,21 +19,6 @@ export const useCustomerStore = create<CustomerStore>((set) => ({
    },
 }));
 
-interface DeleteModalState {
-   deleteIsOpen: boolean;
-   selecedItemId: number | null;
-   deleteOpenModal: (id: number) => void;
-   deleteCloseModal: () => void;
-}
-
-export const useDeleteModalStore = create<DeleteModalState>((set) => ({
-   deleteIsOpen: false,
-   selecedItemId: null,
-   deleteOpenModal: (id: number) =>
-      set({ deleteIsOpen: true, selecedItemId: id }),
-   deleteCloseModal: () => set({ deleteIsOpen: false, selecedItemId: null }),
-}));
-
 interface CreateModalState {
    createIsOpen: boolean;
    createOpenModal: () => void;
@@ -46,7 +31,7 @@ interface CreateModalState {
 export const useCreateModalStore = create<CreateModalState>((set) => ({
    createIsOpen: false,
    createOpenModal: () => set({ createIsOpen: true }),
-   createCloseModal: () => set({ createIsOpen: false }),
+   createCloseModal: () => set({ createIsOpen: false, modalNumber: 0 }),
    modalNumber: 1,
    modalNext: () => set((state) => ({ modalNumber: state.modalNumber + 1 })),
    modalBack: () => set((state) => ({ modalNumber: state.modalNumber - 1 })),

@@ -10,7 +10,7 @@ import Form from "./Form";
 import { IAddressSchema, addressSchema } from "@/src/validations/addressSchema";
 import { updateAddress } from "@/src/services/AddressService";
 import { toast } from "react-toastify";
-import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
+import { SuccesToast } from "@/src/components/commom/Toastify/SuccesToast";
 import {
    useCustomerState,
    useUpdateAddress,
@@ -52,9 +52,7 @@ export default function UpdateAddressModal() {
          if (!item) {
             throw new Error("Endereço não encontrado");
          }
-         const streetType = data.streetType as unknown as StreetType;
-         const residenceType = data.residenceType as unknown as ResidenceType;
-         const addressType = data.addressType as unknown as AddressType;
+
          const address: Address = {
             id: item.id,
             customer: item.customer,
@@ -74,9 +72,9 @@ export default function UpdateAddressModal() {
                   country: { id: data.countryId, name: "", states: [] },
                },
             },
-            addressType: addressType,
-            streetType: streetType,
-            residenceType: residenceType,
+            addressType: data.addressType as AddressType,
+            streetType: data.streetType as StreetType,
+            residenceType: data.residenceType as ResidenceType,
          };
          if (item?.id !== undefined) {
             await updateAddress(item.id, address);

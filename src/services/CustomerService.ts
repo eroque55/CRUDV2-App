@@ -18,7 +18,7 @@ export const getCustomers = async (): Promise<Customer[]> => {
    return response.data;
 };
 
-export const updateCustomerStatus = async (id: number, customer: Customer) => {
+export const updateCustomer = async (id: number, customer: Customer) => {
    return axios.put(`${API_URL}/${id}`, customer);
 };
 

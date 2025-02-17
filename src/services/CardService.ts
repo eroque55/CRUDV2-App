@@ -13,13 +13,8 @@ export const getCards = async (): Promise<Card[]> => {
    return response.data;
 };
 
-export const getCardsByCustomer = async (id: number): Promise<Card[]> => {
-   const response = await axios.get(`${API_URL}/customer/${id}`);
-   return response.data;
-};
-
-export const updateCard = async (id: number, card: Card) => {
-   return axios.put(`${API_URL}/${id}`, card);
+export const updateCard = async (id: number) => {
+   return axios.put(`${API_URL}/${id}`);
 };
 
 export const deleteCard = async (id: number) => {

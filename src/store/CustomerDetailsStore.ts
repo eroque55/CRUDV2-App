@@ -20,20 +20,6 @@ export const useCustomerState = create<CustomerState>((set) => ({
    },
 }));
 
-interface DeleteState {
-   isOpen: boolean;
-   itemId: number | null;
-   openModal: (id: number) => void;
-   closeModal: () => void;
-}
-
-export const useDeleteModal = create<DeleteState>((set) => ({
-   isOpen: false,
-   itemId: null,
-   openModal: (id: number) => set({ isOpen: true, itemId: id }),
-   closeModal: () => set({ isOpen: false, itemId: null }),
-}));
-
 interface UpdateState<T> {
    isOpen: boolean;
    item: T | null;
@@ -53,6 +39,18 @@ export const useUpdateCard = create<UpdateState<Card>>((set) => ({
    item: null,
    openModal: (card) => set({ isOpen: true, item: card }),
    closeModal: () => set({ isOpen: false, item: null }),
+}));
+
+interface UpdateCustomer {
+   isOpen: boolean;
+   openModal: () => void;
+   closeModal: () => void;
+}
+
+export const useUpdateCustomer = create<UpdateCustomer>((set) => ({
+   isOpen: false,
+   openModal: () => set({ isOpen: true }),
+   closeModal: () => set({ isOpen: false }),
 }));
 
 interface CreateState {

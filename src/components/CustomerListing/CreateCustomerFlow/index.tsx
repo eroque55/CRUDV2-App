@@ -20,6 +20,7 @@ export default function CreateCustomerFlow() {
    const { fetchCustomers } = useCustomerStore();
 
    const [customer, setCustomer] = useState<Customer>({
+      id: 0,
       name: "",
       birthDate: new Date(),
       cpf: "",

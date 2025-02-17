@@ -9,15 +9,27 @@ import {
    StyledFieldTitle,
    StyledInputMask,
 } from "@/src/components/commom/Fields/index.styles";
-import { ICustomerSchema } from "@/src/validations/customerSchema";
+import { IUpdateCustomerSchema } from "@/src/validations/updateCustomerSchema";
+import { useCustomerState } from "@/src/store/CustomerDetailsStore";
 
 interface Props {
-   register: UseFormRegister<ICustomerSchema>;
-   errors: FieldErrors<ICustomerSchema>;
-   setValue: UseFormSetValue<ICustomerSchema>;
+   register: UseFormRegister<IUpdateCustomerSchema>;
+   errors: FieldErrors<IUpdateCustomerSchema>;
+   setValue: UseFormSetValue<IUpdateCustomerSchema>;
 }
 
 export default function CustomerForm({ register, errors, setValue }: Props) {
+   const { customer } = useCustomerState();
+
+   const phone =
+      (customer?.phones?.[0]?.ddd ?? "") +
+      (customer?.phones?.[0]?.number ?? "");
+
+   const cpf = customer?.cpf || "";
+
+   setValue("number", phone);
+   setValue("cpf", cpf);
+
    return (
       <StyledModalForm>
          <StyledField>
@@ -27,7 +39,7 @@ export default function CustomerForm({ register, errors, setValue }: Props) {
                   <StyledErrorSpan>{errors.name.message}</StyledErrorSpan>
                )}
             </StyledFieldTitle>
-            <StyledInput {...register("name")} />
+            <StyledInput defaultValue={customer?.name} {...register("name")} />
          </StyledField>
 
          <StyledField>
@@ -37,7 +49,11 @@ export default function CustomerForm({ register, errors, setValue }: Props) {
                   <StyledErrorSpan>{errors.birthDate.message}</StyledErrorSpan>
                )}
             </StyledFieldTitle>
-            <StyledInput type="date" {...register("birthDate")} />
+            <StyledInput
+               type="date"
+               defaultValue={customer?.birthDate.toString().split("T")[0]}
+               {...register("birthDate")}
+            />
          </StyledField>
 
          <StyledField>
@@ -49,8 +65,11 @@ export default function CustomerForm({ register, errors, setValue }: Props) {
             </StyledFieldTitle>
             <StyledInputMask
                mask="000.000.000-00"
+               defaultValue={customer?.cpf}
                onAccept={(value) => {
-                  setValue("cpf", value.replace(/[-.]/g, ""));
+                  setValue("cpf", value.replace(/[-.]/g, ""), {
+                     shouldValidate: true,
+                  });
                }}
                {...register("cpf")}
             />
@@ -63,7 +82,10 @@ export default function CustomerForm({ register, errors, setValue }: Props) {
                   <StyledErrorSpan>{errors.gender.message}</StyledErrorSpan>
                )}
             </StyledFieldTitle>
-            <StyledSelect {...register("gender")}>
+            <StyledSelect
+               defaultValue={customer?.gender}
+               {...register("gender")}
+            >
                <option value="MASCULINO">Masculino</option>
                <option value="FEMININO">Feminino</option>
                <option value="OUTRO">Outro</option>
@@ -77,29 +99,11 @@ export default function CustomerForm({ register, errors, setValue }: Props) {
                   <StyledErrorSpan>{errors.email.message}</StyledErrorSpan>
                )}
             </StyledFieldTitle>
-            <StyledInput type="email" {...register("email")} />
-         </StyledField>
-
-         <StyledField>
-            <StyledFieldTitle>
-               <StyledLabel>Senha</StyledLabel>
-               {errors.password && (
-                  <StyledErrorSpan>{errors.password.message}</StyledErrorSpan>
-               )}
-            </StyledFieldTitle>
-            <StyledInput type="password" {...register("password")} />
-         </StyledField>
-
-         <StyledField>
-            <StyledFieldTitle>
-               <StyledLabel>Confirme a senha</StyledLabel>
-               {errors.confPassword && (
-                  <StyledErrorSpan>
-                     {errors.confPassword.message}
-                  </StyledErrorSpan>
-               )}
-            </StyledFieldTitle>
-            <StyledInput type="password" {...register("confPassword")} />
+            <StyledInput
+               defaultValue={customer?.email}
+               type="email"
+               {...register("email")}
+            />
          </StyledField>
 
          <StyledField>
@@ -111,7 +115,7 @@ export default function CustomerForm({ register, errors, setValue }: Props) {
             </StyledFieldTitle>
             <StyledInput
                type="number"
-               defaultValue={1}
+               defaultValue={customer?.ranking}
                {...register("ranking")}
             />
          </StyledField>
@@ -124,9 +128,12 @@ export default function CustomerForm({ register, errors, setValue }: Props) {
                )}
             </StyledFieldTitle>
             <StyledInputMask
+               defaultValue={phone}
                mask="(00) 00000-0000"
                onAccept={(value) => {
-                  setValue("number", value.replace(/[()-/ ]/g, ""));
+                  setValue("number", value.replace(/[()-/ ]/g, ""), {
+                     shouldValidate: true,
+                  });
                }}
                {...register("number")}
             />
@@ -139,7 +146,10 @@ export default function CustomerForm({ register, errors, setValue }: Props) {
                   <StyledErrorSpan>{errors.phoneType.message}</StyledErrorSpan>
                )}
             </StyledFieldTitle>
-            <StyledSelect {...register("phoneType")}>
+            <StyledSelect
+               defaultValue={customer?.phones?.[0].phoneType}
+               {...register("phoneType")}
+            >
                <option value="CELULAR">Celular</option>
                <option value="RESIDENCIAL">Residencial</option>
                <option value="COMERCIAL">Comercial</option>

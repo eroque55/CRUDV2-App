@@ -1,15 +1,15 @@
 import { Address, City, State, Country } from "@/src/@types/api";
 import { capitalizeFirstLetter } from "@/src/util";
 import DetailsActionButtons from "@/src/components/commom/DetailsActionButtons";
-import { SuccesToast } from "@/src/components/commom/Toastify/ToastContainer";
 import { toast } from "react-toastify";
 import { deleteAddress } from "@/src/services/AddressService";
 import { StyledCard } from "@/src/components/CustomerDetails/common/StyledCard/index.styles";
-import InfoContainer from "@/src/components/CustomerDetails/common/InfoContainer/";
+import InfoContainer from "@/src/components/commom/InfoContainer";
 import {
    useCustomerState,
    useUpdateAddress,
 } from "@/src/store/CustomerDetailsStore";
+import { ConfirmationToast } from "@/src/components/commom/Toastify/ConfirmationToast";
 
 interface Props {
    customerId: number;
@@ -23,16 +23,6 @@ export default function AddressCard({ address, customerId }: Props) {
    async function handleDeleteAddress() {
       try {
          await deleteAddress(address.id || 0);
-         toast(SuccesToast, {
-            data: {
-               title: "Sucesso!",
-               message: "Endereço excluido com sucesso!",
-            },
-            autoClose: false,
-            position: "top-center",
-            closeButton: false,
-            hideProgressBar: true,
-         });
          await getCustomer(customerId);
       } catch (error) {
          alert("Erro ao excluir endereço: " + error);
@@ -52,7 +42,22 @@ export default function AddressCard({ address, customerId }: Props) {
       <StyledCard>
          <InfoContainer title="Tipo de endereço">{addressType}</InfoContainer>
          <DetailsActionButtons
-            handleDelete={handleDeleteAddress}
+            handleDelete={() => {
+               toast(ConfirmationToast, {
+                  data: {
+                     title: "Tem certeza?",
+                     message: "Tem certeza que deseja excluir esse endereço?",
+                     notice: "Essa ação não poderá ser desfeita",
+                     successMessage: "Endereço excluído com sucesso!",
+                     actionButton: "Excluir",
+                     onSubmit: handleDeleteAddress,
+                  },
+                  autoClose: false,
+                  position: "top-center",
+                  closeButton: false,
+                  hideProgressBar: true,
+               });
+            }}
             handleEdit={handlUpdateAddress}
          />
          <InfoContainer title="Apelido">{address.nickname}</InfoContainer>

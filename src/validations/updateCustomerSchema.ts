@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
-export type ICustomerSchema = yup.InferType<typeof customerSchema>;
+export type IUpdateCustomerSchema = yup.InferType<typeof updateCustomerSchema>;
 
-export const customerSchema = yup.object().shape({
+export const updateCustomerSchema = yup.object().shape({
    name: yup
       .string()
       .required("Nome é obrigatório")
@@ -31,22 +31,6 @@ export const customerSchema = yup.object().shape({
       .string()
       .required("E-mail é obrigatório")
       .email("E-mail inválido"),
-
-   password: yup
-      .string()
-      .required("Senha é obrigatória")
-      .min(8, "Senha deve ter pelo menos 8 caracteres")
-      .matches(/[A-Z]/, "Senha deve conter pelo menos uma letra maiúscula")
-      .matches(/[a-z]/, "Senha deve conter pelo menos uma letra minúscula")
-      .matches(
-         /[!@#$%^&*(),.?":{}|<>]/,
-         "Senha deve conter pelo menos um caractere especial"
-      ),
-
-   confPassword: yup
-      .string()
-      .required("Confirmação de senha é obrigatória")
-      .oneOf([yup.ref("password")], "As senhas não coincidem"),
 
    ranking: yup
       .number()

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { updateCustomerStatus } from "@/src/services/CustomerService";
+import { deleteCustomer, updateCustomer } from "@/src/services/CustomerService";
 
 import {
    StyledRowBodyActions,
@@ -12,17 +12,19 @@ import {
 import ActionButton from "../../commom/RowActionButton";
 import lixeira from "@/public/icons/lixeira.svg";
 import Switch from "../../commom/Switch";
-import { useDeleteModalStore } from "@/src/store/CustomerListingStore";
+import { useCustomerStore } from "@/src/store/CustomerListingStore";
 import DetailsButton from "../../commom/DetailsButton";
 import { Customer } from "@/src/@types/api";
+import { toast } from "react-toastify";
+import { ConfirmationToast } from "../../commom/Toastify/ConfirmationToast";
 
 interface Props {
    customer: Customer;
 }
 
 export default function CustomerRow({ customer }: Props) {
-   const { deleteOpenModal } = useDeleteModalStore();
    const [status, setStatus] = useState(customer.status);
+   const { fetchCustomers } = useCustomerStore();
 
    async function toggleStatus() {
       try {
@@ -30,7 +32,7 @@ export default function CustomerRow({ customer }: Props) {
 
          setStatus(novoStatus);
 
-         await updateCustomerStatus(customer.id, {
+         await updateCustomer(customer.id, {
             ...customer,
             status: novoStatus,
          });
@@ -38,6 +40,15 @@ export default function CustomerRow({ customer }: Props) {
          console.error("Erro ao atualizar status do cliente", error);
 
          setStatus(status);
+      }
+   }
+
+   async function handleDelete() {
+      try {
+         await deleteCustomer(customer.id);
+         await fetchCustomers();
+      } catch (error: any) {
+         console.error("Erro ao excluir cliente", error);
       }
    }
 
@@ -58,7 +69,22 @@ export default function CustomerRow({ customer }: Props) {
             <ActionButton
                id={customer.id}
                icon={lixeira}
-               onClick={() => deleteOpenModal(customer.id)}
+               onClick={() => {
+                  toast(ConfirmationToast, {
+                     data: {
+                        title: "Tem certeza?",
+                        message: "Tem certeza que deseja excluir esse cliente?",
+                        notice: "Essa ação não poderá ser desfeita",
+                        successMessage: "Cliente excluído com sucesso!",
+                        actionButton: "Excluir",
+                        onSubmit: handleDelete,
+                     },
+                     autoClose: false,
+                     position: "top-center",
+                     closeButton: false,
+                     hideProgressBar: true,
+                  });
+               }}
             />
             <DetailsButton href={`/customer/${customer.id}`} />
          </StyledRowBodyActions>
