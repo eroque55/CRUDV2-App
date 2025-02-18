@@ -1,16 +1,15 @@
 import {
    StyledDialog,
    StyledOverlay,
-} from "@/src/components/commom/Modal/modal.styles";
-import ModalHeader from "@/src/components/commom/Modal/ModalHeader";
-import ModalFooter from "@/src/components/commom/Modal/ModalFooter";
+} from "@/src/components/Commom/Modal/modal.styles";
+import ModalHeader from "@/src/components/Commom/Modal/ModalHeader";
+import ModalFooter from "@/src/components/Commom/Modal/ModalFooter";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "./Form";
 import { IAddressSchema, addressSchema } from "@/src/validations/addressSchema";
 import { updateAddress } from "@/src/services/AddressService";
 import { toast } from "react-toastify";
-import { SuccesToast } from "@/src/components/commom/Toastify/SuccesToast";
 import {
    useCustomerState,
    useUpdateAddress,
@@ -18,10 +17,11 @@ import {
 import { useEffect } from "react";
 import { Address } from "@/src/@types/api";
 import { AddressType, ResidenceType, StreetType } from "@/src/@types/enums";
+import { SuccesToast } from "@/src/components/Commom/Toastify/SuccesToast";
 
 export default function UpdateAddressModal() {
    const { closeModal, isOpen, item } = useUpdateAddress();
-   const { getCustomer } = useCustomerState();
+   const { getCustomer, customer } = useCustomerState();
 
    const {
       register,
@@ -76,11 +76,7 @@ export default function UpdateAddressModal() {
             streetType: data.streetType as StreetType,
             residenceType: data.residenceType as ResidenceType,
          };
-         if (item?.id !== undefined) {
-            await updateAddress(item.id, address);
-         } else {
-            throw new Error("Id do endereço não encontrado");
-         }
+         await updateAddress(item.id, address);
          toast(SuccesToast, {
             data: {
                title: "Sucesso!",
@@ -92,14 +88,10 @@ export default function UpdateAddressModal() {
             hideProgressBar: true,
          });
 
-         if (!item?.customer?.id) {
-            throw new Error("Cliente não encontrado");
-         }
-
-         await getCustomer(item.customer.id);
+         await getCustomer(customer?.id || 0);
          closeModal();
       } catch (error) {
-         alert("Erro ao editar endereço");
+         alert("Erro ao editar endereço: " + error);
       }
    };
 

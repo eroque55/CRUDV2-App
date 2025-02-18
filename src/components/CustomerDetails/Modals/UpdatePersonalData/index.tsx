@@ -1,9 +1,9 @@
 import {
    StyledDialog,
    StyledOverlay,
-} from "@/src/components/commom/Modal/modal.styles";
-import ModalHeader from "@/src/components/commom/Modal/ModalHeader";
-import ModalFooter from "@/src/components/commom/Modal/ModalFooter";
+} from "@/src/components/Commom/Modal/modal.styles";
+import ModalHeader from "@/src/components/Commom/Modal/ModalHeader";
+import ModalFooter from "@/src/components/Commom/Modal/ModalFooter";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "./Form";
@@ -13,15 +13,14 @@ import {
 } from "@/src/validations/updateCustomerSchema";
 import { updateCustomer } from "@/src/services/CustomerService";
 import { toast } from "react-toastify";
-import { SuccesToast } from "@/src/components/commom/Toastify/SuccesToast";
 import {
    useCustomerState,
    useUpdateCustomer,
 } from "@/src/store/CustomerDetailsStore";
-import { useEffect } from "react";
 import { Customer, Phone } from "@/src/@types/api";
 import { Gender, PhoneType } from "@/src/@types/enums";
 import { updatePhone } from "@/src/services/PhoneService";
+import { SuccesToast } from "@/src/components/Commom/Toastify/SuccesToast";
 
 export default function UpdatePersonalDataModal() {
    const { closeModal, isOpen } = useUpdateCustomer();

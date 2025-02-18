@@ -14,7 +14,8 @@ export const getAddresses = async (): Promise<Address[]> => {
 };
 
 export const updateAddress = async (id: number, address: Address) => {
-   return axios.put(`${API_URL}/${id}`, address);
+   const response = await axios.put(`${API_URL}/${id}`, address);
+   return response.data;
 };
 
 export const deleteAddress = async (id: number) => {

@@ -1,15 +1,15 @@
-import { Address, City, State, Country } from "@/src/@types/api";
+import { Address } from "@/src/@types/api";
 import { capitalizeFirstLetter } from "@/src/util";
-import DetailsActionButtons from "@/src/components/commom/DetailsActionButtons";
+import DetailsActionButtons from "@/src/components/Commom/DetailsActionButtons";
 import { toast } from "react-toastify";
 import { deleteAddress } from "@/src/services/AddressService";
-import { StyledCard } from "@/src/components/CustomerDetails/common/StyledCard/index.styles";
-import InfoContainer from "@/src/components/commom/InfoContainer";
+import InfoContainer from "@/src/components/Commom/InfoContainer";
 import {
    useCustomerState,
    useUpdateAddress,
 } from "@/src/store/CustomerDetailsStore";
-import { ConfirmationToast } from "@/src/components/commom/Toastify/ConfirmationToast";
+import { ConfirmationToast } from "@/src/components/Commom/Toastify/ConfirmationToast";
+import { StyledCard } from "../../Common/StyledCard/index.styles";
 
 interface Props {
    customerId: number;

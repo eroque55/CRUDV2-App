@@ -1,4 +1,4 @@
-import { StyledOverlay } from "@/src/components/commom/Modal/modal.styles";
+import { StyledOverlay } from "@/src/components/Commom/Modal/modal.styles";
 import {
    useCustomerStore,
    useCreateModalStore,
@@ -11,7 +11,7 @@ import { useState } from "react";
 import { createCustomer } from "@/src/services/CustomerService";
 import { Customer } from "@/src/@types/api";
 import { Gender } from "@/src/@types/enums";
-import Modal from "@/src/components/commom/Modal/AttentionModal";
+import Modal from "@/src/components/Commom/Modal/AttentionModal";
 
 export default function CreateCustomerFlow() {
    const { createIsOpen, createCloseModal, modalBack, modalNext, modalNumber } =
