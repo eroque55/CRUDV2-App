@@ -1,6 +1,6 @@
-import { StyledTitle } from "@/src/components/Commom/Title";
-import SearchBar from "@/src/components/Commom/SearchBar";
-import AddButton from "@/src/components/Commom/AddButton";
+import { StyledTitle } from "@/src/components/commom/Title";
+import SearchBar from "@/src/components/commom/SearchBar";
+import AddButton from "@/src/components/commom/AddButton";
 import {
    StyledContentHeaderOptions,
    StyledContentHeader,

@@ -1,5 +1,5 @@
 import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
-import { StyledModalForm } from "@/src/components/Commom/Modal/modal.styles";
+import { StyledModalForm } from "@/src/components/commom/Modal/modal.styles";
 import {
    StyledField,
    StyledInput,
@@ -8,10 +8,10 @@ import {
    StyledErrorSpan,
    StyledFieldTitle,
    StyledInputMask,
-} from "@/src/components/Commom/Fields/index.styles";
+} from "@/src/components/commom/Fields/index.styles";
 import { IAddressSchema } from "@/src/validations/addressSchema";
 
-import { City, Country, State } from "@/src/@types/api";
+import { Address, City, Country, State } from "@/src/@types/api";
 
 import { useEffect, useState } from "react";
 import { getCountries } from "@/src/services/CountryService";
@@ -20,33 +20,58 @@ interface Props {
    register: UseFormRegister<IAddressSchema>;
    errors: FieldErrors<IAddressSchema>;
    setValue: UseFormSetValue<IAddressSchema>;
-   cep: string;
+   address: Address;
 }
 
 export default function AddressForm({
    register,
    errors,
    setValue,
-   cep,
+   address,
 }: Props) {
    const [countries, setCountries] = useState<Country[]>([]);
    const [states, setStates] = useState<State[]>([]);
    const [cities, setCities] = useState<City[]>([]);
 
+   const cityId = address.city.id || 0;
+   const stateId = address.city.state.id || 0;
+   const countryId = address.city.state.country.id || 0;
+
    useEffect(() => {
       const fetchCountries = async () => {
          const fetchedCountries = await getCountries();
          setCountries(fetchedCountries);
+
+         setValue("cityId", cityId);
+         setValue("stateId", stateId);
+         setValue("countryId", countryId);
+
+         const selectedCountry = fetchedCountries.find(
+            (country) => country.id === countryId
+         );
+         if (selectedCountry) {
+            if (selectedCountry.states) {
+               setStates(selectedCountry.states);
+
+               const selectedState = selectedCountry.states.find(
+                  (state) => state.id === stateId
+               );
+               if (selectedState) {
+                  selectedState.cities && setCities(selectedState.cities);
+               }
+            }
+         }
       };
+
       fetchCountries();
-   }, []);
+   }, [cityId, stateId, countryId, setValue]);
 
    const getStatesByCountry = (countryId: number) => {
       const selectedCountry = countries.find(
          (country) => country.id === countryId
       );
       if (selectedCountry) {
-         setStates(selectedCountry?.states ?? []);
+         setStates(selectedCountry.states ?? []);
          setCities([]);
          setValue("stateId", 0);
          setValue("cityId", 0);
@@ -56,10 +81,14 @@ export default function AddressForm({
    const getCitiesByState = (stateId: number) => {
       const selectedState = states.find((state) => state.id === stateId);
       if (selectedState) {
-         setCities(selectedState?.cities ?? []);
+         setCities(selectedState.cities ?? []);
          setValue("cityId", 0);
       }
    };
+
+   const cep = address.cep;
+
+   setValue("cep", cep);
 
    return (
       <StyledModalForm>
@@ -70,7 +99,10 @@ export default function AddressForm({
                   <StyledErrorSpan>{errors.nickname.message}</StyledErrorSpan>
                )}
             </StyledFieldTitle>
-            <StyledInput {...register("nickname")} />
+            <StyledInput
+               defaultValue={address.nickname}
+               {...register("nickname")}
+            />
          </StyledField>
 
          <StyledField>
@@ -101,7 +133,10 @@ export default function AddressForm({
                   </StyledErrorSpan>
                )}
             </StyledFieldTitle>
-            <StyledSelect {...register("residenceType")}>
+            <StyledSelect
+               defaultValue={address.residenceType}
+               {...register("residenceType")}
+            >
                <option value="CASA">Casa</option>
                <option value="APARTAMENTO">Apartamento</option>
                <option value="OUTRO">Outro</option>
@@ -115,7 +150,10 @@ export default function AddressForm({
                   <StyledErrorSpan>{errors.streetType.message}</StyledErrorSpan>
                )}
             </StyledFieldTitle>
-            <StyledSelect {...register("streetType")}>
+            <StyledSelect
+               defaultValue={address.streetType}
+               {...register("streetType")}
+            >
                <option value="RUA">Rua</option>
                <option value="AVENIDA">Avenida</option>
                <option value="TRAVESSA">Travessa</option>
@@ -132,7 +170,10 @@ export default function AddressForm({
                   <StyledErrorSpan>{errors.street.message}</StyledErrorSpan>
                )}
             </StyledFieldTitle>
-            <StyledInput {...register("street")} />
+            <StyledInput
+               defaultValue={address.street}
+               {...register("street")}
+            />
          </StyledField>
 
          <StyledField>
@@ -142,7 +183,11 @@ export default function AddressForm({
                   <StyledErrorSpan>{errors.number.message}</StyledErrorSpan>
                )}
             </StyledFieldTitle>
-            <StyledInput type="number" {...register("number")} />
+            <StyledInput
+               type="number"
+               defaultValue={address.number}
+               {...register("number")}
+            />
          </StyledField>
 
          <StyledField>
@@ -154,7 +199,10 @@ export default function AddressForm({
                   </StyledErrorSpan>
                )}
             </StyledFieldTitle>
-            <StyledInput {...register("neighborhood")} />
+            <StyledInput
+               defaultValue={address.neighborhood}
+               {...register("neighborhood")}
+            />
          </StyledField>
 
          <StyledField>
@@ -169,6 +217,7 @@ export default function AddressForm({
                onChange={(e) => {
                   getStatesByCountry(parseInt(e.target.value));
                }}
+               defaultValue={countryId}
             >
                {countries.map((country) => (
                   <option key={country.id} value={country.id}>
@@ -187,6 +236,7 @@ export default function AddressForm({
             </StyledFieldTitle>
             <StyledSelect
                {...register("stateId")}
+               defaultValue={stateId}
                onChange={(e) => {
                   getCitiesByState(parseInt(e.target.value));
                }}
@@ -208,6 +258,7 @@ export default function AddressForm({
                )}
             </StyledFieldTitle>
             <StyledSelect
+               defaultValue={cityId}
                {...register("cityId")}
                disabled={cities.length === 0}
             >
@@ -217,16 +268,6 @@ export default function AddressForm({
                   </option>
                ))}
             </StyledSelect>
-         </StyledField>
-
-         <StyledField>
-            <StyledFieldTitle>
-               <StyledLabel>Complemento (opcional)</StyledLabel>
-               {errors.complement && (
-                  <StyledErrorSpan>{errors.complement.message}</StyledErrorSpan>
-               )}
-            </StyledFieldTitle>
-            <StyledInput {...register("complement")} />
          </StyledField>
       </StyledModalForm>
    );

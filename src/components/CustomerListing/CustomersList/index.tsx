@@ -1,6 +1,6 @@
 import { useCustomerStore } from "@/src/store/CustomerListingStore";
 import TableBody from "../CustomerRow";
-import TableHeader from "../../Commom/TableHeader";
+import TableHeader from "../../commom/TableHeader";
 import { StyledTable } from "../index.styles";
 import { useEffect } from "react";
 

@@ -7,7 +7,7 @@ import ContentHeader from "@/src/components/CustomerListing/ContentHeader";
 import { StyledMain, StyledContent } from "./page.styles";
 import ExitModal from "@/src/components/NavBar/ExitModal";
 import CreateCustomerFlow from "../components/CustomerListing/CreateCustomerFlow";
-import { StyledToastContainer } from "../components/Commom/Toastify/index.styles";
+import { StyledToastContainer } from "../components/commom/Toastify/index.styles";
 
 export default function Home() {
    return (

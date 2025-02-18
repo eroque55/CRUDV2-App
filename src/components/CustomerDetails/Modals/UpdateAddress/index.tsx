@@ -1,9 +1,9 @@
 import {
    StyledDialog,
    StyledOverlay,
-} from "@/src/components/Commom/Modal/modal.styles";
-import ModalHeader from "@/src/components/Commom/Modal/ModalHeader";
-import ModalFooter from "@/src/components/Commom/Modal/ModalFooter";
+} from "@/src/components/commom/Modal/modal.styles";
+import ModalHeader from "@/src/components/commom/Modal/ModalHeader";
+import ModalFooter from "@/src/components/commom/Modal/ModalFooter";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "./Form";
@@ -14,10 +14,9 @@ import {
    useCustomerState,
    useUpdateAddress,
 } from "@/src/store/CustomerDetailsStore";
-import { useEffect } from "react";
 import { Address } from "@/src/@types/api";
 import { AddressType, ResidenceType, StreetType } from "@/src/@types/enums";
-import { SuccesToast } from "@/src/components/Commom/Toastify/SuccesToast";
+import { SuccesToast } from "@/src/components/commom/Toastify/SuccesToast";
 
 export default function UpdateAddressModal() {
    const { closeModal, isOpen, item } = useUpdateAddress();
@@ -32,20 +31,6 @@ export default function UpdateAddressModal() {
       resolver: yupResolver(addressSchema),
       mode: "onBlur",
    });
-
-   useEffect(() => {
-      if (item) {
-         setValue("nickname", item.nickname || "");
-         setValue("street", item.street || "");
-         setValue("number", item.number || 0);
-         setValue("neighborhood", item.neighborhood || "");
-         setValue("cep", item.cep || "00000000");
-         setValue("complement", item.complement || "");
-         setValue("cityId", item.city.id || 0);
-         setValue("streetType", item.streetType || "OUTRO");
-         setValue("residenceType", item.residenceType || "OUTRO");
-      }
-   }, [item, setValue]);
 
    const submit: SubmitHandler<IAddressSchema> = async (data) => {
       try {
@@ -102,7 +87,7 @@ export default function UpdateAddressModal() {
          <StyledDialog>
             <ModalHeader>Editar endereço</ModalHeader>
             <Form
-               cep={item.cep}
+               address={item}
                setValue={setValue}
                register={register}
                errors={errors}

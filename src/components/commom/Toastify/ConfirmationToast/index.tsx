@@ -1,7 +1,7 @@
-import { StyledDialog } from "@/src/components/Commom/Modal/modal.styles";
-import ModalHeader from "@/src/components/Commom/Modal/ModalHeader";
-import ModalBody from "@/src/components/Commom/Modal/AttentionModal/ModalBody";
-import ModalFooter from "@/src/components/Commom/Modal/ModalFooter";
+import { StyledDialog } from "@/src/components/commom/Modal/modal.styles";
+import ModalHeader from "@/src/components/commom/Modal/ModalHeader";
+import ModalBody from "@/src/components/commom/Modal/AttentionModal/ModalBody";
+import ModalFooter from "@/src/components/commom/Modal/ModalFooter";
 import { toast, ToastContentProps } from "react-toastify";
 import { SuccesToast } from "../SuccesToast";
 

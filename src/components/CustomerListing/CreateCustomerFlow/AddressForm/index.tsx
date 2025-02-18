@@ -1,5 +1,5 @@
 import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
-import { StyledModalForm } from "@/src/components/Commom/Modal/modal.styles";
+import { StyledModalForm } from "@/src/components/commom/Modal/modal.styles";
 import {
    StyledField,
    StyledInput,
@@ -8,7 +8,7 @@ import {
    StyledErrorSpan,
    StyledFieldTitle,
    StyledInputMask,
-} from "@/src/components/Commom/Fields/index.styles";
+} from "@/src/components/commom/Fields/index.styles";
 import { IAddressSchema } from "@/src/validations/addressSchema";
 
 import { City, Country, State } from "@/src/@types/api";

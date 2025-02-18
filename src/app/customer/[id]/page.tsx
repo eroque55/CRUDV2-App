@@ -13,14 +13,14 @@ import {
 import NavBar from "@/src/components/NavBar";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Loading from "@/src/components/Commom/Loading";
+import Loading from "@/src/components/commom/Loading";
 import ExitModal from "@/src/components/NavBar/ExitModal";
-import { StyledTitle } from "@/src/components/Commom/Title";
-import BackButton from "@/src/components/Commom/BackButton";
+import { StyledTitle } from "@/src/components/commom/Title";
+import BackButton from "@/src/components/commom/BackButton";
 import AddressesPage from "@/src/components/CustomerDetails/AddressesPage";
 import CardsPage from "@/src/components/CustomerDetails/CardsPage";
 import PersonalDataPage from "@/src/components/CustomerDetails/PersonalDataPage";
-import AddButton from "@/src/components/Commom/AddButton";
+import AddButton from "@/src/components/commom/AddButton";
 
 import {
    useCreateAddress,
@@ -28,7 +28,7 @@ import {
 } from "@/src/store/CustomerDetailsStore";
 import CreateCard from "@/src/components/CustomerDetails/Modals/CreateCard";
 import CreateAddress from "@/src/components/CustomerDetails/Modals/CreateAddress";
-import { StyledToastContainer } from "@/src/components/Commom/Toastify/index.styles";
+import { StyledToastContainer } from "@/src/components/commom/Toastify/index.styles";
 import UpdateAddressModal from "@/src/components/CustomerDetails/Modals/UpdateAddress";
 import { useCustomerDetails } from "@/src/hooks/useCustomerDetails";
 import UpdatePersonalDataModal from "@/src/components/CustomerDetails/Modals/UpdatePersonalData";

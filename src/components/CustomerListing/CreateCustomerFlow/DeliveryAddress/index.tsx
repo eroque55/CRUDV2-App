@@ -1,6 +1,6 @@
-import { StyledDialog } from "@/src/components/Commom/Modal/modal.styles";
-import ModalHeader from "@/src/components/Commom/Modal/ModalHeader";
-import ModalFooter from "@/src/components/Commom/Modal/ModalFooter";
+import { StyledDialog } from "@/src/components/commom/Modal/modal.styles";
+import ModalHeader from "@/src/components/commom/Modal/ModalHeader";
+import ModalFooter from "@/src/components/commom/Modal/ModalFooter";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "../AddressForm";
@@ -33,6 +33,7 @@ export default function BillingAddress({
    const submit: SubmitHandler<IAddressSchema> = async (data) => {
       try {
          const address: Address = {
+            id: 0,
             nickname: data.nickname,
             street: data.street,
             number: data.number,

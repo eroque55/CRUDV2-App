@@ -8,15 +8,15 @@ import {
    StyledRowBodyContent,
    StyledRow,
    StyledRowBodyText,
-} from "../../Commom/lists.styles";
-import ActionButton from "../../Commom/RowActionButton";
+} from "../../commom/lists.styles";
+import ActionButton from "../../commom/RowActionButton";
 import lixeira from "@/public/icons/lixeira.svg";
-import Switch from "../../Commom/Switch";
+import Switch from "../../commom/Switch";
 import { useCustomerStore } from "@/src/store/CustomerListingStore";
-import DetailsButton from "../../Commom/DetailsButton";
+import DetailsButton from "../../commom/DetailsButton";
 import { Customer } from "@/src/@types/api";
 import { toast } from "react-toastify";
-import { ConfirmationToast } from "../../Commom/Toastify/ConfirmationToast";
+import { ConfirmationToast } from "../../commom/Toastify/ConfirmationToast";
 
 interface Props {
    customer: Customer;
