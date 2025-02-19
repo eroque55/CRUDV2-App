@@ -42,18 +42,8 @@ export default function CreateAddress() {
 
    const onSubmit = async (data: IAddressSchema) => {
       const address: Address = {
-         id: 0,
          customer: {
             id: customerId,
-            name: "",
-            birthDate: new Date(),
-            cpf: "",
-            gender: "OUTRO" as Gender,
-            email: "",
-            password: "",
-            confPassword: "",
-            status: true,
-            ranking: 0,
          },
          nickname: data.nickname,
          cep: data.cep,
@@ -63,11 +53,9 @@ export default function CreateAddress() {
          neighborhood: data.neighborhood,
          city: {
             id: data.cityId,
-            name: "",
             state: {
                id: data.stateId,
-               name: "",
-               country: { id: data.countryId, name: "" },
+               country: { id: data.countryId },
             },
          },
          addressType: data.addressType as AddressType,

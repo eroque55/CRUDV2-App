@@ -32,10 +32,7 @@ export default function CustomerRow({ customer }: Props) {
 
          setStatus(novoStatus);
 
-         await updateCustomer(customer.id, {
-            ...customer,
-            status: novoStatus,
-         });
+         await updateCustomer(customer.id, { status: novoStatus });
       } catch (error: any) {
          console.error("Erro ao atualizar status do cliente", error);
 

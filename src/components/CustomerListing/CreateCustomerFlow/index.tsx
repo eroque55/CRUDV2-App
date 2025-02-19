@@ -36,10 +36,10 @@ export default function CreateCustomerFlow() {
       try {
          await createCustomer(customer);
          createCloseModal();
+         modalNumber === 1;
          await fetchCustomers();
       } catch (error: any) {
-         console.error("Erro ao criar cliente:", error);
-         alert("Erro ao criar cliente");
+         alert("Erro ao criar cliente: " + error.message);
       }
    };
 

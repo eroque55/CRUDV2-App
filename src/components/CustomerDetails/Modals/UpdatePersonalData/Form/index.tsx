@@ -11,6 +11,7 @@ import {
 } from "@/src/components/commom/Fields/index.styles";
 import { IUpdateCustomerSchema } from "@/src/validations/updateCustomerSchema";
 import { useCustomerState } from "@/src/store/CustomerDetailsStore";
+import { useEffect } from "react";
 
 interface Props {
    register: UseFormRegister<IUpdateCustomerSchema>;
@@ -21,14 +22,16 @@ interface Props {
 export default function CustomerForm({ register, errors, setValue }: Props) {
    const { customer } = useCustomerState();
 
+   useEffect(() => {
+      setValue("number", phone);
+      setValue("cpf", cpf);
+   }, []);
+
    const phone =
       (customer?.phones?.[0]?.ddd ?? "") +
       (customer?.phones?.[0]?.number ?? "");
 
    const cpf = customer?.cpf || "";
-
-   setValue("number", phone);
-   setValue("cpf", cpf);
 
    return (
       <StyledModalForm>

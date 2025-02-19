@@ -58,13 +58,12 @@ export default function UpdatePersonalDataModal() {
             email: data.email,
             ranking: data.ranking,
             status: true,
-            password: "",
-            confPassword: "",
          };
 
          if (customer?.id !== undefined) {
             await updateCustomer(customer.id, updatedCustomer);
-            await updatePhone(updatedPhone.id, updatedPhone);
+            console.log(updatedPhone);
+            await updatePhone(updatedPhone.id || 0, updatedPhone);
          } else {
             throw new Error("Id do cliente não encontrado");
          }

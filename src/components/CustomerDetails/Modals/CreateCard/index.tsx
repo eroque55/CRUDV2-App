@@ -36,18 +36,8 @@ export default function CreateCard() {
 
    const onSubmit = async (data: ICardSchema) => {
       const card: Card = {
-         id: 0,
          customer: {
             id: customerId,
-            name: "",
-            birthDate: new Date(),
-            cpf: "",
-            gender: "OUTRO" as Gender,
-            email: "",
-            password: "",
-            confPassword: "",
-            status: true,
-            ranking: 0,
          },
          number: data.number,
          cardholder: data.cardholder,
