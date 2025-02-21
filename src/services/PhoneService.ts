@@ -13,7 +13,7 @@ export const getPhones = async (): Promise<Phone[]> => {
    return response.data;
 };
 
-export const updatePhone = async (id: number, phone: Phone) => {
+export const updatePhone = async (id: number, phone: Partial<Phone>) => {
    return axios.put(`${API_URL}/${id}`, phone);
 };
 

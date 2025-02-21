@@ -13,7 +13,7 @@ export const getAddresses = async (): Promise<Address[]> => {
    return response.data;
 };
 
-export const updateAddress = async (id: number, address: Address) => {
+export const updateAddress = async (id: number, address: Partial<Address>) => {
    const response = await axios.put(`${API_URL}/${id}`, address);
    return response.data;
 };

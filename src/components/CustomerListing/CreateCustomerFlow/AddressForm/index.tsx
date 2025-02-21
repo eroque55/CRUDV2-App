@@ -1,5 +1,5 @@
 import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
-import { StyledModalForm } from "@/src/components/commom/Modal/modal.styles";
+import { StyledModalForm } from "@/src/components/Commom/Modal/modal.styles";
 import {
    StyledField,
    StyledInput,
@@ -8,11 +8,9 @@ import {
    StyledErrorSpan,
    StyledFieldTitle,
    StyledInputMask,
-} from "@/src/components/commom/Fields/index.styles";
+} from "@/src/components/Commom/Fields/index.styles";
 import { IAddressSchema } from "@/src/validations/addressSchema";
-
 import { City, Country, State } from "@/src/@types/api";
-
 import { useEffect, useState } from "react";
 import { getCountries } from "@/src/services/CountryService";
 
@@ -31,27 +29,50 @@ export default function AddressForm({ register, errors, setValue }: Props) {
       const fetchCountries = async () => {
          const fetchedCountries = await getCountries();
          setCountries(fetchedCountries);
+
+         if (fetchedCountries.length > 0) {
+            const firstCountry = fetchedCountries[0];
+            setValue("countryId", firstCountry.id);
+            setStates(firstCountry.states);
+
+            if (firstCountry.states.length > 0) {
+               const firstState = firstCountry.states[0];
+               setValue("stateId", firstState.id);
+               setCities(firstState.cities);
+
+               if (firstState.cities.length > 0) {
+                  const firstCity = firstState.cities[0];
+                  setValue("cityId", firstCity.id);
+               }
+            }
+         }
       };
       fetchCountries();
-   }, []);
+   }, [setValue]);
 
    const getStatesByCountry = (countryId: number) => {
       const selectedCountry = countries.find(
          (country) => country.id === countryId
       );
       if (selectedCountry) {
-         setStates(selectedCountry?.states ?? []);
+         const statesList = selectedCountry.states;
+         setStates(statesList);
          setCities([]);
-         setValue("stateId", 0);
+         setValue("stateId", statesList.length ? statesList[0].id : 0);
          setValue("cityId", 0);
+
+         if (statesList.length > 0) {
+            getCitiesByState(statesList[0].id);
+         }
       }
    };
 
    const getCitiesByState = (stateId: number) => {
       const selectedState = states.find((state) => state.id === stateId);
       if (selectedState) {
-         setCities(selectedState?.cities ?? []);
-         setValue("cityId", 0);
+         const citiesList = selectedState.cities;
+         setCities(citiesList);
+         setValue("cityId", citiesList.length ? citiesList[0].id : 0);
       }
    };
 

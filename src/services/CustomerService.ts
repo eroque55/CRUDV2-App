@@ -13,12 +13,17 @@ export const getCustomer = async (id: number): Promise<Customer> => {
    return response.data;
 };
 
-export const getCustomers = async (): Promise<Customer[]> => {
-   const response = await axios.get(API_URL);
+export const getCustomers = async (
+   customer?: Customer
+): Promise<Customer[]> => {
+   const response = await axios.get(API_URL, { params: customer });
    return response.data;
 };
 
-export const updateCustomer = async (id: number, customer: Customer) => {
+export const updateCustomer = async (
+   id: number,
+   customer: Partial<Customer>
+) => {
    return axios.put(`${API_URL}/${id}`, customer);
 };
 

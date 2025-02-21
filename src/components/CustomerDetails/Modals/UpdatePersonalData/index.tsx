@@ -1,9 +1,9 @@
 import {
    StyledDialog,
    StyledOverlay,
-} from "@/src/components/commom/Modal/modal.styles";
-import ModalHeader from "@/src/components/commom/Modal/ModalHeader";
-import ModalFooter from "@/src/components/commom/Modal/ModalFooter";
+} from "@/src/components/Commom/Modal/modal.styles";
+import ModalHeader from "@/src/components/Commom/Modal/ModalHeader";
+import ModalFooter from "@/src/components/Commom/Modal/ModalFooter";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "./Form";
@@ -20,7 +20,7 @@ import {
 import { Customer, Phone } from "@/src/@types/api";
 import { Gender, PhoneType } from "@/src/@types/enums";
 import { updatePhone } from "@/src/services/PhoneService";
-import { SuccesToast } from "@/src/components/commom/Toastify/SuccesToast";
+import { SuccesToast } from "@/src/components/Commom/Toastify/SuccesToast";
 
 export default function UpdatePersonalDataModal() {
    const { closeModal, isOpen } = useUpdateCustomer();
@@ -42,15 +42,14 @@ export default function UpdatePersonalDataModal() {
             throw new Error("Cliente não encontrado");
          }
 
-         const updatedPhone: Phone = {
+         const updatedPhone: Partial<Phone> = {
             id: customer.phones?.[0].id || 0,
             ddd: data.number.substring(0, 2),
             number: data.number.substring(2),
             phoneType: data.phoneType as PhoneType,
          };
 
-         const updatedCustomer: Customer = {
-            id: customer.id,
+         const updatedCustomer: Partial<Customer> = {
             name: data.name,
             birthDate: data.birthDate,
             cpf: data.cpf,
@@ -85,8 +84,8 @@ export default function UpdatePersonalDataModal() {
 
          await getCustomer(customer.id);
          closeModal();
-      } catch (error) {
-         alert("Erro ao editar endereço");
+      } catch (error: any) {
+         toast.error(error.response.data);
       }
    };
 

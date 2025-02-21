@@ -7,17 +7,17 @@ import { createCard } from "@/src/services/CardService";
 import {
    StyledDialog,
    StyledOverlay,
-} from "@/src/components/commom/Modal/modal.styles";
-import ModalHeader from "@/src/components/commom/Modal/ModalHeader";
-import ModalFooter from "@/src/components/commom/Modal/ModalFooter";
+} from "@/src/components/Commom/Modal/modal.styles";
+import ModalHeader from "@/src/components/Commom/Modal/ModalHeader";
+import ModalFooter from "@/src/components/Commom/Modal/ModalFooter";
 import CardForm from "./Form";
 import { ICardSchema, cardSchema } from "@/src/validations/cardSchema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { SuccesToast } from "@/src/components/commom/Toastify/SuccesToast";
-import { Card } from "@/src/@types/api";
-import { CardBrand, Gender } from "@/src/@types/enums";
+import { SuccesToast } from "@/src/components/Commom/Toastify/SuccesToast";
+import { Card, Customer } from "@/src/@types/api";
+import { CardBrand } from "@/src/@types/enums";
 
 export default function CreateCard() {
    const { isOpen, closeModal, customerId } = useCreateCard();
@@ -35,31 +35,38 @@ export default function CreateCard() {
    });
 
    const onSubmit = async (data: ICardSchema) => {
-      const card: Card = {
-         customer: {
+      try {
+         const customer: Partial<Customer> = {
             id: customerId,
-         },
-         number: data.number,
-         cardholder: data.cardholder,
-         cvv: data.cvv,
-         expirationDate: data.expirationDate,
-         cardBrand: data.cardBrand as CardBrand,
-         preferential: false,
-      };
-      await createCard(card);
-      reset();
-      closeModal();
-      await getCustomer(customerId);
-      toast(SuccesToast, {
-         data: {
-            title: "Cartão cadastrado",
-            message: "Cartão cadastrado com sucesso!",
-         },
-         autoClose: false,
-         position: "top-center",
-         closeButton: false,
-         hideProgressBar: true,
-      });
+         };
+
+         const card: Partial<Card> = {
+            customer: customer as Customer,
+            number: data.number,
+            cardholder: data.cardholder,
+            cvv: data.cvv,
+            expirationDate: data.expirationDate,
+            cardBrand: data.cardBrand as CardBrand,
+            preferential: false,
+         };
+
+         await createCard(card as Card);
+         reset();
+         closeModal();
+         await getCustomer(customerId);
+         toast(SuccesToast, {
+            data: {
+               title: "Cartão cadastrado",
+               message: "Cartão cadastrado com sucesso!",
+            },
+            autoClose: false,
+            position: "top-center",
+            closeButton: false,
+            hideProgressBar: true,
+         });
+      } catch (error: any) {
+         toast.error(`${error.response.data}`);
+      }
    };
 
    if (!isOpen) return null;

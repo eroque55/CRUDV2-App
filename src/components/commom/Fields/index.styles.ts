@@ -11,7 +11,7 @@ export const StyledInput = styled.input`
    padding: 0.75rem;
    border-radius: 0.75rem;
    border: 1px solid ${({ theme }) => theme.colors.neutral.color4};
-
+   width: 100%;
    color: ${({ theme }) => theme.colors.neutral.color6};
    font-size: 1rem;
 
@@ -28,6 +28,7 @@ export const StyledInputMask = styled(IMaskInput)`
    padding: 0.75rem;
    border-radius: 0.75rem;
    border: 1px solid ${({ theme }) => theme.colors.neutral.color4};
+   width: 100%;
 
    color: ${({ theme }) => theme.colors.neutral.color6};
    font-size: 1rem;
@@ -45,6 +46,7 @@ export const StyledSelect = styled.select`
    padding: 0.75rem;
    border-radius: 0.75rem;
    border: 1px solid ${({ theme }) => theme.colors.neutral.color4};
+   width: 100%;
 
    color: ${({ theme }) => theme.colors.neutral.color6};
    font-size: 1rem;
@@ -79,4 +81,27 @@ export const StyledErrorSpan = styled.span`
    max-height: 0.75rem;
    align-items: flex-end;
    text-align: right;
+`;
+
+export const StyledRadioContainer = styled.div`
+   display: flex;
+   gap: 0.25rem;
+   align-items: center;
+
+   input {
+      appearance: none;
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 50%;
+      border: 1px solid ${({ theme }) => theme.colors.neutral.color3};
+      transition: 0.2s all linear;
+   }
+
+   input:checked {
+      border: none;
+      background: ${({ theme }) => theme.colors.alerts.success};
+      background-image: url("/icons/Check.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+   }
 `;

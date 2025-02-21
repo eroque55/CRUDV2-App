@@ -1,7 +1,7 @@
-import { StyledDialog } from "@/src/components/commom/Modal/modal.styles";
-import ModalHeader from "@/src/components/commom/Modal/ModalHeader";
-import ModalBody from "@/src/components/commom/Modal/AttentionModal/ModalBody";
-import ModalFooter from "@/src/components/commom/Modal/ModalFooter";
+import { StyledDialog } from "@/src/components/Commom/Modal/modal.styles";
+import ModalHeader from "@/src/components/Commom/Modal/ModalHeader";
+import ModalBody from "@/src/components/Commom/Modal/AttentionModal/ModalBody";
+import ModalFooter from "@/src/components/Commom/Modal/ModalFooter";
 import { toast, ToastContentProps } from "react-toastify";
 import { SuccesToast } from "../SuccesToast";
 
@@ -9,6 +9,7 @@ type CustomNotificationProps = ToastContentProps<{
    title: string;
    message: string;
    notice?: string;
+   notConfirmation?: boolean;
    actionButton: string;
    successMessage: string;
    onSubmit: () => void;
@@ -20,16 +21,18 @@ export function ConfirmationToast({
 }: CustomNotificationProps) {
    const handleSubmit = () => {
       data.onSubmit();
-      toast(SuccesToast, {
-         data: {
-            title: "Sucesso!",
-            message: data.successMessage,
-         },
-         autoClose: false,
-         position: "top-center",
-         closeButton: false,
-         hideProgressBar: true,
-      });
+      if (!data.notConfirmation) {
+         toast(SuccesToast, {
+            data: {
+               title: "Sucesso!",
+               message: data.successMessage,
+            },
+            autoClose: false,
+            position: "top-center",
+            closeButton: false,
+            hideProgressBar: true,
+         });
+      }
       closeToast();
    };
 

@@ -1,4 +1,4 @@
-import { StyledOverlay } from "@/src/components/commom/Modal/modal.styles";
+import { StyledOverlay } from "@/src/components/Commom/Modal/modal.styles";
 import {
    useCustomerStore,
    useCreateModalStore,
@@ -7,45 +7,59 @@ import {
 import PersonalData from "./PersonalData";
 import BillingAddress from "./BillingAddress";
 import DeliveryAddress from "./DeliveryAddress";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createCustomer } from "@/src/services/CustomerService";
 import { Customer } from "@/src/@types/api";
-import { Gender } from "@/src/@types/enums";
-import Modal from "@/src/components/commom/Modal/AttentionModal";
+import Modal from "@/src/components/Commom/Modal/AttentionModal";
+import { toast } from "react-toastify";
+import { SuccesToast } from "../../Commom/Toastify/SuccesToast";
+import { ConfirmationToast } from "../../Commom/Toastify/ConfirmationToast";
 
 export default function CreateCustomerFlow() {
-   const { createIsOpen, createCloseModal, modalBack, modalNext, modalNumber } =
-      useCreateModalStore();
-
+   const {
+      createIsOpen,
+      createCloseModal,
+      modalBack,
+      modalNext,
+      modalNumber,
+      modalReset,
+   } = useCreateModalStore();
    const { fetchCustomers } = useCustomerStore();
-
-   const [customer, setCustomer] = useState<Customer>({
-      id: 0,
-      name: "",
-      birthDate: new Date(),
-      cpf: "",
-      gender: "OUTRO" as Gender,
-      email: "",
-      password: "",
-      confPassword: "",
-      status: true,
-      ranking: 0,
-   });
+   const [customer, setCustomer] = useState<Partial<Customer>>({});
+   const [isSubmitting, setIsSubmitting] = useState(false);
 
    const finalSubmit = async () => {
       try {
-         await createCustomer(customer);
+         setIsSubmitting(true);
+         await createCustomer(customer as Customer);
          createCloseModal();
-         modalNumber === 1;
+         modalReset();
          await fetchCustomers();
+         toast(SuccesToast, {
+            data: {
+               title: "Sucesso!",
+               message: "Cliente cadastrado com sucesso!",
+            },
+            autoClose: false,
+            position: "top-center",
+            closeButton: false,
+            hideProgressBar: true,
+         });
       } catch (error: any) {
-         alert("Erro ao criar cliente: " + error.message);
+         toast.error(error.response.data);
+      } finally {
+         setIsSubmitting(false);
       }
    };
 
-   const cancelModal = () => {
-      createCloseModal();
-      modalNext();
+   useEffect(() => {
+      if (isSubmitting) {
+         finalSubmit();
+      }
+   }, [customer]);
+
+   const handleFinalSubmit = () => {
+      setIsSubmitting(true);
    };
 
    if (!createIsOpen) return null;
@@ -53,49 +67,40 @@ export default function CreateCustomerFlow() {
    return (
       <StyledOverlay>
          {modalNumber === 0 && (
-            <Modal
-               isOpen={true}
-               title="Tem certeza?"
-               actionButton="Descartar"
-               closeModal={modalNext}
-               submitModal={cancelModal}
-               color="red"
-            >
-               Tem certeza que deseja descartar as alterações?
-            </Modal>
-         )}
-         {modalNumber === 1 && (
             <PersonalData
                setCustomer={setCustomer}
-               modalBack={modalBack}
+               modalBack={() => {
+                  toast(ConfirmationToast, {
+                     data: {
+                        title: "Tem certeza?",
+                        notConfirmation: true,
+                        message: "Tem certeza que deseja descartar o cadastro?",
+                        successMessage: "",
+                        actionButton: "Descartar",
+                        onSubmit: createCloseModal,
+                     },
+                     autoClose: false,
+                     position: "top-center",
+                     closeButton: false,
+                     hideProgressBar: true,
+                  });
+               }}
                modalNext={modalNext}
             />
          )}
-         {modalNumber === 2 && (
+         {modalNumber === 1 && (
             <BillingAddress
                setCustomer={setCustomer}
                onCancel={modalBack}
                onSubmit={modalNext}
             />
          )}
-         {modalNumber === 3 && (
+         {modalNumber === 2 && (
             <DeliveryAddress
                setCustomer={setCustomer}
                onCancel={modalBack}
-               onSubmit={modalNext}
+               onSubmit={handleFinalSubmit}
             />
-         )}
-         {modalNumber === 4 && (
-            <Modal
-               isOpen={true}
-               title="Sucesso!"
-               actionButton="Cadastrar"
-               submitModal={finalSubmit}
-               uniqueButton
-               color="green"
-            >
-               Cliente cadastrado com sucesso!
-            </Modal>
          )}
       </StyledOverlay>
    );

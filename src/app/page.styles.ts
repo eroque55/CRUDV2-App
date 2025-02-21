@@ -15,4 +15,19 @@ export const StyledContent = styled.section`
    flex-direction: column;
    gap: 1rem;
    padding: 1.75rem 1rem 0rem 1rem;
+   overflow-y: auto;
+
+   &::-webkit-scrollbar {
+      width: 0.5rem;
+   }
+
+   &::-webkit-scrollbar-thumb {
+      background-color: ${({ theme }) => theme.colors.neutral.color4};
+      border-radius: 1rem;
+   }
+
+   &::-webkit-scrollbar-track {
+      margin-top: 1rem;
+      border-radius: 1rem;
+   }
 `;

@@ -1,5 +1,5 @@
-import { StyledCard } from "../../common/StyledCard/index.styles";
-import InfoContainer from "../../../commom/InfoContainer";
+import { StyledCard } from "../../Common/StyledCard/index.styles";
+import InfoContainer from "../../../Commom/InfoContainer";
 import { capitalizeFirstLetter } from "@/src/util";
 import { Phone } from "@/src/@types/api";
 

@@ -1,15 +1,15 @@
 import { Address } from "@/src/@types/api";
 import { capitalizeFirstLetter } from "@/src/util";
-import DetailsActionButtons from "@/src/components/commom/DetailsActionButtons";
+import DetailsActionButtons from "@/src/components/Commom/DetailsActionButtons";
 import { toast } from "react-toastify";
 import { deleteAddress } from "@/src/services/AddressService";
-import InfoContainer from "@/src/components/commom/InfoContainer";
+import InfoContainer from "@/src/components/Commom/InfoContainer";
 import {
    useCustomerState,
    useUpdateAddress,
 } from "@/src/store/CustomerDetailsStore";
-import { ConfirmationToast } from "@/src/components/commom/Toastify/ConfirmationToast";
-import { StyledCard } from "../../common/StyledCard/index.styles";
+import { ConfirmationToast } from "@/src/components/Commom/Toastify/ConfirmationToast";
+import { StyledCard } from "../../Common/StyledCard/index.styles";
 
 interface Props {
    customerId: number;
@@ -24,8 +24,8 @@ export default function AddressCard({ address, customerId }: Props) {
       try {
          await deleteAddress(address.id || 0);
          await getCustomer(customerId);
-      } catch (error) {
-         alert("Erro ao excluir endereço: " + error);
+      } catch (error: any) {
+         toast.error(error.response.data);
       }
    }
 

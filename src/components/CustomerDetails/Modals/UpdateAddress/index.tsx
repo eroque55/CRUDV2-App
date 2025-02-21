@@ -1,9 +1,9 @@
 import {
    StyledDialog,
    StyledOverlay,
-} from "@/src/components/commom/Modal/modal.styles";
-import ModalHeader from "@/src/components/commom/Modal/ModalHeader";
-import ModalFooter from "@/src/components/commom/Modal/ModalFooter";
+} from "@/src/components/Commom/Modal/modal.styles";
+import ModalHeader from "@/src/components/Commom/Modal/ModalHeader";
+import ModalFooter from "@/src/components/Commom/Modal/ModalFooter";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "./Form";
@@ -16,7 +16,7 @@ import {
 } from "@/src/store/CustomerDetailsStore";
 import { Address } from "@/src/@types/api";
 import { AddressType, ResidenceType, StreetType } from "@/src/@types/enums";
-import { SuccesToast } from "@/src/components/commom/Toastify/SuccesToast";
+import { SuccesToast } from "@/src/components/Commom/Toastify/SuccesToast";
 
 export default function UpdateAddressModal() {
    const { closeModal, isOpen, item } = useUpdateAddress();
@@ -38,9 +38,8 @@ export default function UpdateAddressModal() {
             throw new Error("Endereço não encontrado");
          }
 
-         const address: Address = {
+         const address: Partial<Address> = {
             id: item.id,
-            customer: item.customer,
             nickname: data.nickname,
             street: data.street,
             number: data.number,
@@ -75,8 +74,8 @@ export default function UpdateAddressModal() {
 
          await getCustomer(customer?.id || 0);
          closeModal();
-      } catch (error) {
-         alert("Erro ao editar endereço: " + error);
+      } catch (error: any) {
+         toast.error(error.response.data);
       }
    };
 

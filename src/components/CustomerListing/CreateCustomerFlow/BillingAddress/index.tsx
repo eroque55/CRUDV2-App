@@ -1,17 +1,18 @@
-import { StyledDialog } from "@/src/components/commom/Modal/modal.styles";
-import ModalHeader from "@/src/components/commom/Modal/ModalHeader";
-import ModalFooter from "@/src/components/commom/Modal/ModalFooter";
+import { StyledDialog } from "@/src/components/Commom/Modal/modal.styles";
+import ModalHeader from "@/src/components/Commom/Modal/ModalHeader";
+import ModalFooter from "@/src/components/Commom/Modal/ModalFooter";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "../AddressForm";
 import { IAddressSchema, addressSchema } from "@/src/validations/addressSchema";
 import { Dispatch, SetStateAction } from "react";
 
-import { Customer, Address } from "@/src/@types/api";
+import { Customer, Address, City, State, Country } from "@/src/@types/api";
 import { AddressType, ResidenceType, StreetType } from "@/src/@types/enums";
+import { toast } from "react-toastify";
 
 interface Props {
-   setCustomer: Dispatch<SetStateAction<Customer>>;
+   setCustomer: Dispatch<SetStateAction<Partial<Customer>>>;
    onCancel: () => void;
    onSubmit: () => void;
 }
@@ -33,37 +34,41 @@ export default function BillingAddress({
 
    const submit: SubmitHandler<IAddressSchema> = async (data) => {
       try {
-         const address: Address = {
-            id: 0,
+         const country: Partial<Country> = {
+            id: data.countryId,
+         };
+
+         const state: Partial<State> = {
+            id: data.stateId,
+            country: country as Country,
+         };
+
+         const city: Partial<City> = {
+            id: data.cityId,
+            state: state as State,
+         };
+
+         const address: Partial<Address> = {
             nickname: data.nickname,
             street: data.street,
             number: data.number,
             neighborhood: data.neighborhood,
             cep: data.cep,
-            city: {
-               id: data.cityId,
-               name: "",
-               state: {
-                  id: data.stateId,
-                  name: "",
-                  country: { id: data.countryId, name: "" },
-               },
-            },
+            city: city as City,
             complement: data.complement,
-            addressType: "COBRANCA" as AddressType,
+            addressType: "ENTREGA" as AddressType,
             residenceType: data.residenceType as ResidenceType,
             streetType: data.streetType as StreetType,
          };
 
          setCustomer((prevCustomer) => ({
             ...prevCustomer,
-            addresses: [...(prevCustomer.addresses || []), address],
+            addresses: [...(prevCustomer.addresses || []), address as Address],
          }));
 
          onSubmit();
-      } catch (error) {
-         console.error("Erro ao salvar endereço:", error);
-         alert("Erro ao salvar endereço");
+      } catch (error: any) {
+         toast.error(error.response.data);
       }
    };
 

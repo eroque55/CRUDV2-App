@@ -7,17 +7,17 @@ import {
 import {
    StyledDialog,
    StyledOverlay,
-} from "@/src/components/commom/Modal/modal.styles";
-import ModalHeader from "@/src/components/commom/Modal/ModalHeader";
-import ModalFooter from "@/src/components/commom/Modal/ModalFooter";
+} from "@/src/components/Commom/Modal/modal.styles";
+import ModalHeader from "@/src/components/Commom/Modal/ModalHeader";
+import ModalFooter from "@/src/components/Commom/Modal/ModalFooter";
 import CardForm from "./Form";
 import { IAddressSchema, addressSchema } from "@/src/validations/addressSchema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { SuccesToast } from "@/src/components/commom/Toastify/SuccesToast";
+import { SuccesToast } from "@/src/components/Commom/Toastify/SuccesToast";
 
-import { Address } from "@/src/@types/api";
+import { Address, City, Country, Customer, State } from "@/src/@types/api";
 import {
    AddressType,
    Gender,
@@ -41,28 +41,38 @@ export default function CreateAddress() {
    });
 
    const onSubmit = async (data: IAddressSchema) => {
-      const address: Address = {
-         customer: {
-            id: customerId,
-         },
+      const country: Partial<Country> = {
+         id: data.countryId,
+      };
+
+      const state: Partial<State> = {
+         id: data.stateId,
+         country: country as Country,
+      };
+
+      const city: Partial<City> = {
+         id: data.cityId,
+         state: state as State,
+      };
+
+      const customer: Partial<Customer> = {
+         id: customerId,
+      };
+
+      const address: Partial<Address> = {
+         customer: customer as Customer,
          nickname: data.nickname,
          cep: data.cep,
          street: data.street,
          number: data.number,
          complement: data.complement,
          neighborhood: data.neighborhood,
-         city: {
-            id: data.cityId,
-            state: {
-               id: data.stateId,
-               country: { id: data.countryId },
-            },
-         },
+         city: city as City,
          addressType: data.addressType as AddressType,
          residenceType: data.residenceType as ResidenceType,
          streetType: data.streetType as StreetType,
       };
-      await createAddress(address);
+      await createAddress(address as Address);
       reset();
       closeModal();
       await getCustomer(customerId);

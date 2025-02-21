@@ -1,10 +1,10 @@
-import InfoContainer from "../../../commom/InfoContainer";
-import { StyledCard } from "../../common/StyledCard/index.styles";
+import InfoContainer from "../../../Commom/InfoContainer";
+import { StyledCard } from "../../Common/StyledCard/index.styles";
 import { capitalizeFirstLetter } from "@/src/util";
-import { ButtonsContainer } from "@/src/components/commom/DetailsActionButtons/index.styles";
-import ActionButtons from "@/src/components/commom/DetailsActionButtons/ActionButton";
+import { ButtonsContainer } from "@/src/components/Commom/DetailsActionButtons/index.styles";
 import { Customer } from "@/src/@types/api";
 import { useUpdateCustomer } from "@/src/store/CustomerDetailsStore";
+import ActionButtons from "@/src/components/Commom/DetailsActionButtons/ActionButton";
 
 interface Props {
    customer: Customer | null;

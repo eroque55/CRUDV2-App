@@ -7,7 +7,8 @@ import ContentHeader from "@/src/components/CustomerListing/ContentHeader";
 import { StyledMain, StyledContent } from "./page.styles";
 import ExitModal from "@/src/components/NavBar/ExitModal";
 import CreateCustomerFlow from "../components/CustomerListing/CreateCustomerFlow";
-import { StyledToastContainer } from "../components/commom/Toastify/index.styles";
+import { StyledToastContainer } from "../components/Commom/Toastify/index.styles";
+import CustomerFilter from "../components/CustomerListing/CustomerFilter";
 
 export default function Home() {
    return (
@@ -15,6 +16,7 @@ export default function Home() {
          <StyledToastContainer />
          <ExitModal />
          <CreateCustomerFlow />
+         <CustomerFilter />
          <StyledMain>
             <NavBar />
             <StyledContent>

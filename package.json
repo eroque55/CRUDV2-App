@@ -1,4 +1,10 @@
 {
+   "name": "crudv2-app",
+   "version": "1.0.0",
+   "main": "index.js",
+   "repository": "https://github.com/eroque55/CRUDV2-App.git",
+   "author": "Roque-55 <edurss1000@gmail.com>",
+   "license": "MIT",
    "private": true,
    "scripts": {
       "dev": "next dev",

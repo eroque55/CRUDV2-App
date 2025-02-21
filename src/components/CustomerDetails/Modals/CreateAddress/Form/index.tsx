@@ -1,5 +1,5 @@
 import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
-import { StyledModalForm } from "@/src/components/commom/Modal/modal.styles";
+import { StyledModalForm } from "@/src/components/Commom/Modal/modal.styles";
 import {
    StyledField,
    StyledInput,
@@ -8,7 +8,7 @@ import {
    StyledErrorSpan,
    StyledFieldTitle,
    StyledInputMask,
-} from "@/src/components/commom/Fields/index.styles";
+} from "@/src/components/Commom/Fields/index.styles";
 import { IAddressSchema } from "@/src/validations/addressSchema";
 import { City, Country, State } from "@/src/@types/api";
 import { useEffect, useState } from "react";
@@ -30,7 +30,6 @@ export default function AddressForm({ register, errors, setValue }: Props) {
          const fetchedCountries = await getCountries();
          setCountries(fetchedCountries);
 
-         // Automatically select the first country, state, and city
          if (fetchedCountries.length > 0) {
             const firstCountry = fetchedCountries[0];
             setValue("countryId", firstCountry.id);

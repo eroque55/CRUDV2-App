@@ -1,5 +1,5 @@
 import { useSairModalStore } from "@/src/store/NavBarStore";
-import Modal from "../../commom/Modal/AttentionModal";
+import Modal from "../../Commom/Modal/AttentionModal";
 
 export default function ExitModal() {
    const { ExitIsOpen: isOpen, exitCloseModal: closeModal } =

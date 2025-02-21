@@ -1,6 +1,6 @@
-import { StyledDialog } from "@/src/components/commom/Modal/modal.styles";
-import ModalHeader from "@/src/components/commom/Modal/ModalHeader";
-import ModalFooter from "@/src/components/commom/Modal/ModalFooter";
+import { StyledDialog } from "@/src/components/Commom/Modal/modal.styles";
+import ModalHeader from "@/src/components/Commom/Modal/ModalHeader";
+import ModalFooter from "@/src/components/Commom/Modal/ModalFooter";
 import CustomerForm from "./Form";
 import {
    ICustomerSchema,
@@ -13,7 +13,7 @@ import { Customer, Phone } from "@/src/@types/api";
 import { Gender, PhoneType } from "@/src/@types/enums";
 
 interface Props {
-   setCustomer: Dispatch<SetStateAction<Customer>>;
+   setCustomer: Dispatch<SetStateAction<Partial<Customer>>>;
    modalNext: () => void;
    modalBack: () => void;
 }
@@ -34,8 +34,7 @@ export default function CreateCustomerModal({
    });
 
    const onSubmit: SubmitHandler<ICustomerSchema> = async (data) => {
-      const phone: Phone = {
-         id: 0,
+      const phone: Partial<Phone> = {
          ddd: data.number.substring(0, 2),
          number: data.number.substring(2),
          phoneType: data.phoneType as PhoneType,
@@ -52,7 +51,7 @@ export default function CreateCustomerModal({
          password: data.password,
          ranking: data.ranking,
          status: true,
-         phones: [phone],
+         phones: [phone as Phone],
       }));
 
       modalNext();

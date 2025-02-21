@@ -1,13 +1,13 @@
 import { capitalizeFirstLetter } from "@/src/util";
-import InfoContainer from "@/src/components/commom/InfoContainer";
+import InfoContainer from "@/src/components/Commom/InfoContainer";
 import { toast } from "react-toastify";
 import { deleteCard, updateCard } from "@/src/services/CardService";
-import { ButtonsContainer } from "@/src/components/commom/DetailsActionButtons/index.styles";
-import ActionButtons from "@/src/components/commom/DetailsActionButtons/ActionButton";
-import { StyledCard } from "../../common/StyledCard/index.styles";
+import { ButtonsContainer } from "@/src/components/Commom/DetailsActionButtons/index.styles";
+import ActionButtons from "@/src/components/Commom/DetailsActionButtons/ActionButton";
+import { StyledCard } from "../../Common/StyledCard/index.styles";
 import { useCustomerState } from "@/src/store/CustomerDetailsStore";
 import { Card } from "@/src/@types/api";
-import { ConfirmationToast } from "@/src/components/commom/Toastify/ConfirmationToast";
+import { ConfirmationToast } from "@/src/components/Commom/Toastify/ConfirmationToast";
 
 interface Props {
    customerId: number;
@@ -21,8 +21,8 @@ export default function CardCard({ card, customerId }: Props) {
       try {
          await deleteCard(card.id);
          await getCustomer(customerId);
-      } catch (error) {
-         alert("Erro ao excluir cartão: " + error);
+      } catch (error: any) {
+         toast.error(error.response.data);
       }
    }
 
@@ -30,8 +30,8 @@ export default function CardCard({ card, customerId }: Props) {
       try {
          await updateCard(card.id);
          await getCustomer(customerId);
-      } catch (error) {
-         alert("Erro ao excluir cartão: " + error);
+      } catch (error: any) {
+         toast.error(error.response.data);
       }
    }
 
