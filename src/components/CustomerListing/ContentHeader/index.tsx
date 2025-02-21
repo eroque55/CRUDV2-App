@@ -1,11 +1,11 @@
 import { StyledTitle } from "@/src/components/commom/Title";
-import SearchBar from "@/src/components/commom/SearchBar";
 import AddButton from "@/src/components/commom/AddButton";
 import {
    StyledContentHeaderOptions,
    StyledContentHeader,
 } from "./index.styles";
 import { useCreateModalStore } from "@/src/store/CustomerListingStore";
+import FilterButton from "@/src/components/Commom/FilterButton/index";
 
 interface Props {
    children: React.ReactNode;
@@ -17,7 +17,7 @@ export default function ContentHeader({ children }: Props) {
       <StyledContentHeader>
          <StyledTitle>{children}</StyledTitle>
          <StyledContentHeaderOptions>
-            <SearchBar />
+            <FilterButton />
             <AddButton onClick={createOpenModal} />
          </StyledContentHeaderOptions>
       </StyledContentHeader>
