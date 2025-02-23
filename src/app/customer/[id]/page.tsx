@@ -25,6 +25,7 @@ import AddButton from "@/src/components/Commom/AddButton";
 import {
    useCreateAddress,
    useCreateCard,
+   useUpdatePassword,
 } from "@/src/store/CustomerDetailsStore";
 import CreateCard from "@/src/components/CustomerDetails/Modals/CreateCard";
 import CreateAddress from "@/src/components/CustomerDetails/Modals/CreateAddress";
@@ -32,6 +33,7 @@ import { StyledToastContainer } from "@/src/components/Commom/Toastify/index.sty
 import UpdateAddressModal from "@/src/components/CustomerDetails/Modals/UpdateAddress";
 import { useCustomerDetails } from "@/src/hooks/useCustomerDetails";
 import UpdatePersonalDataModal from "@/src/components/CustomerDetails/Modals/UpdatePersonalData";
+import ResetPasswordButton from "@/src/components/Commom/ResetPasswordButton";
 
 export default function CustomerDetails() {
    const params = useParams();
@@ -41,6 +43,7 @@ export default function CustomerDetails() {
 
    const { openModal: openCreateAddress } = useCreateAddress();
    const { openModal: openCreateCard } = useCreateCard();
+   const { openModal: openUpdatePassword } = useUpdatePassword();
 
    if (loading || !customer) return <Loading />;
 
@@ -81,14 +84,16 @@ export default function CustomerDetails() {
                            )
                         )}
                      </TabsContainer>
-                     {page !== 0 && (
-                        <AddButton
-                           onClick={() =>
-                              page === 1
-                                 ? openCreateAddress(id)
-                                 : openCreateCard(id)
-                           }
+                     {page === 0 && (
+                        <ResetPasswordButton
+                           onClick={() => openUpdatePassword(id)}
                         />
+                     )}
+                     {page === 1 && (
+                        <AddButton onClick={() => openCreateAddress(id)} />
+                     )}
+                     {page === 2 && (
+                        <AddButton onClick={() => openCreateCard(id)} />
                      )}
                   </StyledActions>
                </StyledHeader>

@@ -45,32 +45,35 @@ export default function CardCard({ card, customerId }: Props) {
          <InfoContainer title="Número do cartão">{card.number}</InfoContainer>
          <ButtonsContainer>
             {!card.preferential && (
-               <ActionButtons
-                  onClick={handleSetPreferential}
-                  src="/icons/PreferentialButton.svg"
-                  alt="Botão de preferencial"
-               />
+               <>
+                  <ActionButtons
+                     onClick={handleSetPreferential}
+                     src="/icons/PreferentialButton.svg"
+                     alt="Botão de preferencial"
+                  />
+                  <ActionButtons
+                     onClick={() => {
+                        toast(ConfirmationToast, {
+                           data: {
+                              title: "Tem certeza?",
+                              message:
+                                 "Tem certeza que deseja excluir esse cartão?",
+                              notice: "Essa ação não poderá ser desfeita",
+                              successMessage: "Cartão excluído com sucesso!",
+                              actionButton: "Excluir",
+                              onSubmit: handleDeleteCard,
+                           },
+                           autoClose: false,
+                           position: "top-center",
+                           closeButton: false,
+                           hideProgressBar: true,
+                        });
+                     }}
+                     src="/icons/DeleteButton.svg"
+                     alt="Botão de excluir"
+                  />
+               </>
             )}
-            <ActionButtons
-               onClick={() => {
-                  toast(ConfirmationToast, {
-                     data: {
-                        title: "Tem certeza?",
-                        message: "Tem certeza que deseja excluir esse cartão?",
-                        notice: "Essa ação não poderá ser desfeita",
-                        successMessage: "Cartão excluído com sucesso!",
-                        actionButton: "Excluir",
-                        onSubmit: handleDeleteCard,
-                     },
-                     autoClose: false,
-                     position: "top-center",
-                     closeButton: false,
-                     hideProgressBar: true,
-                  });
-               }}
-               src="/icons/DeleteButton.svg"
-               alt="Botão de excluir"
-            />
          </ButtonsContainer>
          <InfoContainer title="Titular do cartão">
             {card.cardholder}

@@ -73,3 +73,10 @@ export const useCreateCard = create<CreateState>((set) => ({
    openModal: (customerId: number) => set({ isOpen: true, customerId }),
    closeModal: () => set({ isOpen: false }),
 }));
+
+export const useUpdatePassword = create<CreateState>((set) => ({
+   isOpen: false,
+   customerId: 0,
+   openModal: (customerId: number) => set({ isOpen: true, customerId }),
+   closeModal: () => set({ isOpen: false }),
+}));

@@ -163,7 +163,7 @@ export default function CustomerFilter() {
             </StyledFilterForm>
             <StyledFilterButtonsContainer>
                <StyledFilterButton onClick={handleSubmit(onSubmit)}>
-                  Filtar
+                  Filtrar
                </StyledFilterButton>
                <StyledFilterClear onClick={handleReset}>
                   Limpar
