@@ -80,7 +80,6 @@ export default function CardCard({ card, customerId }: Props) {
          </InfoContainer>
          <InfoContainer title="Validade">{expirationDate}</InfoContainer>
          <InfoContainer title="Bandeira do cartão">{cardBrand}</InfoContainer>
-         <InfoContainer title="Preferencial">{preferential}</InfoContainer>
       </StyledCard>
    );
 }

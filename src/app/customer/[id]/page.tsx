@@ -34,6 +34,7 @@ import UpdateAddressModal from "@/src/components/CustomerDetails/Modals/UpdateAd
 import { useCustomerDetails } from "@/src/hooks/useCustomerDetails";
 import UpdatePersonalDataModal from "@/src/components/CustomerDetails/Modals/UpdatePersonalData";
 import ResetPasswordButton from "@/src/components/Commom/ResetPasswordButton";
+import ResetPassword from "@/src/components/CustomerDetails/Modals/ResetPassword";
 
 export default function CustomerDetails() {
    const params = useParams();
@@ -57,6 +58,7 @@ export default function CustomerDetails() {
          <ExitModal />
          <CreateCard />
          <CreateAddress />
+         <ResetPassword />
          <UpdateAddressModal />
          <UpdatePersonalDataModal />
          <StyledMain>

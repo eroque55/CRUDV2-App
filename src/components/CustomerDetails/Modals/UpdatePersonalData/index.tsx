@@ -61,7 +61,6 @@ export default function UpdatePersonalDataModal() {
 
          if (customer?.id !== undefined) {
             await updateCustomer(customer.id, updatedCustomer);
-            console.log(updatedPhone);
             await updatePhone(updatedPhone.id || 0, updatedPhone);
          } else {
             throw new Error("Id do cliente não encontrado");

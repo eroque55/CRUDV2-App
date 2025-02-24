@@ -1,8 +1,4 @@
-import {
-   useCreateCard,
-   useCustomerState,
-} from "@/src/store/CustomerDetailsStore";
-import { createCard } from "@/src/services/CardService";
+import { useUpdatePassword } from "@/src/store/CustomerDetailsStore";
 
 import {
    StyledDialog,
@@ -10,18 +6,20 @@ import {
 } from "@/src/components/Commom/Modal/modal.styles";
 import ModalHeader from "@/src/components/Commom/Modal/ModalHeader";
 import ModalFooter from "@/src/components/Commom/Modal/ModalFooter";
-import CardForm from "./Form";
-import { ICardSchema, cardSchema } from "@/src/validations/cardSchema";
+import ResetPasswordForm from "./Form";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { SuccesToast } from "@/src/components/Commom/Toastify/SuccesToast";
-import { Card, Customer } from "@/src/@types/api";
-import { CardBrand } from "@/src/@types/enums";
+import { Customer } from "@/src/@types/api";
+import {
+   IResetPasswordSchema,
+   resetPasswordSchema,
+} from "@/src/validations/resetPasswordSchema";
+import { updateCustomer } from "@/src/services/CustomerService";
 
 export default function ResetPassword() {
-   const { isOpen, closeModal, customerId } = useCreateCard();
-   const { getCustomer } = useCustomerState();
+   const { isOpen, closeModal, customerId } = useUpdatePassword();
 
    const {
       register,
@@ -29,35 +27,25 @@ export default function ResetPassword() {
       setValue,
       reset,
       formState: { errors },
-   } = useForm<ICardSchema>({
-      resolver: yupResolver(cardSchema),
+   } = useForm<IResetPasswordSchema>({
+      resolver: yupResolver(resetPasswordSchema),
       mode: "onBlur",
    });
 
-   const onSubmit = async (data: ICardSchema) => {
+   const onSubmit = async (data: IResetPasswordSchema) => {
       try {
          const customer: Partial<Customer> = {
-            id: customerId,
+            password: data.newPassword,
+            confPassword: data.lastPassword,
          };
 
-         const card: Partial<Card> = {
-            customer: customer as Customer,
-            number: data.number,
-            cardholder: data.cardholder,
-            cvv: data.cvv,
-            expirationDate: data.expirationDate,
-            cardBrand: data.cardBrand as CardBrand,
-            preferential: false,
-         };
-
-         await createCard(card as Card);
+         await updateCustomer(customerId, customer as Customer);
          reset();
          closeModal();
-         await getCustomer(customerId);
          toast(SuccesToast, {
             data: {
-               title: "Cartão cadastrado",
-               message: "Cartão cadastrado com sucesso!",
+               title: "Sucesso!",
+               message: "Senha alterada com sucesso!",
             },
             autoClose: false,
             position: "top-center",
@@ -74,13 +62,13 @@ export default function ResetPassword() {
    return (
       <StyledOverlay>
          <StyledDialog>
-            <ModalHeader>Cadastrar cartão</ModalHeader>
-            <CardForm register={register} setValue={setValue} errors={errors} />
+            <ModalHeader>Alterar senha</ModalHeader>
+            <ResetPasswordForm register={register} errors={errors} />
             <ModalFooter
                onCancel={closeModal}
                onSubmit={handleSubmit(onSubmit)}
             >
-               Cadastrar
+               Alterar
             </ModalFooter>
          </StyledDialog>
       </StyledOverlay>
