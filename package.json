@@ -9,7 +9,8 @@
    "scripts": {
       "dev": "next dev",
       "build": "next build",
-      "start": "next start"
+      "start": "next start",
+      "cy:open": "cypress open"
    },
    "dependencies": {
       "@hookform/resolvers": "^4.1.0",
@@ -31,6 +32,7 @@
       "@types/react-dom": "^19.0.4",
       "@types/styled-components": "^5.1.34",
       "@types/toastify-js": "^1.12.3",
+      "cypress": "^14.1.0",
       "typescript": "^5.7.3"
    }
 }
