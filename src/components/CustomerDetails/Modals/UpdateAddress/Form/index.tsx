@@ -85,10 +85,7 @@ export default function AddressForm({
          setValue("cityId", 0);
       }
    };
-
    const cep = address.cep;
-
-   setValue("cep", cep);
 
    return (
       <StyledModalForm>
