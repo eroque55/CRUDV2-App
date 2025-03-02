@@ -12,6 +12,8 @@ export const customerSchema = yup.object().shape({
 
    birthDate: yup
       .date()
+      .nullable()
+      .typeError("Data de nascimento inválida")
       .required("Data de nascimento é obrigatória")
       .min(new Date("1925-01-01"), "Data de nascimento muito antiga")
       .max(new Date(), "Data de nascimento não pode estar no futuro"),
@@ -50,6 +52,7 @@ export const customerSchema = yup.object().shape({
 
    ranking: yup
       .number()
+      .typeError("Ranking invalido")
       .required("Ranking é obrigatório")
       .integer("Ranking deve ser um número inteiro")
       .min(1, "Ranking deve ser pelo menos 1")

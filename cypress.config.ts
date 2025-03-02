@@ -1,6 +1,7 @@
 import { defineConfig } from "cypress";
 
 export default defineConfig({
+   projectId: "iqfizd",
    component: {
       devServer: {
          framework: "next",
@@ -10,5 +11,15 @@ export default defineConfig({
    e2e: {
       baseUrl: "http://localhost:3000",
       setupNodeEvents(on, config) {},
+   },
+   video: true,
+   videosFolder: "cypress/results/videos",
+   reporter: "mochawesome",
+   reporterOptions: {
+      reportDir: "cypress/results/reports",
+      overwrite: true,
+      html: true,
+      json: false,
+      timestamp: "mmddyyyy_HHMMss",
    },
 });

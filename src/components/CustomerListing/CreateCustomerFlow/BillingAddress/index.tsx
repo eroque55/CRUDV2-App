@@ -56,7 +56,7 @@ export default function BillingAddress({
             cep: data.cep,
             city: city as City,
             complement: data.complement,
-            addressType: "ENTREGA" as AddressType,
+            addressType: "COBRANCA" as AddressType,
             residenceType: data.residenceType as ResidenceType,
             streetType: data.streetType as StreetType,
          };

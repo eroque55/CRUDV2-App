@@ -43,7 +43,9 @@ export const addressSchema = yup.object().shape({
 
    number: yup
       .number()
+      .typeError("Número inválido")
       .required("Número é obrigatório")
+      .integer("Número deve ser um número inteiro")
       .positive("Número deve ser positivo"),
 
    neighborhood: yup
