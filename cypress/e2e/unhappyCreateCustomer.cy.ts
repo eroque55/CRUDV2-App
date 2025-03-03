@@ -1,5 +1,5 @@
 import createCustomer from "../support/listing/createCustomer";
-import { customers } from "../fixtures/customers.json";
+import { customersToCreate } from "../fixtures/customers.json";
 
 describe("Unhappy create customer path", () => {
    beforeEach(() => {
@@ -13,16 +13,16 @@ describe("Unhappy create customer path", () => {
    });
 
    it("Try going next without billing address", () => {
-      createCustomer.fillPersonalData(customers[0]);
+      createCustomer.fillPersonalData(customersToCreate[0]);
       cy.get(".bgjfki").click();
       cy.get(".bgjfki").click();
       createCustomer.validateAddress();
    });
 
    it("Try going next without delivery address", () => {
-      createCustomer.fillPersonalData(customers[0]);
+      createCustomer.fillPersonalData(customersToCreate[0]);
       cy.get(".bgjfki").click();
-      createCustomer.fillBillingAddress(customers[0].addresses[0]);
+      createCustomer.fillBillingAddress(customersToCreate[0].addresses[0]);
       cy.get(".bgjfki").click();
       cy.get(".bgjfki").click();
       createCustomer.validateAddress();

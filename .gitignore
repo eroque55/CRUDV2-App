@@ -12,6 +12,7 @@
 
 # testing
 /cypress/results
+/cypress/screenshots
 
 # next.js
 /.next/

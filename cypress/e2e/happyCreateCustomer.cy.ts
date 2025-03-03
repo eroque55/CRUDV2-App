@@ -1,5 +1,5 @@
 import CreateCustomer from "../support/listing/createCustomer";
-import { customers } from "../fixtures/customers.json";
+import { customersToCreate } from "../fixtures/customers.json";
 
 describe("Happy create customer", () => {
    beforeEach(() => {
@@ -16,7 +16,7 @@ describe("Happy create customer", () => {
          lastCustomers = response?.body;
       });
 
-      customers.forEach((customer: any, index: number) => {
+      customersToCreate.forEach((customer: any, index: number) => {
          cy.get(".index-styles__StyledAddButton-sc-2bd0f11a-0").click();
          CreateCustomer.fillAllData(customer);
 

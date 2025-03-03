@@ -1,5 +1,5 @@
 {
-   "customers": [
+   "customersToCreate": [
       {
          "id": 0,
          "name": "Marcelo Ferreira Lima",
@@ -305,5 +305,66 @@
             }
          ]
       }
-   ]
+   ],
+   "customersToUpdate": {
+      "id": 0,
+      "name": "Carlos Eduardo Martins",
+      "birthDate": "1988-05-23T02:00:00.000Z",
+      "cpf": "53285968036",
+      "email": "carlos.martins88@example.com",
+      "gender": "MASCULINO",
+      "password": "Bb54321@",
+      "confPassword": "Bb54321@",
+      "ranking": 2,
+      "status": true,
+      "phones": [
+         {
+            "ddd": "11",
+            "number": "972775377",
+            "phoneType": "CELULAR"
+         }
+      ],
+      "addresses": [
+         {
+            "nickname": "Endereço de cobrança",
+            "street": "Avenida Paulista",
+            "number": 1000,
+            "neighborhood": "Bela Vista",
+            "cep": "01311000",
+            "city": {
+               "id": 34,
+               "state": {
+                  "id": 17,
+                  "country": {
+                     "id": 6
+                  }
+               }
+            },
+            "complement": "Apto 101",
+            "addressType": "COBRANCA",
+            "residenceType": "APARTAMENTO",
+            "streetType": "AVENIDA"
+         },
+         {
+            "nickname": "Endereço de entrega",
+            "street": "Avenida Paulista",
+            "number": 1000,
+            "neighborhood": "Bela Vista",
+            "cep": "01311000",
+            "city": {
+               "id": 34,
+               "state": {
+                  "id": 17,
+                  "country": {
+                     "id": 6
+                  }
+               }
+            },
+            "complement": "",
+            "addressType": "ENTREGA",
+            "residenceType": "APARTAMENTO",
+            "streetType": "AVENIDA"
+         }
+      ]
+   }
 }

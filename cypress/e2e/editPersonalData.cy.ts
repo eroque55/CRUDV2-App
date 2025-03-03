@@ -1,9 +1,9 @@
 import EditCustomer from "../support/details/editCustomer";
-import { customers } from "../fixtures/customers.json";
+import { customersToUpdate } from "../fixtures/customers.json";
 
 describe("Edit personal data", () => {
    it("Edit personal data", () => {
-      cy.visit("/customer/17");
+      cy.visit("/customer/1");
 
       cy.intercept("GET", "http://localhost:8000/customers/*", (req) => {
          delete req.headers["if-none-match"];
@@ -19,7 +19,7 @@ describe("Edit personal data", () => {
          const customer = response?.body;
          cy.get(".index-styles__StyledActionButton-sc-38363f88-0").click();
          EditCustomer.verifyPersonalData(customer);
-         EditCustomer.submitPersonalData(customers[0]);
+         EditCustomer.submitPersonalData(customersToUpdate);
 
          cy.get(".modal-styles__StyledDialog-sc-c19ee1d0-1").should(
             "be.visible"
