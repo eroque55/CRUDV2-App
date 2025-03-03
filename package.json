@@ -10,7 +10,9 @@
       "dev": "next dev",
       "build": "next build",
       "start": "next start",
-      "cy:open": "cypress open"
+      "cy:open": "cypress open",
+      "cy:run": "cypress run",
+      "cy:run:ci": "npx cypress run --record --key 88ddb3ab-0480-4887-8e08-d8522effa971"
    },
    "dependencies": {
       "@hookform/resolvers": "^4.1.0",
