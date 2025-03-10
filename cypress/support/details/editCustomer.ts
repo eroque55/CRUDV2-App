@@ -1,5 +1,10 @@
-import { PersonalData } from "./elements";
-import { formatPhone, formatCpf } from "../../../src/util";
+import {
+   PersonalData,
+   CreateAddress,
+   UpdateAddress,
+   CreateCard,
+} from "./elements";
+import { formatPhone, formatCpf, formatCep } from "../../../src/util";
 
 class EditCustomer {
    verifyPersonalData(customerPersonalData: any) {
@@ -27,13 +32,12 @@ class EditCustomer {
       cy.get(PersonalData.phone).should(
          "have.value",
          formatPhone(
-            customerPersonalData.phones[0].ddd +
-               customerPersonalData.phones[0].number
+            customerPersonalData.phone.ddd + customerPersonalData.phone.number
          )
       );
       cy.get(PersonalData.phoneType).should(
          "have.value",
-         customerPersonalData.phones[0].phoneType
+         customerPersonalData.phone.phoneType
       );
    }
 
@@ -53,77 +57,91 @@ class EditCustomer {
       cy.get(PersonalData.saveButton).click();
    }
 
-   // fillBillingAddress(billingAddress: any) {
-   //    cy.get(BillingAddress.nickname).clear().type(billingAddress.nickname);
-   //    cy.get(BillingAddress.cep).clear().type(billingAddress.cep);
-   //    cy.get(BillingAddress.residenceType).select(billingAddress.residenceType);
-   //    cy.get(BillingAddress.streetType).select(billingAddress.streetType);
-   //    cy.get(BillingAddress.street).clear().type(billingAddress.street);
-   //    cy.get(BillingAddress.number)
-   //       .clear()
-   //       .type(billingAddress.number.toString());
-   //    cy.get(BillingAddress.neighborhood)
-   //       .clear()
-   //       .type(billingAddress.neighborhood);
-   //    cy.get(BillingAddress.country).select(
-   //       billingAddress.city.state.country.id.toString()
-   //    );
-   //    cy.get(BillingAddress.state).select(
-   //       billingAddress.city.state.id.toString()
-   //    );
-   //    cy.get(BillingAddress.city).select(billingAddress.city.id.toString());
-   //    {
-   //       billingAddress.complement &&
-   //          cy.get(DeliveryAddress.complement).type(billingAddress.complement);
-   //    }
-   //    cy.get(BillingAddress.nextButton).click();
-   // }
+   submitAddress(address: any) {
+      cy.get(CreateAddress.nickname).type(address.nickname);
+      cy.get(CreateAddress.cep).type(address.cep);
+      cy.get(CreateAddress.addressType).select(address.addressType);
+      cy.get(CreateAddress.residenceType).select(address.residenceType);
+      cy.get(CreateAddress.streetType).select(address.streetType);
+      cy.get(CreateAddress.street).type(address.street);
+      cy.get(CreateAddress.number).type(address.number.toString());
+      cy.get(CreateAddress.neighborhood).type(address.neighborhood);
+      cy.get(CreateAddress.country).select(
+         address.city.state.country.id.toString()
+      );
+      cy.get(CreateAddress.state).select(address.city.state.id.toString());
+      cy.get(CreateAddress.city).select(address.city.id.toString());
+      {
+         address.complement &&
+            cy.get(CreateAddress.complement).type(address.complement);
+      }
+      cy.get(CreateAddress.saveButton).click();
+   }
 
-   // fillDeliveryAddress(deliveryAddress: any) {
-   //    cy.get(DeliveryAddress.nickname).clear().type(deliveryAddress.nickname);
-   //    cy.get(DeliveryAddress.cep).clear().type(deliveryAddress.cep);
-   //    cy.get(DeliveryAddress.residenceType).select(
-   //       deliveryAddress.residenceType
-   //    );
-   //    cy.get(DeliveryAddress.streetType).select(deliveryAddress.streetType);
-   //    cy.get(DeliveryAddress.street).clear().type(deliveryAddress.street);
-   //    cy.get(DeliveryAddress.number)
-   //       .clear()
-   //       .type(deliveryAddress.number.toString());
-   //    cy.get(DeliveryAddress.neighborhood)
-   //       .clear()
-   //       .type(deliveryAddress.neighborhood);
-   //    cy.get(DeliveryAddress.country).select(
-   //       deliveryAddress.city.state.country.id.toString()
-   //    );
-   //    cy.get(DeliveryAddress.state).select(
-   //       deliveryAddress.city.state.id.toString()
-   //    );
-   //    cy.get(DeliveryAddress.city).select(deliveryAddress.city.id.toString());
-   //    {
-   //       deliveryAddress.complement &&
-   //          cy.get(DeliveryAddress.complement).type(deliveryAddress.complement);
-   //    }
-   //    cy.get(DeliveryAddress.nextButton).click();
-   // }
+   verifyAddress(address: any) {
+      cy.get(UpdateAddress.nickname).should("have.value", address.nickname);
+      cy.get(UpdateAddress.cep).should("have.value", formatCep(address.cep));
+      cy.get(UpdateAddress.residenceType).should(
+         "have.value",
+         address.residenceType
+      );
+      cy.get(UpdateAddress.streetType).should("have.value", address.streetType);
+      cy.get(UpdateAddress.street).should("have.value", address.street);
+      cy.get(UpdateAddress.number).should(
+         "have.value",
+         address.number.toString()
+      );
+      cy.get(UpdateAddress.neighborhood).should(
+         "have.value",
+         address.neighborhood
+      );
+      cy.get(UpdateAddress.country).should(
+         "have.value",
+         address.city.state.country.id.toString()
+      );
+      cy.get(UpdateAddress.state).should(
+         "have.value",
+         address.city.state.id.toString()
+      );
+      cy.get(UpdateAddress.city).should(
+         "have.value",
+         address.city.id.toString()
+      );
+      {
+         address.complement &&
+            cy
+               .get(UpdateAddress.complement)
+               .should("have.value", address.complement);
+      }
+   }
 
-   // validatePersonalData() {
-   //    cy.contains("Nome é obrigatório").should("be.visible");
-   //    cy.contains("Data de nascimento inválida").should("be.visible");
-   //    cy.contains("CPF é obrigatório").should("be.visible");
-   //    cy.contains("E-mail é obrigatório").should("be.visible");
-   //    cy.contains("Senha é obrigatória").should("be.visible");
-   //    cy.contains("Confirmação de senha é obrigatória").should("be.visible");
-   //    cy.contains("Número de telefone é obrigatório").should("be.visible");
-   // }
+   updateAddress(address: any) {
+      cy.get(UpdateAddress.nickname).clear().type(address.nickname);
+      cy.get(UpdateAddress.cep).clear().type(address.cep);
+      cy.get(UpdateAddress.residenceType).select(address.residenceType);
+      cy.get(UpdateAddress.streetType).select(address.streetType);
+      cy.get(UpdateAddress.street).clear().type(address.street);
+      cy.get(UpdateAddress.number).clear().type(address.number.toString());
+      cy.get(UpdateAddress.neighborhood).clear().type(address.neighborhood);
+      cy.get(UpdateAddress.country).select(
+         address.city.state.country.id.toString()
+      );
+      cy.get(UpdateAddress.state).select(address.city.state.id.toString());
+      cy.get(UpdateAddress.city).select(address.city.id.toString());
+      cy.get(UpdateAddress.complement).clear().type(address.complement);
 
-   //    validateAddress() {
-   //       cy.contains("Apelido é obrigatório").should("be.visible");
-   //       cy.contains("CEP é obrigatório").should("be.visible");
-   //       cy.contains("Logradouro é obrigatório").should("be.visible");
-   //       cy.contains("Número inválido").should("be.visible");
-   //       cy.contains("Bairro é obrigatório").should("be.visible");
-   //    }
+      cy.get(UpdateAddress.saveButton).click();
+   }
+
+   submitCard(card: any) {
+      cy.get(CreateCard.number).type(card.number);
+      cy.get(CreateCard.expirationDate).type(card.expirationDate);
+      cy.get(CreateCard.cardHolder).type(card.cardHolder);
+      cy.get(CreateCard.cvv).type(card.cvv);
+      cy.get(CreateCard.cardBrand).type(card.cardBrand);
+
+      cy.get(CreateCard.saveButton).click();
+   }
 }
 
 export default new EditCustomer();

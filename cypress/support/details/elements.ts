@@ -10,22 +10,23 @@ export const PersonalData = {
    saveButton: ".bgjfki",
 };
 
-export const BillingAddress = {
+export const CreateAddress = {
    nickname: ":nth-child(1) > .index-styles__StyledInput-sc-bb82b5be-1",
    cep: ".index-styles__StyledInputMask-sc-bb82b5be-2",
-   residenceType: ":nth-child(3) > .index-styles__StyledSelect-sc-bb82b5be-3",
-   streetType: ":nth-child(4) > .index-styles__StyledSelect-sc-bb82b5be-3",
-   street: ":nth-child(5) > .index-styles__StyledInput-sc-bb82b5be-1",
-   number: ":nth-child(6) > .index-styles__StyledInput-sc-bb82b5be-1",
-   neighborhood: ":nth-child(7) > .index-styles__StyledInput-sc-bb82b5be-1",
-   country: ":nth-child(8) > .index-styles__StyledSelect-sc-bb82b5be-3",
-   state: ":nth-child(9) > .index-styles__StyledSelect-sc-bb82b5be-3",
-   city: ":nth-child(10) > .index-styles__StyledSelect-sc-bb82b5be-3",
-   complement: ":nth-child(11) > .index-styles__StyledInput-sc-bb82b5be-1",
-   nextButton: ".bgjfki",
+   addressType: ":nth-child(3) > .index-styles__StyledSelect-sc-bb82b5be-3",
+   residenceType: ":nth-child(4) > .index-styles__StyledSelect-sc-bb82b5be-3",
+   streetType: ":nth-child(5) > .index-styles__StyledSelect-sc-bb82b5be-3",
+   street: ":nth-child(6) > .index-styles__StyledInput-sc-bb82b5be-1",
+   number: ":nth-child(7) > .index-styles__StyledInput-sc-bb82b5be-1",
+   neighborhood: ":nth-child(8) > .index-styles__StyledInput-sc-bb82b5be-1",
+   country: ":nth-child(9) > .index-styles__StyledSelect-sc-bb82b5be-3",
+   state: ":nth-child(10) > .index-styles__StyledSelect-sc-bb82b5be-3",
+   city: ":nth-child(11) > .index-styles__StyledSelect-sc-bb82b5be-3",
+   complement: ":nth-child(12) > .index-styles__StyledInput-sc-bb82b5be-1",
+   saveButton: ".bgjfki",
 };
 
-export const DeliveryAddress = {
+export const UpdateAddress = {
    nickname: ":nth-child(1) > .index-styles__StyledInput-sc-bb82b5be-1",
    cep: ".index-styles__StyledInputMask-sc-bb82b5be-2",
    residenceType: ":nth-child(3) > .index-styles__StyledSelect-sc-bb82b5be-3",
@@ -37,5 +38,15 @@ export const DeliveryAddress = {
    state: ":nth-child(9) > .index-styles__StyledSelect-sc-bb82b5be-3",
    city: ":nth-child(10) > .index-styles__StyledSelect-sc-bb82b5be-3",
    complement: ":nth-child(11) > .index-styles__StyledInput-sc-bb82b5be-1",
-   nextButton: ".bgjfki",
+   saveButton: ".bgjfki",
+};
+
+export const CreateCard = {
+   number: ":nth-child(1) > .index-styles__StyledInputMask-sc-bb82b5be-2",
+   expirationDate:
+      ":nth-child(2) > .index-styles__StyledInputMask-sc-bb82b5be-2",
+   cardHolder: ".index-styles__StyledInput-sc-bb82b5be-1",
+   cvv: ":nth-child(4) > .index-styles__StyledInputMask-sc-bb82b5be-2",
+   cardBrand: ".index-styles__StyledSelect-sc-bb82b5be-3",
+   saveButton: ".bgjfki",
 };

@@ -366,5 +366,35 @@
             "streetType": "AVENIDA"
          }
       ]
+   },
+   "addressToUpdate": {
+      "nickname": "Endereço de cobrança",
+      "street": "Rua das Palmeiras",
+      "number": 120,
+      "neighborhood": "Centro",
+      "cep": "08790551",
+      "city": {
+         "id": 34,
+         "state": {
+            "id": 17,
+            "country": {
+               "id": 6
+            }
+         }
+      },
+      "complement": "Casa 2",
+      "customer": { "id": 1 },
+      "addressType": "COBRANCA",
+      "residenceType": "CASA",
+      "streetType": "RUA"
+   },
+   "cardToCreate": {
+      "number": "1234567890123456",
+      "expirationDate": "0325",
+      "cardHolder": "Marcelo Ferreira Lima",
+      "customer": { "id": 1 },
+      "cvv": "123",
+      "cardBrand": "VISA",
+      "preferential": false
    }
 }

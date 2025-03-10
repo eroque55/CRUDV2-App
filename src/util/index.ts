@@ -8,3 +8,7 @@ export const formatCpf = (cpf: string) => {
 export const formatPhone = (phone: string) => {
    return phone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
 };
+
+export const formatCep = (cep: string) => {
+   return cep.replace(/(\d{5})(\d{3})/, "$1-$2");
+};

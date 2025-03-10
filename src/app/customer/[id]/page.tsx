@@ -50,8 +50,6 @@ export default function CustomerDetails() {
 
    const handlePageChange = (newPage: number) => setPage(newPage);
 
-   const phone = customer.phones?.[0] ?? null;
-
    return (
       <>
          <StyledToastContainer />
@@ -101,7 +99,10 @@ export default function CustomerDetails() {
                </StyledHeader>
 
                {page === 0 && (
-                  <PersonalDataPage customer={customer} phone={phone} />
+                  <PersonalDataPage
+                     customer={customer}
+                     phone={customer.phone}
+                  />
                )}
                {page === 1 && (
                   <AddressesPage

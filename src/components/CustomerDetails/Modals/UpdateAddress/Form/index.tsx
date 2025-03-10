@@ -42,9 +42,9 @@ export default function AddressForm({
          const fetchedCountries = await getCountries();
          setCountries(fetchedCountries);
 
-         setValue("cityId", cityId);
-         setValue("stateId", stateId);
          setValue("countryId", countryId);
+         setValue("stateId", stateId);
+         setValue("cityId", cityId);
 
          const selectedCountry = fetchedCountries.find(
             (country) => country.id === countryId
@@ -265,6 +265,19 @@ export default function AddressForm({
                   </option>
                ))}
             </StyledSelect>
+         </StyledField>
+
+         <StyledField>
+            <StyledFieldTitle>
+               <StyledLabel>Complemento (opcional)</StyledLabel>
+               {errors.complement && (
+                  <StyledErrorSpan>{errors.complement.message}</StyledErrorSpan>
+               )}
+            </StyledFieldTitle>
+            <StyledInput
+               defaultValue={address.complement}
+               {...register("complement")}
+            />
          </StyledField>
       </StyledModalForm>
    );

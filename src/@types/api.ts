@@ -58,7 +58,7 @@ export interface Customer {
    ranking: number;
    addresses: Address[];
    cards: Card[];
-   phones: Phone[];
+   phone: Phone;
 }
 
 export interface Phone {
