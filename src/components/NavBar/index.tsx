@@ -1,8 +1,8 @@
 import Image from "next/image";
 
 import NavBarItem from "@/src/components/NavBar/NavItem";
-import logo from "@/public/images/logo.svg";
-import logoX from "@/public/images/logoX.svg";
+import logoFull from "@/public/images/logo-full.svg";
+import logoOnlyR from "@/public/images/logo-only-r.svg";
 import { StyledMenuList, StyledNav } from "./index.styles";
 import ExitItem from "./ExitItem";
 import { useNavBarStore } from "@/src/store/NavBarStore";
@@ -18,10 +18,9 @@ export default function NavBar() {
    return (
       <StyledNav onClick={toggleMenu}>
          <Image
-            src={navBarIsOpen ? logo : logoX}
+            src={navBarIsOpen ? logoFull : logoOnlyR}
             alt="Logo"
-            width={navBarIsOpen ? 114 : 38}
-            height="36"
+            height="43"
          />
          <StyledMenuList>
             <NavBarItem
