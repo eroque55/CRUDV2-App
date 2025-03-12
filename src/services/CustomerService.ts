@@ -8,8 +8,11 @@ export const createCustomer = async (customer: Customer) => {
    return response.data;
 };
 
-export const getCustomer = async (id: number): Promise<Customer> => {
-   const response = await axios.get(`${API_URL}/${id}`);
+export const getCustomer = async (
+   id: number,
+   customer?: Customer
+): Promise<Customer> => {
+   const response = await axios.get(`${API_URL}/${id}`, { params: customer });
    return response.data;
 };
 
