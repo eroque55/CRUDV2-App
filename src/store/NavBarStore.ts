@@ -11,15 +11,3 @@ export const useNavBarStore = create<NavBarState>((set) => ({
    navBarOpen: () => set({ navBarIsOpen: true }),
    navBarClose: () => set({ navBarIsOpen: false }),
 }));
-
-interface ExitModalState {
-   ExitIsOpen: boolean;
-   exitOpenModal: () => void;
-   exitCloseModal: () => void;
-}
-
-export const useSairModalStore = create<ExitModalState>((set) => ({
-   ExitIsOpen: false,
-   exitOpenModal: () => set({ ExitIsOpen: true }),
-   exitCloseModal: () => set({ ExitIsOpen: false }),
-}));

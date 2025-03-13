@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Image from "next/image";
-import Link from "next/link";
 
 export const StyledMain = styled.main`
    height: 100%;
@@ -87,21 +86,4 @@ export const CreateAccount = styled.button`
    border: none;
    cursor: pointer;
    text-decoration: underline;
-`;
-
-export const StyledButton = styled(Link)`
-   display: flex;
-   padding: 0.75rem 0rem;
-   justify-content: center;
-   align-items: center;
-   border-radius: 0.5rem;
-
-   font-size: 1.25rem;
-   color: ${({ theme }) => theme.colors.neutral.color};
-   background-color: ${({ theme }) => theme.colors.primary.color3};
-   border: none;
-
-   &:hover {
-      filter: ${({ theme }) => theme.colors.outers.hoverFilter};
-   }
 `;

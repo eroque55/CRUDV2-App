@@ -29,13 +29,17 @@ import {
 import { toast } from "react-toastify";
 import { StyledToastContainer } from "@/src/components/common/toastify/index.styles";
 import { Customer } from "../@types/api";
-import { getCustomer } from "../services/CustomerService";
 import CreateCustomerFlow from "../components/admin/customerListing/createCustomerFlow";
 import { useCreateModalStore } from "../store/CustomerListingStore";
+import useAuthStore from "../store/CustomerShopStore";
+import { getCustomer } from "../services/CustomerService";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
    const [loginType, setLoginType] = useState(0);
    const { createOpenModal } = useCreateModalStore();
+   const login = useAuthStore((state: any) => state.login);
+   const router = useRouter();
 
    const {
       register,
@@ -47,7 +51,7 @@ export default function Login() {
       mode: "onBlur",
    });
 
-   const login = (data: ILoginSchema) => {
+   const handleLogin = (data: ILoginSchema) => {
       if (loginType === 1) {
          customerLogin(data);
       } else if (loginType === 2) {
@@ -61,8 +65,9 @@ export default function Login() {
             email: data.email,
             password: data.password,
          };
-         const respCustomer = await getCustomer(0, customer as Customer);
-         window.location.href = `/customer/${respCustomer.id}`;
+         const customerData = await getCustomer(0, customer as Customer);
+         login(customerData);
+         router.push("/shop");
       } catch (error: any) {
          toast.error(error.response.data);
       }
@@ -70,10 +75,10 @@ export default function Login() {
 
    const adminLogin = (data: ILoginSchema) => {
       const adminEmail = "admin@admin";
-      const adminPassword = "12@Admin";
+      const adminPassword = "Aa12345@";
 
       if (data.email === adminEmail && data.password === adminPassword) {
-         window.location.href = "/admin";
+         router.push("/admin");
       } else {
          toast.error("Credenciais inválidas");
       }
@@ -164,7 +169,7 @@ export default function Login() {
                            />
                         </StyledField>
 
-                        <DefaultButton onClick={handleSubmit(login)}>
+                        <DefaultButton onClick={handleSubmit(handleLogin)}>
                            Entrar
                         </DefaultButton>
                      </>

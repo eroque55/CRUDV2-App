@@ -4,7 +4,6 @@ const GlobalStyles = createGlobalStyle`
   html,
   body {
     font-family: ${({ theme }) => theme.fonts.roboto.fontFamily};
-    background-color: ${({ theme }) => theme.colors.neutral.color2};
     width: 100vw;
     height: 100vh;
   }

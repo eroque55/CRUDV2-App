@@ -6,6 +6,7 @@ export const StyledMain = styled.main`
    padding: 0.75rem;
    display: flex;
    gap: 1rem;
+   background-color: ${({ theme }) => theme.colors.neutral.color2};
 `;
 
 export const StyledContent = styled.section`
