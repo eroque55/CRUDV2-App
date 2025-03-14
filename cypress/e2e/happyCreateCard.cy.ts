@@ -15,7 +15,7 @@ describe("Happy create card", () => {
          const lastCards = response?.body.cards;
 
          cy.get(
-            ".page-styles__TabsContainer-sc-6d42649-5 > :nth-child(3)"
+            ".page-styles__TabsContainer-sc-ecd5908a-5 > :nth-child(3)"
          ).click();
          cy.get(".index-styles__StyledAddButton-sc-2bd0f11a-0").click();
 

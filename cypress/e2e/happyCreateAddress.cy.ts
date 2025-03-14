@@ -17,7 +17,7 @@ describe("Happy create address", () => {
          const lastAdresses = response?.body.addresses;
 
          cy.get(
-            ".page-styles__TabsContainer-sc-6d42649-5 > :nth-child(2)"
+            ".page-styles__TabsContainer-sc-ecd5908a-5 > :nth-child(2)"
          ).click();
          cy.get(".index-styles__StyledAddButton-sc-2bd0f11a-0").click();
 

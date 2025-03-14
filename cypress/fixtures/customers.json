@@ -11,13 +11,11 @@
          "confPassword": "Bb23456@",
          "ranking": 2,
          "status": true,
-         "phones": [
-            {
-               "ddd": "11",
-               "number": "987654321",
-               "phoneType": "CELULAR"
-            }
-         ],
+         "phone": {
+            "ddd": "11",
+            "number": "987654321",
+            "phoneType": "CELULAR"
+         },
          "addresses": [
             {
                "nickname": "Endereço de cobrança",
@@ -72,13 +70,11 @@
          "confPassword": "Cc34567@",
          "ranking": 3,
          "status": true,
-         "phones": [
-            {
-               "ddd": "11",
-               "number": "912345678",
-               "phoneType": "CELULAR"
-            }
-         ],
+         "phone": {
+            "ddd": "11",
+            "number": "912345678",
+            "phoneType": "CELULAR"
+         },
          "addresses": [
             {
                "nickname": "Endereço de cobrança",
@@ -133,13 +129,11 @@
          "confPassword": "Dd45678@",
          "ranking": 1,
          "status": true,
-         "phones": [
-            {
-               "ddd": "11",
-               "number": "923456789",
-               "phoneType": "CELULAR"
-            }
-         ],
+         "phone": {
+            "ddd": "11",
+            "number": "923456789",
+            "phoneType": "CELULAR"
+         },
          "addresses": [
             {
                "nickname": "Endereço de cobrança",
@@ -194,13 +188,11 @@
          "confPassword": "Ee56789@",
          "ranking": 2,
          "status": true,
-         "phones": [
-            {
-               "ddd": "11",
-               "number": "934567890",
-               "phoneType": "CELULAR"
-            }
-         ],
+         "phone": {
+            "ddd": "11",
+            "number": "934567890",
+            "phoneType": "CELULAR"
+         },
          "addresses": [
             {
                "nickname": "Endereço de cobrança",
@@ -255,13 +247,11 @@
          "confPassword": "Ff67890@",
          "ranking": 3,
          "status": true,
-         "phones": [
-            {
-               "ddd": "11",
-               "number": "945678901",
-               "phoneType": "CELULAR"
-            }
-         ],
+         "phone": {
+            "ddd": "11",
+            "number": "945678901",
+            "phoneType": "CELULAR"
+         },
          "addresses": [
             {
                "nickname": "Endereço de cobrança",
@@ -317,13 +307,11 @@
       "confPassword": "Bb54321@",
       "ranking": 2,
       "status": true,
-      "phones": [
-         {
-            "ddd": "11",
-            "number": "972775377",
-            "phoneType": "CELULAR"
-         }
-      ],
+      "phone": {
+         "ddd": "11",
+         "number": "972775377",
+         "phoneType": "CELULAR"
+      },
       "addresses": [
          {
             "nickname": "Endereço de cobrança",

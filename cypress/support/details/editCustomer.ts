@@ -52,8 +52,8 @@ class EditCustomer {
       cy.get(PersonalData.ranking).clear().type(customer.ranking);
       cy.get(PersonalData.phone)
          .clear()
-         .type(customer.phones[0].ddd + customer.phones[0].number);
-      cy.get(PersonalData.phoneType).select(customer.phones[0].phoneType);
+         .type(customer.phone.ddd + customer.phone.number);
+      cy.get(PersonalData.phoneType).select(customer.phone.phoneType);
       cy.get(PersonalData.saveButton).click();
    }
 

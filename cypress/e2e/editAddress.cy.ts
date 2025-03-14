@@ -15,7 +15,7 @@ describe("Edit address", () => {
          const address = response?.body.addresses[0];
 
          cy.get(
-            ".page-styles__TabsContainer-sc-6d42649-5 > :nth-child(2)"
+            ".page-styles__TabsContainer-sc-ecd5908a-5 > :nth-child(2)"
          ).click();
          cy.get(
             ":nth-child(1) > .index-styles__ButtonsContainer-sc-882e22e-0 > :nth-child(2)"

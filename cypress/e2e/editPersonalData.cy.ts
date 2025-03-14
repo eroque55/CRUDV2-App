@@ -29,7 +29,7 @@ describe("Edit personal data", () => {
             const updatedCustomer = response?.body;
             cy.wait("@putPhone").then(({ response }) => {
                const updatedPhone = response?.body;
-               updatedCustomer.phones = [updatedPhone];
+               updatedCustomer.phone = updatedPhone;
                updatedCustomer.addresses = customer.addresses;
                updatedCustomer.cards = customer.cards;
             });

@@ -23,11 +23,10 @@ class CreateCustomer {
       cy.get(PersonalData.phone)
          .clear()
          .type(
-            customerPersonalData.phones[0].ddd +
-               customerPersonalData.phones[0].number
+            customerPersonalData.phone.ddd + customerPersonalData.phone.number
          );
       cy.get(PersonalData.phoneType).select(
-         customerPersonalData.phones[0].phoneType
+         customerPersonalData.phone.phoneType
       );
       cy.get(PersonalData.nextButton).click();
    }
