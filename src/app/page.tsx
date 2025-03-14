@@ -14,7 +14,7 @@ import {
 } from "./page.styles";
 import Image from "next/image";
 import { DefaultButton } from "../components/common/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyledTitle } from "../components/admin/common/title";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -39,7 +39,12 @@ export default function Login() {
    const [loginType, setLoginType] = useState(0);
    const { createOpenModal } = useCreateModalStore();
    const login = useAuthStore((state: any) => state.login);
+   const { customer, loadUser } = useAuthStore();
    const router = useRouter();
+
+   useEffect(() => {
+      loadUser();
+   }, []);
 
    const {
       register,
@@ -84,6 +89,14 @@ export default function Login() {
       }
    };
 
+   const handleCustomerLogin = () => {
+      if (customer) {
+         router.push("/shop");
+      } else {
+         setLoginType(1);
+      }
+   };
+
    return (
       <>
          <CreateCustomerFlow />
@@ -115,11 +128,7 @@ export default function Login() {
                <StyledButtonContainer>
                   {loginType === 0 && (
                      <>
-                        <DefaultButton
-                           onClick={() => {
-                              setLoginType(1);
-                           }}
-                        >
+                        <DefaultButton onClick={handleCustomerLogin}>
                            Sou cliente
                         </DefaultButton>
                         <DefaultButton

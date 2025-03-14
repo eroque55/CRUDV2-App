@@ -14,7 +14,6 @@ import NavBar from "@/src/components/admin/navBar";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import Loading from "@/src/components/admin/common/loading";
-import ExitModal from "@/src/components/admin/navBar/exitModal";
 import { StyledTitle } from "@/src/components/admin/common/title";
 import BackButton from "@/src/components/admin/common/backButton";
 import AddressesPage from "@/src/components/admin/customerDetails/addressesPage";
@@ -53,7 +52,6 @@ export default function CustomerDetails() {
    return (
       <>
          <StyledToastContainer />
-         <ExitModal />
          <CreateCard />
          <CreateAddress />
          <ResetPassword />
