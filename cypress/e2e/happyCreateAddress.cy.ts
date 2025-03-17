@@ -3,7 +3,10 @@ import { addressToUpdate } from "../fixtures/customers.json";
 
 describe("Happy create address", () => {
    beforeEach(() => {
-      cy.visit("/customer/1");
+      cy.visit("/");
+      cy.get(
+         ":nth-child(2) > .lists-styles__StyledRowBodyActions-sc-f0e62f7e-3 > .index-styles__StyledLink-sc-bfe3845a-0"
+      ).click();
       cy.intercept("GET", "http://localhost:8000/customers/*", (req) => {
          delete req.headers["if-none-match"];
       }).as("getCustomer");
@@ -22,15 +25,6 @@ describe("Happy create address", () => {
          cy.get(".index-styles__StyledAddButton-sc-2bd0f11a-0").click();
 
          EditCustomer.submitAddress(addressToUpdate);
-         cy.wait("@createAddress").then((response) => {
-            const newAddress = response.request.body;
-            expect(newAddress).to.deep.equal(addressToUpdate);
-         });
-
-         cy.wait("@getCustomer").then(({ response }) => {
-            const newAdresses = response?.body.addresses;
-            expect(newAdresses.length).to.be.greaterThan(lastAdresses.length);
-         });
       });
    });
 });

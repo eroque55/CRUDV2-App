@@ -3,7 +3,10 @@ import { addressToUpdate } from "../fixtures/customers.json";
 
 describe("Edit address", () => {
    it("Edit address", () => {
-      cy.visit("/customer/1");
+      cy.visit("/");
+      cy.get(
+         ":nth-child(2) > .lists-styles__StyledRowBodyActions-sc-f0e62f7e-3 > .index-styles__StyledLink-sc-bfe3845a-0"
+      ).click();
 
       cy.intercept("GET", "http://localhost:8000/customers/*", (req) => {
          delete req.headers["if-none-match"];

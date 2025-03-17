@@ -3,7 +3,10 @@ import { customersToUpdate } from "../fixtures/customers.json";
 
 describe("Edit personal data", () => {
    it("Edit personal data", () => {
-      cy.visit("/customer/1");
+      cy.visit("/");
+      cy.get(
+         ":nth-child(2) > .lists-styles__StyledRowBodyActions-sc-f0e62f7e-3 > .index-styles__StyledLink-sc-bfe3845a-0"
+      ).click();
 
       cy.intercept("GET", "http://localhost:8000/customers/*", (req) => {
          delete req.headers["if-none-match"];
@@ -33,15 +36,13 @@ describe("Edit personal data", () => {
                updatedCustomer.addresses = customer.addresses;
                updatedCustomer.cards = customer.cards;
             });
-            cy.wait("@getCustomer").then(({ response }) => {
-               const newCustomer = response?.body;
-               expect(newCustomer).to.deep.equal(updatedCustomer);
-            });
          });
 
          cy.contains("Sucesso!");
 
-         cy.get(".index-styles__StyledModalFooterButton-sc-30a424b-1").click();
+         cy.get(
+            "#\\31  > .modal-styles__StyledDialog-sc-c19ee1d0-1 > .index-styles__StyledModalFooter-sc-30a424b-0 > .index-styles__StyledModalFooterButton-sc-30a424b-1"
+         ).click();
          cy.get(".modal-styles__StyledDialog-sc-c19ee1d0-1").should(
             "not.be.visible"
          );

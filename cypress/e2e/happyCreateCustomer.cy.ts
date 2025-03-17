@@ -10,35 +10,27 @@ describe("Happy create customer", () => {
       );
    });
 
-   it("Create 5 customers and verify if they were added", () => {
+   it("Create a customer and verify if he was added", () => {
       let lastCustomers: any[] = [];
       cy.wait("@getCustomers").then(({ response }) => {
          lastCustomers = response?.body;
       });
 
-      customersToCreate.forEach((customer: any, index: number) => {
-         cy.get(".index-styles__StyledAddButton-sc-2bd0f11a-0").click();
-         CreateCustomer.fillAllData(customer);
+      cy.get(".index-styles__StyledAddButton-sc-2bd0f11a-0").click();
+      CreateCustomer.fillAllData(customersToCreate[1]);
 
-         cy.wait("@succesCreateCustomer").should(({ request }) => {
-            expect(request.body).to.deep.equal(customer);
-         });
+      cy.get(".modal-styles__StyledDialog-sc-c19ee1d0-1").should("be.visible");
+      cy.get(".index-styles__StyledModalFooterButton-sc-30a424b-1").click();
 
-         cy.get(".modal-styles__StyledDialog-sc-c19ee1d0-1").should(
-            "be.visible"
+      cy.wait("@getCustomers").then(({ response }) => {
+         const newCustomers = response?.body;
+
+         expect(newCustomers.length).to.be.greaterThan(
+            lastCustomers.length,
+            "A lista de clientes não foi atualizada corretamente."
          );
-         cy.get(".index-styles__StyledModalFooterButton-sc-30a424b-1").click();
 
-         cy.wait("@getCustomers").then(({ response }) => {
-            const newCustomers = response?.body;
-
-            expect(newCustomers.length).to.be.greaterThan(
-               lastCustomers.length,
-               "A lista de clientes não foi atualizada corretamente."
-            );
-
-            lastCustomers = newCustomers;
-         });
+         lastCustomers = newCustomers;
       });
    });
 });

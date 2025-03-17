@@ -51,7 +51,7 @@ export default function CreateCustomerModal({
          confPassword: data.confPassword,
          ranking: data.ranking,
          status: true,
-         phones: [phone as Phone],
+         phone: phone as Phone,
       }));
 
       modalNext();

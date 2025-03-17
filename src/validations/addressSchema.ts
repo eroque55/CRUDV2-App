@@ -46,7 +46,8 @@ export const addressSchema = yup.object().shape({
       .typeError("Número inválido")
       .required("Número é obrigatório")
       .integer("Número deve ser um número inteiro")
-      .positive("Número deve ser positivo"),
+      .positive("Número deve ser positivo")
+      .max(99999, "Número pode ter no máximo 5 dígitos"),
 
    neighborhood: yup
       .string()
