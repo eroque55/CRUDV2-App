@@ -1,8 +1,8 @@
 "use client";
 
-import { StyledToastContainer } from "@/src/components/common/toastify/index.styles";
-import Header from "@/src/components/shop/header";
-import Unlogged from "@/src/components/shop/unlogged";
+import { StyledToastContainer } from "@/src/components/Toastify/index.styles";
+import Header from "@/src/components/Header";
+import Unlogged from "@/src/components/Unlogged";
 import useAuthStore from "@/src/store/CustomerShopStore";
 import { useEffect } from "react";
 

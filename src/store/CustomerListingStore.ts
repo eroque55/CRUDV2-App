@@ -1,15 +1,15 @@
 import { create } from "zustand";
-import { getCustomers } from "../services/CustomerService";
-import { Customer } from "@/src/@types/api";
+import { getCustomers } from "../services/Customer.service";
+import ICustomer from "@/src/interfaces/ICustomer";
 
 interface CustomerStore {
-   customers: Customer[];
-   fetchCustomers: (customer?: Customer) => Promise<void>;
+   customers: ICustomer[];
+   fetchCustomers: (customer?: ICustomer) => Promise<void>;
 }
 
 export const useCustomerStore = create<CustomerStore>((set) => ({
    customers: [],
-   fetchCustomers: async (customer?: Customer) => {
+   fetchCustomers: async (customer?: ICustomer) => {
       try {
          const data = await getCustomers(customer);
          set({ customers: data });

@@ -25,7 +25,7 @@ declare module "styled-components" {
             success: string;
             fail: string;
          };
-         outers: {
+         other: {
             hoverBackground: string;
             hoverFilter: string;
             shadow: string;

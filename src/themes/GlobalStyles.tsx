@@ -33,7 +33,27 @@ const GlobalStyles = createGlobalStyle`
 	margin: 0;
 	padding: 0;
 	border: 0;
-}
+   }
+
+   .Toastify{
+      position: fixed;
+      z-index: 9999;
+   }
+
+   .Toastify__toast--default { 
+      border-radius: 0;
+      height: 100vh;
+      background-color: transparent;
+      box-shadow: none;
+   }
+   
+   .Toastify__toast-container--top-center {
+      justify-content: center;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.2);
+   }
 `;
 
 export default GlobalStyles;

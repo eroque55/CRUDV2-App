@@ -20,7 +20,7 @@ export const StyledContent = styled.section`
 
 export const StyledBackgroud = styled.div`
    background-color: ${({ theme }) => theme.colors.neutral.color};
-   box-shadow: ${({ theme }) => theme.colors.outers.shadow};
+   box-shadow: ${({ theme }) => theme.colors.other.shadow};
    height: 10rem;
    width: 100%;
    position: absolute;
@@ -66,7 +66,7 @@ export const StyledTabs = styled.button<StyledTabsProps>`
    border-radius: 1rem;
 
    &:hover {
-      background-color: ${({ theme }) => theme.colors.outers.hoverBackground};
+      background-color: ${({ theme }) => theme.colors.other.hoverBackground};
    }
 `;
 

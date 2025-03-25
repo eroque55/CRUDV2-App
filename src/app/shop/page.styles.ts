@@ -75,7 +75,7 @@ export const BackButton = styled.button`
    border-radius: 1rem;
 
    &:hover {
-      background: ${({ theme }) => theme.colors.outers.hoverBackground};
+      background: ${({ theme }) => theme.colors.other.hoverBackground};
    }
 `;
 

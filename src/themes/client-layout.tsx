@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { ThemeProvider, type DefaultTheme } from "styled-components";
 import GlobalStyles from "./GlobalStyles";
 
-const theme: DefaultTheme = {
+export const theme: DefaultTheme = {
    colors: {
       primary: {
          color: "#468FAF",
@@ -27,7 +27,7 @@ const theme: DefaultTheme = {
          success: "#008000",
          fail: "#A4161A",
       },
-      outers: {
+      other: {
          hoverBackground: "rgba(0, 0, 0, 0.05)",
          hoverFilter: "brightness(0.85)",
          shadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25)",

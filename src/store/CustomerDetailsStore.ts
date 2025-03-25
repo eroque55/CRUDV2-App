@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { Card, Address } from "@/src/@types/api";
-import { Customer } from "@/src/@types/api";
-import { getCustomer } from "../services/CustomerService";
+import { Card, Address } from "@/src/interfaces/api";
+import { Customer } from "@/src/interfaces/api";
+import { getCustomer } from "../services/Customer.service";
 
 interface CustomerState {
    customer: Customer | null;

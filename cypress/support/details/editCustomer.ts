@@ -4,7 +4,7 @@ import {
    UpdateAddress,
    CreateCard,
 } from "./elements";
-import { formatPhone, formatCpf, formatCep } from "../../../src/util";
+import { formatPhone, formatCpf, formatCep } from "../../../src/utils";
 
 class EditCustomer {
    verifyPersonalData(customerPersonalData: any) {

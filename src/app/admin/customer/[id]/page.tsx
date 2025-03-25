@@ -10,30 +10,30 @@ import {
    TabsContainer,
    StyledActions,
 } from "./page.styles";
-import NavBar from "@/src/components/admin/navBar";
+import NavBar from "@/src/components/NavBar";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import Loading from "@/src/components/admin/common/loading";
-import { StyledTitle } from "@/src/components/admin/common/title";
-import BackButton from "@/src/components/admin/common/backButton";
-import AddressesPage from "@/src/components/admin/customerDetails/addressesPage";
-import CardsPage from "@/src/components/admin/customerDetails/cardsPage";
-import PersonalDataPage from "@/src/components/admin/customerDetails/personalDataPage";
-import AddButton from "@/src/components/admin/common/addButton";
+import Loading from "@/src/components/Loading";
+import { StyledTitle } from "@/src/components/Title";
+import BackButton from "@/src/components/BackButton";
+import AddressesPage from "@/src/components/AddressesPage";
+import CardsPage from "@/src/components/CardsPage";
+import PersonalDataPage from "@/src/components/PersonalDataPage";
+import AddButton from "@/src/components/AddButton";
 
 import {
    useCreateAddress,
    useCreateCard,
    useUpdatePassword,
 } from "@/src/store/CustomerDetailsStore";
-import CreateCard from "@/src/components/admin/customerDetails/modals/createCard";
-import CreateAddress from "@/src/components/admin/customerDetails/modals/createAddress";
-import { StyledToastContainer } from "@/src/components/common/toastify/index.styles";
-import UpdateAddressModal from "@/src/components/admin/customerDetails/modals/updateAddress";
+import CreateCard from "@/src/components/CreateCard";
+import CreateAddress from "@/src/components/CreateAddress";
+import { StyledToastContainer } from "@/src/components/Toastify/index.styles";
+import UpdateAddressModal from "@/src/components/UpdateAddress";
 import { useCustomerDetails } from "@/src/hooks/useCustomerDetails";
-import UpdatePersonalDataModal from "@/src/components/admin/customerDetails/modals/updatePersonalData";
-import ResetPasswordButton from "@/src/components/admin/common/resetPasswordButton";
-import ResetPassword from "@/src/components/admin/customerDetails/modals/resetPassword";
+import UpdatePersonalDataModal from "@/src/components/UpdatePersonalData";
+import ResetPasswordButton from "@/src/components/ResetPasswordButton";
+import ResetPassword from "@/src/components/ResetPassword";
 
 export default function CustomerDetails() {
    const params = useParams();

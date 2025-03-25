@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Customer } from "../@types/api";
+import { Customer } from "../interfaces/api";
 
 interface UseAuthStore {
    customer: Customer | null;

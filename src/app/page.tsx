@@ -1,7 +1,11 @@
 "use client";
-import Wave1Image from "@/public/images/login-wave1.svg";
-import Wave2Image from "@/public/images/login-wave2.svg";
-import BackIcon from "@/public/icons/back-button.svg";
+import {
+   BackIcon,
+   LoginWaveLeftImg,
+   LoginWaveRightImg,
+   LogoFullWhiteImg,
+} from "@/public";
+
 import {
    StyledMain,
    Wave1,
@@ -11,11 +15,12 @@ import {
    BackContainer,
    BackButton,
    CreateAccount,
-} from "./page.styles";
+} from "./styles";
+
 import Image from "next/image";
-import { DefaultButton } from "../components/common/button";
+import Button from "../components/Button";
 import { useEffect, useState } from "react";
-import { StyledTitle } from "../components/admin/common/title";
+import { Title } from "../components/Title";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ILoginSchema, loginSchema } from "../validations/loginSchema";
@@ -25,14 +30,13 @@ import {
    StyledErrorSpan,
    StyledFieldTitle,
    StyledLabel,
-} from "@/src/components/common/fields/index.styles";
-import { toast } from "react-toastify";
-import { StyledToastContainer } from "@/src/components/common/toastify/index.styles";
-import { Customer } from "../@types/api";
-import CreateCustomerFlow from "../components/admin/customerListing/createCustomerFlow";
+} from "@/src/components/Fields/index.styles";
+import { toast, ToastContainer } from "react-toastify";
+import ICustomer from "../interfaces/ICustomer";
+import CreateCustomerFlow from "../components/CreateCustomerFlow";
 import { useCreateModalStore } from "../store/CustomerListingStore";
 import useAuthStore from "../store/CustomerShopStore";
-import { getCustomer } from "../services/CustomerService";
+import { getCustomer } from "../services/Customer.service";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
@@ -66,11 +70,11 @@ export default function Login() {
 
    const customerLogin = async (data: ILoginSchema) => {
       try {
-         const customer: Partial<Customer> = {
+         const customer: Partial<ICustomer> = {
             email: data.email,
             password: data.password,
          };
-         const customerData = await getCustomer(0, customer as Customer);
+         const customerData = await getCustomer(0, customer as ICustomer);
          login(customerData);
          router.push("/shop");
       } catch (error: any) {
@@ -100,10 +104,9 @@ export default function Login() {
    return (
       <>
          <CreateCustomerFlow />
-         <StyledToastContainer />
          <StyledMain>
-            <Wave1 src={Wave1Image} alt="backgorund wave" />
-            <Wave2 src={Wave2Image} alt="backgorund wave" />
+            <Wave1 src={LoginWaveLeftImg} alt="backgorund wave" />
+            <Wave2 src={LoginWaveRightImg} alt="backgorund wave" />
             <StyledContent>
                {loginType !== 0 && (
                   <BackContainer>
@@ -118,36 +121,28 @@ export default function Login() {
                      Voltar
                   </BackContainer>
                )}
-               <Image
-                  src={"/images/white-logo.svg"}
-                  alt="Logo"
-                  priority
-                  width={317}
-                  height={83}
-               />
+               <Image src={LogoFullWhiteImg} alt="Logo" priority />
                <StyledButtonContainer>
                   {loginType === 0 && (
                      <>
-                        <DefaultButton onClick={handleCustomerLogin}>
+                        <Button onClick={handleCustomerLogin}>
                            Sou cliente
-                        </DefaultButton>
-                        <DefaultButton
+                        </Button>
+                        <Button
                            onClick={() => {
                               setLoginType(2);
                            }}
                            wired
                         >
                            Sou administrador
-                        </DefaultButton>
+                        </Button>
                      </>
                   )}
                   {loginType === 1 && (
-                     <StyledTitle $align="center">Área do cliente</StyledTitle>
+                     <Title $align="center">Área do cliente</Title>
                   )}
                   {loginType === 2 && (
-                     <StyledTitle $align="center">
-                        Área do administrador
-                     </StyledTitle>
+                     <Title $align="center">Área do administrador</Title>
                   )}
                   {loginType !== 0 && (
                      <>
@@ -178,9 +173,9 @@ export default function Login() {
                            />
                         </StyledField>
 
-                        <DefaultButton onClick={handleSubmit(handleLogin)}>
+                        <Button onClick={handleSubmit(handleLogin)}>
                            Entrar
-                        </DefaultButton>
+                        </Button>
                      </>
                   )}
                   {loginType === 1 && (
@@ -191,6 +186,7 @@ export default function Login() {
                </StyledButtonContainer>
             </StyledContent>
          </StyledMain>
+         <ToastContainer />
       </>
    );
 }
