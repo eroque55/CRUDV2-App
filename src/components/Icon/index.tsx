@@ -1,5 +1,5 @@
 import * as Icon from "@/public";
-import Image from "next/image"; // Importing the correct Image component
+import Image from "next/image";
 
 export type IconT = keyof typeof Icon;
 

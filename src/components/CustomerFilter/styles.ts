@@ -25,23 +25,6 @@ export const StyledFilterTitle = styled.h2`
    font-weight: 700;
 `;
 
-export const StyledCloseButton = styled.button`
-   display: flex;
-   width: 2rem;
-   height: 2rem;
-   justify-content: center;
-   align-items: center;
-   border: none;
-   background: none;
-   cursor: pointer;
-   transition: all 0.2s;
-   border-radius: 50%;
-
-   &:hover {
-      background: ${({ theme }) => theme.colors.other.hoverBackground};
-   }
-`;
-
 export const StyledFilterForm = styled.form`
    display: flex;
    flex-direction: column;
@@ -86,27 +69,6 @@ export const StyledFilterButtonsContainer = styled.div`
    align-items: center;
    gap: 0.5rem;
    border-top: 1px solid ${({ theme }) => theme.colors.neutral.color3};
-`;
-
-export const StyledFilterButton = styled.button`
-   display: flex;
-   width: 10rem;
-   padding: 0.625rem 0rem;
-   justify-content: center;
-   align-items: center;
-   gap: 0.625rem;
-   border-radius: 0.5rem;
-   background: none;
-   border: 2px solid ${({ theme }) => theme.colors.primary.color3};
-   color: ${({ theme }) => theme.colors.primary.color3};
-   font-weight: 700;
-   cursor: pointer;
-   transition: all 0.2s;
-   font-size: 1rem;
-
-   &:hover {
-      background: ${({ theme }) => theme.colors.other.hoverBackground};
-   }
 `;
 
 export const StyledFilterClear = styled.button`

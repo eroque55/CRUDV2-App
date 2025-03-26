@@ -37,7 +37,7 @@ export default function NavBar() {
                      ? "CustomersActiveIcon"
                      : "CustomersInactiveIcon"
                }
-               active={pathname === customersPath}
+               active={pathname.includes(customersPath)}
             />
             <NavBarItem
                href={salesPath}
@@ -46,7 +46,7 @@ export default function NavBar() {
                      ? "SalesActiveIcon"
                      : "SalesInactiveIcon"
                }
-               active={pathname === salesPath}
+               active={pathname.includes(salesPath)}
             />
             <NavBarItem
                href={dashboardPath}
@@ -55,7 +55,7 @@ export default function NavBar() {
                      ? "DashboardActiveIcon"
                      : "DashboardInactiveIcon"
                }
-               active={pathname === dashboardPath}
+               active={pathname.includes(dashboardPath)}
             />
          </StyledMenuList>
          <NavBarItem icon={"ExitGrayIcon"} onClick={handleLogout}></NavBarItem>

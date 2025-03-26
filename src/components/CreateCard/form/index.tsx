@@ -8,7 +8,7 @@ import {
    StyledErrorSpan,
    StyledFieldTitle,
    StyledInputMask,
-} from "@/src/components/Fields/index.styles";
+} from "@/src/components/Fields/styles";
 import { ICardSchema } from "@/src/validations/cardSchema";
 
 interface Props {

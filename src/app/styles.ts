@@ -64,22 +64,6 @@ export const BackContainer = styled.label`
    color: ${({ theme }) => theme.colors.primary.color3};
 `;
 
-export const BackButton = styled.button`
-   width: 2rem;
-   height: 2rem;
-   background: transparent;
-   border: none;
-   cursor: pointer;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   border-radius: 1rem;
-
-   &:hover {
-      background: ${({ theme }) => theme.colors.other.hoverBackground};
-   }
-`;
-
 export const CreateAccount = styled.button`
    font-size: 1rem;
    color: ${({ theme }) => theme.colors.primary.color3};

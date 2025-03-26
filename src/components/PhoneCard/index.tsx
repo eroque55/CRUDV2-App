@@ -1,10 +1,10 @@
 import { StyledCard } from "../StyledCard/index.styles";
 import InfoContainer from "../InfoContainer";
 import { capitalizeFirstLetter } from "@/src/utils";
-import { Phone } from "@/src/interfaces/api";
+import IPhone from "@/src/interfaces/IPhone";
 
 interface Props {
-   phone: Phone | null;
+   phone: IPhone | null;
 }
 
 export default function PhoneCard({ phone }: Props) {

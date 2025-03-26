@@ -1,13 +1,15 @@
 import InfoContainer from "@/src/components/InfoContainer";
-import { StyledCard } from "@/src/components/admin/CustomerDetails/common/StyledCard/index.styles";
+import {
+   ButtonsContainer,
+   StyledCard,
+} from "@/src/components/StyledCard/index.styles";
 import { capitalizeFirstLetter } from "@/src/utils";
-import { ButtonsContainer } from "@/src/components/DetailsActionButtons/index.styles";
-import { Customer } from "@/src/interfaces/api";
+import ICustomer from "@/src/interfaces/ICustomer";
 import { useUpdateCustomer } from "@/src/store/CustomerDetailsStore";
-import ActionButtons from "@/src/components/DetailsActionButtons/actionButton";
+import CardButton from "../CardButton";
 
 interface Props {
-   customer: Customer | null;
+   customer: ICustomer | null;
 }
 
 export default function PersonalDataCard({ customer }: Props) {
@@ -26,11 +28,7 @@ export default function PersonalDataCard({ customer }: Props) {
       <StyledCard>
          <InfoContainer title="Nome">{customer.name}</InfoContainer>
          <ButtonsContainer>
-            <ActionButtons
-               onClick={openModal}
-               src="/icons/edit-button.svg"
-               alt="Botão de editar"
-            />
+            <CardButton onClick={openModal} icon="EditIcon" />
          </ButtonsContainer>
          <InfoContainer title="Data de nascimento">{birthDate}</InfoContainer>
          <InfoContainer title="CPF">{cpf}</InfoContainer>

@@ -13,7 +13,6 @@ import {
    StyledContent,
    StyledButtonContainer,
    BackContainer,
-   BackButton,
    CreateAccount,
 } from "./styles";
 
@@ -30,7 +29,7 @@ import {
    StyledErrorSpan,
    StyledFieldTitle,
    StyledLabel,
-} from "@/src/components/Fields/index.styles";
+} from "@/src/components/Fields/styles";
 import { toast, ToastContainer } from "react-toastify";
 import ICustomer from "../interfaces/ICustomer";
 import CreateCustomerFlow from "../components/CreateCustomerFlow";
@@ -38,6 +37,7 @@ import { useCreateModalStore } from "../store/CustomerListingStore";
 import useAuthStore from "../store/CustomerShopStore";
 import { getCustomer } from "../services/Customer.service";
 import { useRouter } from "next/navigation";
+import BackButton from "../components/BackButton";
 
 export default function Login() {
    const [loginType, setLoginType] = useState(0);
@@ -115,9 +115,7 @@ export default function Login() {
                            setLoginType(0);
                            reset();
                         }}
-                     >
-                        <Image src={BackIcon} alt="Icone de voltar"></Image>
-                     </BackButton>
+                     />
                      Voltar
                   </BackContainer>
                )}

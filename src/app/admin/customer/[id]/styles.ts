@@ -1,40 +1,5 @@
 import styled from "styled-components";
 
-export const StyledMain = styled.main`
-   height: 100%;
-   width: 100%;
-   padding: 0.75rem;
-   display: flex;
-   gap: 1rem;
-   background-color: ${({ theme }) => theme.colors.neutral.color2};
-`;
-
-export const StyledContent = styled.section`
-   width: 100%;
-   height: 100%;
-   display: flex;
-   flex-direction: column;
-   padding: 1.75rem 1rem 0rem 1rem;
-   z-index: 1;
-`;
-
-export const StyledBackgroud = styled.div`
-   background-color: ${({ theme }) => theme.colors.neutral.color};
-   box-shadow: ${({ theme }) => theme.colors.other.shadow};
-   height: 10rem;
-   width: 100%;
-   position: absolute;
-   top: 0;
-   left: 0;
-   z-index: 0;
-`;
-
-export const TitleContainer = styled.div`
-   display: flex;
-   gap: 1rem;
-   align-items: center;
-`;
-
 export const StyledHeader = styled.header`
    display: flex;
    flex-direction: column;
@@ -70,7 +35,7 @@ export const StyledTabs = styled.button<StyledTabsProps>`
    }
 `;
 
-export const StyledPage = styled.section`
+export const PageContainer = styled.section`
    display: flex;
    flex-direction: column;
    gap: 2rem;
@@ -94,7 +59,7 @@ export const StyledPage = styled.section`
    }
 `;
 
-export const StyledActions = styled.div`
+export const ActionsContainer = styled.div`
    display: flex;
    justify-content: space-between;
    align-items: flex-end;

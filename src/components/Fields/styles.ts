@@ -100,7 +100,7 @@ export const StyledRadioContainer = styled.div`
    input:checked {
       border: none;
       background: ${({ theme }) => theme.colors.alerts.success};
-      background-image: url("/icons/Check.svg");
+      background-image: url("icons/CheckWhite.svg");
       background-repeat: no-repeat;
       background-position: center;
    }

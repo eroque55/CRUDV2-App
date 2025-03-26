@@ -3,12 +3,10 @@ import {
    StyledFilterContainer,
    StyledFilterTitle,
    StyledFilterButtonsContainer,
-   StyledFilterButton,
    StyledFilterClear,
    StyledFilterForm,
    StyledFilterField,
    SyledFilterHeader,
-   StyledCloseButton,
 } from "./styles";
 
 import {
@@ -17,7 +15,7 @@ import {
    StyledSelect,
    StyledInputMask,
    StyledRadioContainer,
-} from "@/src/components/Fields/index.styles";
+} from "@/src/components/Fields/styles";
 
 import {
    filterCustomerSchema,
@@ -29,9 +27,9 @@ import {
    useCustomerStore,
    useFilterModalStore,
 } from "@/src/store/CustomerListingStore";
-import Image from "next/image";
-import CloseIcon from "@/public/icons/Close.svg";
 import ModalBackground from "../ModalBackground";
+import CloseButton from "../CloseButton";
+import ButtonComponent from "../Button";
 
 export default function CustomerFilter() {
    const { fetchCustomers } = useCustomerStore();
@@ -90,14 +88,7 @@ export default function CustomerFilter() {
          <StyledFilterContainer>
             <SyledFilterHeader>
                <StyledFilterTitle>Filtrar clientes</StyledFilterTitle>
-               <StyledCloseButton onClick={filterCloseModal}>
-                  <Image
-                     src={CloseIcon}
-                     alt="Icone de fechar"
-                     width={16}
-                     height={16}
-                  />
-               </StyledCloseButton>
+               <CloseButton onClick={filterCloseModal} />
             </SyledFilterHeader>
             <StyledFilterForm>
                <StyledFilterField>
@@ -160,9 +151,9 @@ export default function CustomerFilter() {
                </StyledFilterField>
             </StyledFilterForm>
             <StyledFilterButtonsContainer>
-               <StyledFilterButton onClick={handleSubmit(onSubmit)}>
+               <ButtonComponent onClick={handleSubmit(onSubmit)}>
                   Filtrar
-               </StyledFilterButton>
+               </ButtonComponent>
                <StyledFilterClear onClick={handleReset}>
                   Limpar
                </StyledFilterClear>

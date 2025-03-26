@@ -1,19 +1,21 @@
-import Image from "next/image";
-import { StyledBackButton } from "./index.styles";
+import { BackButtonContainer } from "./styles";
+import IconComponent from "../Icon";
+import { useRouter } from "next/navigation";
 
 interface Props {
-   href: string;
+   onClick?: () => void;
 }
 
-export default function BackButton({ href }: Props) {
+export default function BackButton({ onClick }: Props) {
+   const router = useRouter();
+
+   const handleClick = () => {
+      onClick ? onClick() : router.back();
+   };
+
    return (
-      <StyledBackButton href={href}>
-         <Image
-            src="/icons/back-button.svg"
-            alt="icone de voltar"
-            height={24}
-            width={12}
-         />
-      </StyledBackButton>
+      <BackButtonContainer onClick={handleClick}>
+         <IconComponent name="BackIcon" />
+      </BackButtonContainer>
    );
 }

@@ -8,7 +8,7 @@ import {
    StyledErrorSpan,
    StyledFieldTitle,
    StyledInputMask,
-} from "@/src/components/Fields/index.styles";
+} from "@/src/components/Fields/styles";
 import { IUpdateCustomerSchema } from "@/src/validations/updateCustomerSchema";
 import { useCustomerState } from "@/src/store/CustomerDetailsStore";
 import { useEffect } from "react";

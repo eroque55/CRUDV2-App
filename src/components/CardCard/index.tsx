@@ -2,16 +2,18 @@ import { capitalizeFirstLetter } from "@/src/utils";
 import InfoContainer from "@/src/components/InfoContainer";
 import { toast } from "react-toastify";
 import { deleteCard, updateCard } from "@/src/services/Card.service";
-import { ButtonsContainer } from "@/src/components/DetailsActionButtons/index.styles";
-import ActionButtons from "@/src/components/DetailsActionButtons/actionButton";
-import { StyledCard } from "../StyledCard/index.styles";
+import {
+   ButtonsContainer,
+   StyledCard,
+} from "@/src/components/StyledCard/index.styles";
 import { useCustomerState } from "@/src/store/CustomerDetailsStore";
-import { Card } from "@/src/interfaces/api";
-import { ConfirmationToast } from "@/src/components/common/toastify/ConfirmationToast";
+import ICard from "@/src/interfaces/ICard";
+import { ConfirmationToast } from "@/src/components/ConfirmationToast";
+import CardButton from "../CardButton";
 
 interface Props {
    customerId: number;
-   card: Card;
+   card: ICard;
 }
 
 export default function CardCard({ card, customerId }: Props) {
@@ -38,7 +40,6 @@ export default function CardCard({ card, customerId }: Props) {
    const cardBrand = capitalizeFirstLetter(card.cardBrand);
    const expirationDate =
       card.expirationDate.slice(0, 2) + "/" + card.expirationDate.slice(2);
-   const preferential = card.preferential ? "Sim" : "Não";
 
    return (
       <StyledCard $isPreferential={card.preferential}>
@@ -46,12 +47,11 @@ export default function CardCard({ card, customerId }: Props) {
          <ButtonsContainer>
             {!card.preferential && (
                <>
-                  <ActionButtons
+                  <CardButton
                      onClick={handleSetPreferential}
-                     src="/icons/preferential-button.svg"
-                     alt="Botão de preferencial"
+                     icon="CheckGreenIcon"
                   />
-                  <ActionButtons
+                  <CardButton
                      onClick={() => {
                         toast(ConfirmationToast, {
                            data: {
@@ -69,8 +69,7 @@ export default function CardCard({ card, customerId }: Props) {
                            hideProgressBar: true,
                         });
                      }}
-                     src="/icons/delete-button.svg"
-                     alt="Botão de excluir"
+                     icon="TrashIcon"
                   />
                </>
             )}

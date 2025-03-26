@@ -8,7 +8,7 @@ import {
    StyledErrorSpan,
    StyledFieldTitle,
    StyledInputMask,
-} from "@/src/components/Fields/index.styles";
+} from "@/src/components/Fields/styles";
 import { ICustomerSchema } from "@/src/validations/customerSchema";
 
 interface Props {

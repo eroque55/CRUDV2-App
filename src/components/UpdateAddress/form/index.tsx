@@ -8,7 +8,7 @@ import {
    StyledErrorSpan,
    StyledFieldTitle,
    StyledInputMask,
-} from "@/src/components/Fields/index.styles";
+} from "@/src/components/Fields/styles";
 import { IAddressSchema } from "@/src/validations/addressSchema";
 
 import { Address, City, Country, State } from "@/src/interfaces/api";

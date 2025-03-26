@@ -1,6 +1,5 @@
-import { Address } from "@/src/interfaces/api";
+import IAddress from "@/src/interfaces/IAddress";
 import { capitalizeFirstLetter } from "@/src/utils";
-import DetailsActionButtons from "@/src/components/DetailsActionButtons";
 import { toast } from "react-toastify";
 import { deleteAddress } from "@/src/services/Address.service";
 import InfoContainer from "@/src/components/InfoContainer";
@@ -9,11 +8,16 @@ import {
    useUpdateAddress,
 } from "@/src/store/CustomerDetailsStore";
 import { ConfirmationToast } from "@/src/components/ConfirmationToast";
-import { StyledCard } from "@/src/components/StyledCard/index.styles";
+import {
+   ButtonsContainer,
+   StyledCard,
+} from "@/src/components/StyledCard/index.styles";
+import IconComponent from "../Icon";
+import CardButton from "../CardButton";
 
 interface Props {
    customerId: number;
-   address: Address;
+   address: IAddress;
 }
 
 export default function AddressCard({ address, customerId }: Props) {
@@ -41,25 +45,29 @@ export default function AddressCard({ address, customerId }: Props) {
    return (
       <StyledCard>
          <InfoContainer title="Tipo de endereço">{addressType}</InfoContainer>
-         <DetailsActionButtons
-            handleDelete={() => {
-               toast(ConfirmationToast, {
-                  data: {
-                     title: "Tem certeza?",
-                     message: "Tem certeza que deseja excluir esse endereço?",
-                     notice: "Essa ação não poderá ser desfeita",
-                     successMessage: "Endereço excluído com sucesso!",
-                     actionButton: "Excluir",
-                     onSubmit: handleDeleteAddress,
-                  },
-                  autoClose: false,
-                  position: "top-center",
-                  closeButton: false,
-                  hideProgressBar: true,
-               });
-            }}
-            handleEdit={handlUpdateAddress}
-         />
+         <ButtonsContainer>
+            <CardButton icon="EditIcon" onClick={handlUpdateAddress} />
+            <CardButton
+               icon="TrashIcon"
+               onClick={() => {
+                  toast(ConfirmationToast, {
+                     data: {
+                        title: "Tem certeza?",
+                        message:
+                           "Tem certeza que deseja excluir esse endereço?",
+                        notice: "Essa ação não poderá ser desfeita",
+                        successMessage: "Endereço excluído com sucesso!",
+                        actionButton: "Excluir",
+                        onSubmit: handleDeleteAddress,
+                     },
+                     autoClose: false,
+                     position: "top-center",
+                     closeButton: false,
+                     hideProgressBar: true,
+                  });
+               }}
+            />
+         </ButtonsContainer>
          <InfoContainer title="Apelido">{address.nickname}</InfoContainer>
          <InfoContainer title="CEP">{cep}</InfoContainer>
          <InfoContainer title="Tipo de residência">

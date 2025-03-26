@@ -6,7 +6,7 @@ import {
    StyledLabel,
    StyledErrorSpan,
    StyledFieldTitle,
-} from "@/src/components/Fields/index.styles";
+} from "@/src/components/Fields/styles";
 import { IResetPasswordSchema } from "@/src/validations/resetPasswordSchema";
 
 interface Props {
