@@ -14,8 +14,8 @@ export const ModalContainer = styled.dialog<ModalContainerProps>`
    border: none;
    padding: 0;
    overflow: hidden;
-
    box-shadow: ${({ theme }) => theme.colors.other.shadow};
+   background-color: ${({ theme }) => theme.colors.neutral.color};
 `;
 
 export const ModalBackground = styled.div`

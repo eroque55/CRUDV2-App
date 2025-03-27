@@ -1,10 +1,11 @@
 import { create } from "zustand";
-import { Card, Address } from "@/src/interfaces/api";
-import { Customer } from "@/src/interfaces/api";
+import ICard from "@/src/interfaces/ICard";
+import IAddress from "@/src/interfaces/IAddress";
+import ICustomer from "@/src/interfaces/ICustomer";
 import { getCustomer } from "../services/Customer.service";
 
 interface CustomerState {
-   customer: Customer | null;
+   customer: ICustomer | null;
    getCustomer: (id: number) => Promise<void>;
 }
 
@@ -27,14 +28,14 @@ interface UpdateState<T> {
    closeModal: () => void;
 }
 
-export const useUpdateAddress = create<UpdateState<Address>>((set) => ({
+export const useUpdateAddress = create<UpdateState<IAddress>>((set) => ({
    isOpen: false,
    item: null,
    openModal: (address) => set({ isOpen: true, item: address }),
    closeModal: () => set({ isOpen: false, item: null }),
 }));
 
-export const useUpdateCard = create<UpdateState<Card>>((set) => ({
+export const useUpdateCard = create<UpdateState<ICard>>((set) => ({
    isOpen: false,
    item: null,
    openModal: (card) => set({ isOpen: true, item: card }),

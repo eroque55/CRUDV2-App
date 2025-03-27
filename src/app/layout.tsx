@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { Roboto } from "next/font/google";
 import StyledComponentsRegistry from "@/src/themes/styled-components-registry";
 import ClientLayout from "@/src/themes/client-layout";
+import { ToastContainer } from "react-toastify";
 
 const roboto = Roboto({
    weight: ["400", "700"],
@@ -20,7 +21,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <html lang="pt_BR">
          <body className={`${roboto.variable}`}>
             <StyledComponentsRegistry>
-               <ClientLayout>{children}</ClientLayout>
+               <ClientLayout>
+                  {children}
+                  <ToastContainer />
+               </ClientLayout>
             </StyledComponentsRegistry>
          </body>
       </html>

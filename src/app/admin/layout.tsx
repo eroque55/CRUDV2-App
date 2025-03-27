@@ -2,7 +2,6 @@
 
 import NavBar from "@/src/components/NavBar";
 import { StyledContent, StyledMain } from "./styles";
-import { ToastContainer } from "react-toastify";
 
 interface Props {
    children: React.ReactNode;
@@ -11,7 +10,6 @@ interface Props {
 const AdminLayout = ({ children }: Props) => {
    return (
       <>
-         <ToastContainer />
          <StyledMain>
             <NavBar />
             <StyledContent>{children}</StyledContent>

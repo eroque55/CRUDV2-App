@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { StyledMessage, StyledLink, UnloggedContent } from "./index.styles";
-import ExitIcon from "@/public/icons/exit-icon.svg";
+import IconComponent from "../Icon";
 
 export default function Unlogged() {
    return (
@@ -10,7 +10,7 @@ export default function Unlogged() {
          </StyledMessage>
          <StyledLink href={"/"}>
             Voltar para a página inicial
-            <Image src={ExitIcon} alt="Icone de sair" />
+            <IconComponent name="ExitBlueIcon" />
          </StyledLink>
       </UnloggedContent>
    );

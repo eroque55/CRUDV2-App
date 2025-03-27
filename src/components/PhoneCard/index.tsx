@@ -1,5 +1,5 @@
 import { StyledCard } from "../StyledCard/index.styles";
-import InfoContainer from "../InfoContainer";
+import CardContent from "../CardContentContainer";
 import { capitalizeFirstLetter } from "@/src/utils";
 import IPhone from "@/src/interfaces/IPhone";
 
@@ -15,10 +15,10 @@ export default function PhoneCard({ phone }: Props) {
    )}-${phone.number.substring(5)}`;
    return (
       <StyledCard>
-         <InfoContainer title="Tipo de telefone">
+         <CardContent title="Tipo de telefone">
             {capitalizeFirstLetter(phone.phoneType)}
-         </InfoContainer>
-         <InfoContainer title="Telefone">{phoneFormatted}</InfoContainer>
+         </CardContent>
+         <CardContent title="Telefone">{phoneFormatted}</CardContent>
       </StyledCard>
    );
 }

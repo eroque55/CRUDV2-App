@@ -7,7 +7,7 @@ interface Props {
 
 export default function CloseButton({ onClick }: Props) {
    return (
-      <CloseButtonContainer onClick={onClick}>
+      <CloseButtonContainer type="button" onClick={onClick}>
          <IconComponent name="CloseIcon" />
       </CloseButtonContainer>
    );

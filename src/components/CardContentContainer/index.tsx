@@ -2,18 +2,20 @@ import {
    StyledInfoContainer,
    StyledInfoContent,
    StyledInfoTitle,
-} from "./index.styles";
+} from "./styles";
 
-interface Props {
+export interface CardContentProps {
    title: string;
    children: React.ReactNode;
 }
 
-export default function InfoContainer({ title, children }: Props) {
+const CardContent = ({ title, children }: CardContentProps) => {
    return (
       <StyledInfoContainer>
          <StyledInfoTitle>{title}</StyledInfoTitle>
          <StyledInfoContent>{children}</StyledInfoContent>
       </StyledInfoContainer>
    );
-}
+};
+
+export default CardContent;

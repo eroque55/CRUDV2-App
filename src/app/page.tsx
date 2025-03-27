@@ -23,13 +23,6 @@ import { Title } from "../components/Title";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ILoginSchema, loginSchema } from "../validations/loginSchema";
-import {
-   StyledField,
-   StyledInput,
-   StyledErrorSpan,
-   StyledFieldTitle,
-   StyledLabel,
-} from "@/src/components/Fields/styles";
 import { toast, ToastContainer } from "react-toastify";
 import ICustomer from "../interfaces/ICustomer";
 import CreateCustomerFlow from "../components/CreateCustomerFlow";
@@ -38,6 +31,7 @@ import useAuthStore from "../store/CustomerShopStore";
 import { getCustomer } from "../services/Customer.service";
 import { useRouter } from "next/navigation";
 import BackButton from "../components/BackButton";
+import InputField from "../components/InputField";
 
 export default function Login() {
    const [loginType, setLoginType] = useState(0);
@@ -87,7 +81,7 @@ export default function Login() {
       const adminPassword = "Aa12345@";
 
       if (data.email === adminEmail && data.password === adminPassword) {
-         router.push("/admin");
+         router.push("/admin/customers");
       } else {
          toast.error("Credenciais inválidas");
       }
@@ -144,34 +138,24 @@ export default function Login() {
                   )}
                   {loginType !== 0 && (
                      <>
-                        <StyledField>
-                           <StyledFieldTitle>
-                              <StyledLabel>E-mail</StyledLabel>
-                              {errors.email && (
-                                 <StyledErrorSpan>
-                                    {errors.email.message}
-                                 </StyledErrorSpan>
-                              )}
-                           </StyledFieldTitle>
-                           <StyledInput {...register("email")} />
-                        </StyledField>
+                        <InputField
+                           id="email"
+                           placeholder="Insira seu e-mail"
+                           label="E-mail"
+                           register={register}
+                           inputType="email"
+                           error={errors.email?.message}
+                        />
+                        <InputField
+                           id="password"
+                           label="Senha"
+                           placeholder="Insira sua senha"
+                           register={register}
+                           error={errors.password?.message}
+                           type="password"
+                        />
 
-                        <StyledField>
-                           <StyledFieldTitle>
-                              <StyledLabel>Senha</StyledLabel>
-                              {errors.password && (
-                                 <StyledErrorSpan>
-                                    {errors.password.message}
-                                 </StyledErrorSpan>
-                              )}
-                           </StyledFieldTitle>
-                           <StyledInput
-                              type="password"
-                              {...register("password")}
-                           />
-                        </StyledField>
-
-                        <Button onClick={handleSubmit(handleLogin)}>
+                        <Button submit onClick={handleSubmit(handleLogin)}>
                            Entrar
                         </Button>
                      </>

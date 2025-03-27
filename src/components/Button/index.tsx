@@ -7,11 +7,21 @@ interface Props {
    wired?: boolean;
    icon?: IconT;
    onClick?: () => void;
+   submit?: boolean;
 }
 
-const ButtonComponent = ({ children, width, wired, icon, onClick }: Props) => {
+const ButtonComponent = ({
+   children,
+   width,
+   wired,
+   icon,
+   onClick,
+   submit,
+}: Props) => {
+   const type = submit ? "submit" : "button";
+
    return (
-      <StyledButton onClick={onClick} $width={width} $wired={wired}>
+      <StyledButton type={type} onClick={onClick} $width={width} $wired={wired}>
          {icon && <IconComponent name={icon} size={20} />}
          {children}
       </StyledButton>

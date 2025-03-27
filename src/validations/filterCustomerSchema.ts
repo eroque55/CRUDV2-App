@@ -5,7 +5,7 @@ export type IFilterCustomerSchema = yup.InferType<typeof filterCustomerSchema>;
 export const filterCustomerSchema = yup.object().shape({
    name: yup.string().optional(),
 
-   birthDate: yup.string().optional(),
+   birthDate: yup.date().optional().nullable(),
 
    cpf: yup.string().optional(),
 

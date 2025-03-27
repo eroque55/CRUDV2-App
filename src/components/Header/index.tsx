@@ -4,12 +4,10 @@ import {
    StyledHeader,
    StyledHello,
    StyledLogoutButton,
-} from "./index.styles";
-import Image from "next/image";
-import ExitIcon from "@/public/icons/exit-icon.svg";
-import { toast } from "react-toastify";
-import { ConfirmationToast } from "@/src/components/common/toastify/ConfirmationToast";
+} from "./styles";
 import { useRouter } from "next/navigation";
+import IconComponent from "../Icon";
+import { confirmationModal } from "@/src/utils/Toasts";
 
 export default function Header() {
    const { customer, logout } = useAuthStore();
@@ -28,25 +26,19 @@ export default function Header() {
             </StyledHello>
             <StyledLogoutButton
                onClick={() => {
-                  toast(ConfirmationToast, {
-                     data: {
-                        title: "Tem certeza?",
-                        message: "Tem certeza que deseja sair?",
-                        notConfirmation: true,
-                        successMessage: "",
-                        actionButton: "Sair",
-                        onSubmit: handleLogout,
+                  confirmationModal({
+                     title: "Tem certeza?",
+                     message: "Tem certeza que deseja sair?",
+                     confirmButton: "Sair",
+                     confirmAction: () => {
+                        handleLogout();
                      },
-                     toastId: "exit",
-                     autoClose: false,
-                     position: "top-center",
-                     closeButton: false,
-                     hideProgressBar: true,
+                     cancelButton: "Cancelar",
                   });
                }}
             >
                Sair
-               <Image src={ExitIcon} alt="Icone de sair" />
+               <IconComponent name="ExitBlueIcon" />
             </StyledLogoutButton>
          </HelloContainer>
          sdasda

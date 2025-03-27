@@ -1,6 +1,6 @@
 "use client";
 
-import { StyledToastContainer } from "@/src/components/Toastify/index.styles";
+// import { StyledToastContainer } from "@/src/components/Toastify/index.styles";
 import Header from "@/src/components/Header";
 import Unlogged from "@/src/components/Unlogged";
 import useAuthStore from "@/src/store/CustomerShopStore";
@@ -19,7 +19,6 @@ export default function Shop() {
 
    return (
       <>
-         <StyledToastContainer />
          <Header />
       </>
    );

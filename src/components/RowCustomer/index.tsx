@@ -69,10 +69,10 @@ const RowCustomer = ({ customer }: Props) => {
          content={collumns}
          actions={[
             { name: switchIcon, onClick: toggleStatus, height: 20 },
-            { name: "TrashIcon", onClick: trashAction },
+            { name: "TrashGrayIcon", onClick: trashAction },
             {
                name: "EyeIcon",
-               onClick: () => router.push(`/admin/customer/${customer.id}`),
+               onClick: () => router.push(`customers/customer/${customer.id}`),
             },
          ]}
       ></Row>

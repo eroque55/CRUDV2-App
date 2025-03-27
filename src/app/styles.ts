@@ -47,7 +47,7 @@ export const StyledContent = styled.section`
    backdrop-filter: blur(5px);
 `;
 
-export const StyledButtonContainer = styled.div`
+export const StyledButtonContainer = styled.form`
    display: flex;
    flex-direction: column;
    gap: 1.25rem;
@@ -64,7 +64,7 @@ export const BackContainer = styled.label`
    color: ${({ theme }) => theme.colors.primary.color3};
 `;
 
-export const CreateAccount = styled.button`
+export const CreateAccount = styled.h3`
    font-size: 1rem;
    color: ${({ theme }) => theme.colors.primary.color3};
    background: transparent;

@@ -22,7 +22,7 @@ export default function NavBar() {
       });
    };
 
-   const customersPath = "/admin";
+   const customersPath = "/admin/customers";
    const salesPath = "/admin/sales";
    const dashboardPath = "/admin/dashboard";
 

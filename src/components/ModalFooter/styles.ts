@@ -14,7 +14,7 @@ export const ModalFooterButton = styled.button`
    border: 1px solid ${({ theme }) => theme.colors.neutral.color2};
    background-color: ${({ theme }) => theme.colors.neutral.color};
 
-   color: ${({ theme }) => theme.colors.primary.color};
+   color: ${({ theme }) => theme.colors.primary.color3};
    font-size: 1rem;
 
    cursor: pointer;

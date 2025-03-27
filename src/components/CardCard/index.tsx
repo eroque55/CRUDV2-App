@@ -1,84 +1,89 @@
-import { capitalizeFirstLetter } from "@/src/utils";
-import InfoContainer from "@/src/components/InfoContainer";
-import { toast } from "react-toastify";
-import { deleteCard, updateCard } from "@/src/services/Card.service";
-import {
-   ButtonsContainer,
-   StyledCard,
-} from "@/src/components/StyledCard/index.styles";
-import { useCustomerState } from "@/src/store/CustomerDetailsStore";
 import ICard from "@/src/interfaces/ICard";
-import { ConfirmationToast } from "@/src/components/ConfirmationToast";
-import CardButton from "../CardButton";
+import Card from "../Card";
+import { capitalizeFirstLetter } from "@/src/utils";
+import { CardContentProps } from "../CardContentContainer";
+import { useCustomerState } from "@/src/store/CustomerDetailsStore";
+import { deleteCard, updateCard } from "@/src/services/Card.service";
+import { confirmationModal, errorModal } from "@/src/utils/Toasts";
+import { CardButtonProps } from "../CardButton";
 
 interface Props {
-   customerId: number;
    card: ICard;
 }
 
-export default function CardCard({ card, customerId }: Props) {
-   const { getCustomer } = useCustomerState();
+const CardCard = ({ card }: Props) => {
+   const { getCustomer, customer } = useCustomerState();
 
    async function handleDeleteCard() {
       try {
          await deleteCard(card.id);
-         await getCustomer(customerId);
+         await getCustomer(customer?.id || 0);
       } catch (error: any) {
-         toast.error(error.response.data);
+         errorModal(error.response.data);
       }
    }
 
    async function handleSetPreferential() {
       try {
          await updateCard(card.id);
-         await getCustomer(customerId);
+         await getCustomer(customer?.id || 0);
       } catch (error: any) {
-         toast.error(error.response.data);
+         errorModal(error.response.data);
       }
    }
 
-   const cardBrand = capitalizeFirstLetter(card.cardBrand);
    const expirationDate =
       card.expirationDate.slice(0, 2) + "/" + card.expirationDate.slice(2);
 
+   const cardContent: CardContentProps[] = [
+      {
+         title: "Número do cartão",
+         children: card.number,
+      },
+      {
+         title: "Nome do titular",
+         children: card.cardholder,
+      },
+      {
+         title: "Validade",
+         children: expirationDate,
+      },
+      {
+         title: "Bandeira do cartão",
+         children: capitalizeFirstLetter(card.cardBrand),
+      },
+   ];
+
+   const preferentialButton: CardButtonProps = {
+      icon: "CheckGreenIcon",
+      onClick: handleSetPreferential,
+   };
+
+   const deleteButton: CardButtonProps = {
+      icon: "TrashRedIcon",
+      onClick: () =>
+         confirmationModal({
+            title: "Excluir cartão",
+            message: "Deseja realmente excluir este cartão?",
+            confirmButton: "Excluir",
+            cancelButton: "Cancelar",
+            confirmAction: handleDeleteCard,
+            notice: "Essa ação não poderá ser desfeita.",
+            succesMessage: "Cartão excluído com sucesso!",
+         }),
+   };
+
+   const cardButtons: CardButtonProps[] = [];
+   if (!card.preferential) cardButtons.push(preferentialButton);
+   cardButtons.push(deleteButton);
+
    return (
-      <StyledCard $isPreferential={card.preferential}>
-         <InfoContainer title="Número do cartão">{card.number}</InfoContainer>
-         <ButtonsContainer>
-            {!card.preferential && (
-               <>
-                  <CardButton
-                     onClick={handleSetPreferential}
-                     icon="CheckGreenIcon"
-                  />
-                  <CardButton
-                     onClick={() => {
-                        toast(ConfirmationToast, {
-                           data: {
-                              title: "Tem certeza?",
-                              message:
-                                 "Tem certeza que deseja excluir esse cartão?",
-                              notice: "Essa ação não poderá ser desfeita",
-                              successMessage: "Cartão excluído com sucesso!",
-                              actionButton: "Excluir",
-                              onSubmit: handleDeleteCard,
-                           },
-                           autoClose: false,
-                           position: "top-center",
-                           closeButton: false,
-                           hideProgressBar: true,
-                        });
-                     }}
-                     icon="TrashIcon"
-                  />
-               </>
-            )}
-         </ButtonsContainer>
-         <InfoContainer title="Titular do cartão">
-            {card.cardholder}
-         </InfoContainer>
-         <InfoContainer title="Validade">{expirationDate}</InfoContainer>
-         <InfoContainer title="Bandeira do cartão">{cardBrand}</InfoContainer>
-      </StyledCard>
+      <Card
+         cardContent={cardContent}
+         active={card.preferential}
+         cardButtons={cardButtons}
+      />
    );
-}
+};
+
+export default CardCard;

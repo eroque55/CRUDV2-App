@@ -1,6 +1,6 @@
 "use client";
 
-import { StyledContentHeader, StyledContentHeaderOptions } from "./styles";
+import { StyledContentHeader, StyledContentHeaderOptions } from "../styles";
 import CreateCustomerFlow from "@/src/components/CreateCustomerFlow";
 import CustomerFilter from "@/src/components/CustomerFilter";
 import ButtonComponent from "@/src/components/Button";
@@ -12,6 +12,7 @@ import {
 import { Title } from "@/src/components/Title";
 import { useEffect } from "react";
 import ListCustomers from "@/src/components/ListCustomers";
+import FilterCustomer from "@/src/components/FilterCustomer";
 
 export default function Admin() {
    const { filterOpenModal } = useFilterModalStore();
@@ -25,7 +26,7 @@ export default function Admin() {
    return (
       <>
          <CreateCustomerFlow />
-         <CustomerFilter />
+         <FilterCustomer />
          <StyledContentHeader>
             <Title>Clientes</Title>
             <StyledContentHeaderOptions>

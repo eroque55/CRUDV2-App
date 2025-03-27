@@ -32,6 +32,7 @@ const IconComponent = ({
             width={width || size}
             height={height || size}
             onClick={onClick}
+            style={onClick && { cursor: "pointer" }}
          />
       );
    }

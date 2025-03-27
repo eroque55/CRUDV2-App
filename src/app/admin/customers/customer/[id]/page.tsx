@@ -20,13 +20,13 @@ import {
 } from "@/src/store/CustomerDetailsStore";
 import { useCustomerDetails } from "@/src/hooks/useCustomerDetails";
 import ButtonComponent from "@/src/components/Button";
-import PersonalDataCard from "@/src/components/PersonalDataCard";
-import PhoneCard from "@/src/components/PhoneCard";
-import AddressCard from "@/src/components/AddressCard";
 import IAddress from "@/src/interfaces/IAddress";
 import ICard from "@/src/interfaces/ICard";
 import CardCard from "@/src/components/CardCard";
-export default function CustomerDetails() {
+import CardAddress from "@/src/components/CardAddress";
+import CardPersonalData from "@/src/components/CardPersonalData";
+
+const CustomerDetails = () => {
    const params = useParams();
    const id = params.id ? parseInt(params.id as string) : NaN;
    const { customer, loading } = useCustomerDetails(id);
@@ -88,29 +88,18 @@ export default function CustomerDetails() {
             </ActionsContainer>
          </StyledHeader>
          <PageContainer>
-            {page === 0 && (
-               <>
-                  <PersonalDataCard customer={customer} />
-                  <PhoneCard phone={customer.phone} />
-               </>
-            )}
+            {page === 0 && <CardPersonalData customer={customer} />}
             {page === 1 &&
                customer.addresses.map((address: IAddress) => (
-                  <AddressCard
-                     customerId={customer.id}
-                     key={address.id}
-                     address={address}
-                  />
+                  <CardAddress key={address.id} address={address} />
                ))}
             {page === 2 &&
                customer.cards.map((card: ICard) => (
-                  <CardCard
-                     customerId={customer.id}
-                     key={card.id}
-                     card={card}
-                  />
+                  <CardCard key={card.id} card={card} />
                ))}
          </PageContainer>
       </>
    );
-}
+};
+
+export default CustomerDetails;
