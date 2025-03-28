@@ -7,7 +7,10 @@ import ModalFooter from "@/src/components/Modalzz/modalFooter";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "./form";
-import { IAddressSchema, addressSchema } from "@/src/validations/addressSchema";
+import {
+   IAddressCreateSchema,
+   AddressCreateSchema,
+} from "@/src/validations/AddressCreateSchema";
 import { updateAddress } from "@/src/services/Address.service";
 import { toast } from "react-toastify";
 import {
@@ -27,12 +30,12 @@ export default function UpdateAddressModal() {
       handleSubmit,
       formState: { errors },
       setValue,
-   } = useForm<IAddressSchema>({
-      resolver: yupResolver(addressSchema),
+   } = useForm<IAddressCreateSchema>({
+      resolver: yupResolver(AddressCreateSchema),
       mode: "onBlur",
    });
 
-   const submit: SubmitHandler<IAddressSchema> = async (data) => {
+   const submit: SubmitHandler<IAddressCreateSchema> = async (data) => {
       try {
          if (!item) {
             throw new Error("Endereço não encontrado");

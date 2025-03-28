@@ -9,7 +9,7 @@ import {
    StyledFieldTitle,
    StyledInputMask,
 } from "@/src/components/Fields/styles";
-import { IAddressSchema } from "@/src/validations/addressSchema";
+import { IAddressCreateSchema } from "@/src/validations/AddressCreateSchema";
 
 import { Address, City, Country, State } from "@/src/interfaces/api";
 
@@ -17,9 +17,9 @@ import { useEffect, useState } from "react";
 import { getCountries } from "@/src/services/Country.service";
 
 interface Props {
-   register: UseFormRegister<IAddressSchema>;
-   errors: FieldErrors<IAddressSchema>;
-   setValue: UseFormSetValue<IAddressSchema>;
+   register: UseFormRegister<IAddressCreateSchema>;
+   errors: FieldErrors<IAddressCreateSchema>;
+   setValue: UseFormSetValue<IAddressCreateSchema>;
    address: Address;
 }
 

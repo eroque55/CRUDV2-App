@@ -4,7 +4,10 @@ import ModalFooter from "@/src/components/Modalzz/modalFooter";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "../addressForm";
-import { IAddressSchema, addressSchema } from "@/src/validations/addressSchema";
+import {
+   IAddressCreateSchema,
+   AddressCreateSchema,
+} from "@/src/validations/AddressCreateSchema";
 import { Dispatch, SetStateAction } from "react";
 
 import { Customer, Address, City, State, Country } from "@/src/interfaces/api";
@@ -27,12 +30,12 @@ export default function BillingAddress({
       handleSubmit,
       formState: { errors },
       setValue,
-   } = useForm<IAddressSchema>({
-      resolver: yupResolver(addressSchema),
+   } = useForm<IAddressCreateSchema>({
+      resolver: yupResolver(AddressCreateSchema),
       mode: "onBlur",
    });
 
-   const submit: SubmitHandler<IAddressSchema> = async (data) => {
+   const submit: SubmitHandler<IAddressCreateSchema> = async (data) => {
       try {
          const country: Partial<Country> = {
             id: data.countryId,

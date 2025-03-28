@@ -5,9 +5,9 @@ interface ModalContainerProps {
    $height?: string;
 }
 
-export const ModalContainer = styled.dialog<ModalContainerProps>`
+export const ModalContainer = styled.form<ModalContainerProps>`
    display: flex;
-   width: ${({ $width }) => $width || "22rem"};
+   width: ${({ $width }) => $width || "25rem"};
    height: ${({ $height }) => $height || "auto"};
    flex-direction: column;
    border-radius: 0.5rem;
@@ -16,16 +16,4 @@ export const ModalContainer = styled.dialog<ModalContainerProps>`
    overflow: hidden;
    box-shadow: ${({ theme }) => theme.colors.other.shadow};
    background-color: ${({ theme }) => theme.colors.neutral.color};
-`;
-
-export const ModalBackground = styled.div`
-   position: fixed;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   background-color: rgba(0, 0, 0, 0.2);
-   display: flex;
-   justify-content: center;
-   align-items: center;
 `;

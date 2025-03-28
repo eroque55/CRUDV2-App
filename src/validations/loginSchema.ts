@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
-export type ILoginSchema = yup.InferType<typeof loginSchema>;
+export type ILoginSchema = yup.InferType<typeof LoginSchema>;
 
-export const loginSchema = yup.object().shape({
+export const LoginSchema = yup.object().shape({
    email: yup
       .string()
       .required("E-mail é obrigatório")

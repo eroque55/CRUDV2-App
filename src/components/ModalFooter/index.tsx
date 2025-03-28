@@ -1,6 +1,7 @@
 import { ModalFooterContainer, ModalFooterButton } from "./styles";
 
 interface Props {
+   confirmButtonType?: "button" | "submit";
    children: React.ReactNode;
    cancelButton?: string;
    confirmAction: () => void;
@@ -12,15 +13,16 @@ const ModalFooter = ({
    cancelButton,
    cancelAction,
    confirmAction,
+   confirmButtonType = "button",
 }: Props) => {
    return (
       <ModalFooterContainer>
          {cancelButton && (
-            <ModalFooterButton onClick={cancelAction}>
+            <ModalFooterButton type="button" onClick={cancelAction}>
                {cancelButton}
             </ModalFooterButton>
          )}
-         <ModalFooterButton onClick={confirmAction}>
+         <ModalFooterButton type={confirmButtonType} onClick={confirmAction}>
             {children}
          </ModalFooterButton>
       </ModalFooterContainer>

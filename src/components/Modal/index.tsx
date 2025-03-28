@@ -48,6 +48,7 @@ const Modal = ({
          <ModalHeader>{title}</ModalHeader>
          <ModalBody notice={notice}>{message}</ModalBody>
          <ModalFooter
+            confirmButtonType="button"
             cancelButton={cancelButton}
             confirmAction={handleConfirm}
             cancelAction={handleCancel}

@@ -4,7 +4,7 @@ interface Props {
    $align?: "center" | "left";
 }
 
-export const ModalBackgroundContainer = styled.div<Props>`
+const ModalBackground = styled.div<Props>`
    display: flex;
    width: 100vw;
    height: 100vh;
@@ -12,7 +12,7 @@ export const ModalBackgroundContainer = styled.div<Props>`
    position: fixed;
    top: 0;
    left: 0;
-   z-index: 1000;
+   z-index: 100;
 
    ${({ $align }) => {
       if ($align === "left") {
@@ -27,3 +27,5 @@ export const ModalBackgroundContainer = styled.div<Props>`
       }
    }}
 `;
+
+export default ModalBackground;

@@ -2,7 +2,6 @@
 
 import { StyledContentHeader, StyledContentHeaderOptions } from "../styles";
 import CreateCustomerFlow from "@/src/components/CreateCustomerFlow";
-import CustomerFilter from "@/src/components/CustomerFilter";
 import ButtonComponent from "@/src/components/Button";
 import {
    useCreateModalStore,

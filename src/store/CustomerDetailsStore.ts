@@ -21,27 +21,6 @@ export const useCustomerState = create<CustomerState>((set) => ({
    },
 }));
 
-interface UpdateState<T> {
-   isOpen: boolean;
-   item: T | null;
-   openModal: (item: T) => void;
-   closeModal: () => void;
-}
-
-export const useUpdateAddress = create<UpdateState<IAddress>>((set) => ({
-   isOpen: false,
-   item: null,
-   openModal: (address) => set({ isOpen: true, item: address }),
-   closeModal: () => set({ isOpen: false, item: null }),
-}));
-
-export const useUpdateCard = create<UpdateState<ICard>>((set) => ({
-   isOpen: false,
-   item: null,
-   openModal: (card) => set({ isOpen: true, item: card }),
-   closeModal: () => set({ isOpen: false, item: null }),
-}));
-
 interface UpdateCustomer {
    isOpen: boolean;
    openModal: () => void;
@@ -60,20 +39,6 @@ interface CreateState {
    openModal: (customerId: number) => void;
    closeModal: () => void;
 }
-
-export const useCreateAddress = create<CreateState>((set) => ({
-   isOpen: false,
-   customerId: 0,
-   openModal: (customerId: number) => set({ isOpen: true, customerId }),
-   closeModal: () => set({ isOpen: false }),
-}));
-
-export const useCreateCard = create<CreateState>((set) => ({
-   isOpen: false,
-   customerId: 0,
-   openModal: (customerId: number) => set({ isOpen: true, customerId }),
-   closeModal: () => set({ isOpen: false }),
-}));
 
 export const useUpdatePassword = create<CreateState>((set) => ({
    isOpen: false,

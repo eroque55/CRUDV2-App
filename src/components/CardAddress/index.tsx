@@ -1,14 +1,12 @@
 import Card from "../Card";
 import { capitalizeFirstLetter, formatCep } from "@/src/utils";
 import { CardContentProps } from "../CardContentContainer";
-import {
-   useCustomerState,
-   useUpdateAddress,
-} from "@/src/store/CustomerDetailsStore";
+import { useCustomerState } from "@/src/store/CustomerDetailsStore";
 import { confirmationModal, errorModal } from "@/src/utils/Toasts";
 import { CardButtonProps } from "../CardButton";
 import IAddress from "@/src/interfaces/IAddress";
 import { deleteAddress } from "@/src/services/Address.service";
+import { useUpdateAddress } from "@/src/store/AddressUpdateStore";
 
 interface Props {
    address: IAddress;

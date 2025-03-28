@@ -7,6 +7,7 @@ import { InputMask } from "../InputMask";
 import InputSelect, { OptionProps } from "../InputSelect";
 import InputRadio, { RadioProps } from "../InputRadio";
 import InputPassword from "../InputPassword";
+import { ChangeEvent } from "react";
 
 interface Props {
    id: string;
@@ -17,9 +18,10 @@ interface Props {
    type?: "input" | "maskedInput" | "select" | "radio" | "password";
    inputType?: "text" | "email" | "date" | "number";
    mask?: string;
-   onAccept?: (value: string) => void;
    selectOptions?: OptionProps[];
    radioOptions?: RadioProps[];
+   onAccept?: (value: string) => void;
+   onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const InputField = ({
@@ -31,16 +33,13 @@ const InputField = ({
    type = "input",
    inputType,
    mask,
-   onAccept,
    selectOptions = [],
    radioOptions = [],
+   onAccept,
+   onChange,
 }: Props) => {
    if (type === "radio" && radioOptions.length === 0) {
       throw new Error("Radio options are required");
-   }
-
-   if (type === "select" && selectOptions.length === 0) {
-      throw new Error("Select options are required");
    }
 
    if (type === "maskedInput" && !mask) {
@@ -71,7 +70,7 @@ const InputField = ({
             />
          )}
          {type === "select" && (
-            <InputSelect id={id} {...register(id)}>
+            <InputSelect id={id} {...register(id)} onChange={onChange}>
                <option value="">Selecione</option>
                {selectOptions.map((option) => (
                   <option key={option.value} value={option.value}>

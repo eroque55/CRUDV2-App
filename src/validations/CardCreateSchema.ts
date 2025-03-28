@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
-export type ICardSchema = yup.InferType<typeof cardSchema>;
+export type ICardCreateSchema = yup.InferType<typeof CardCreateSchema>;
 
-export const cardSchema = yup.object().shape({
+export const CardCreateSchema = yup.object().shape({
    number: yup
       .string()
       .required("Número do cartão é obrigatório")
@@ -32,6 +32,7 @@ export const cardSchema = yup.object().shape({
       .required("Bandeira do cartão é obrigatória")
       .oneOf(
          [
+            "",
             "VISA",
             "MASTERCARD",
             "AMERICAN_EXPRESS",

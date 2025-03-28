@@ -9,10 +9,6 @@ import {
    IConfirmationToast,
    successModal,
 } from "@/src/utils/Toasts";
-import {
-   AddressCreateSchema,
-   IAddressCreateSchema,
-} from "@/src/validations/AddressCreateSchema";
 import ICountry from "@/src/interfaces/ICountry";
 import IState from "@/src/interfaces/IState";
 import ICity from "@/src/interfaces/ICity";
@@ -25,13 +21,14 @@ import { useCustomerState } from "@/src/store/CustomerDetailsStore";
 import ICustomer from "@/src/interfaces/ICustomer";
 import ModalBackground from "../ModalBackground";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useUpdateAddress } from "@/src/store/AddressUpdateStore";
+import {
+   AddressUpdateSchema,
+   IAddressUpdateSchema,
+} from "@/src/validations/AddressUpdateSchema";
 
-interface Props {
-   isOpen: boolean;
-   setIsOpen: (value: boolean) => void;
-}
-
-const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
+const ModalAddressUpdate = () => {
+   const { closeModal, isOpen } = useUpdateAddress();
    const [countries, setCountries] = useState<ICountry[]>([]);
    const [states, setStates] = useState<IState[]>([]);
    const [cities, setCities] = useState<ICity[]>([]);
@@ -43,8 +40,8 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
       setValue,
       reset,
       formState: { errors },
-   } = useForm<IAddressCreateSchema>({
-      resolver: yupResolver(AddressCreateSchema),
+   } = useForm<IAddressUpdateSchema>({
+      resolver: yupResolver(AddressUpdateSchema),
       mode: "onBlur",
    });
 
@@ -57,12 +54,12 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
    }, [setValue]);
 
    const confModal: IConfirmationToast = {
-      title: "Cancelar Cadastro",
-      message: "Deseja realmente cancelar o cadastro?",
+      title: "Cancelar alterações?",
+      message: "Deseja realmente cancelar as alterações?",
       confirmButton: "Cancelar",
       cancelButton: "Voltar",
       confirmAction: () => {
-         setIsOpen(false);
+         closeModal();
          reset();
       },
    };
@@ -71,7 +68,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
       confirmationModal(confModal);
    };
 
-   const onSubmit = async (data: IAddressCreateSchema) => {
+   const onSubmit = async (data: IAddressUpdateSchema) => {
       try {
          const country: Partial<ICountry> = {
             id: Number(data.countryId),
@@ -96,10 +93,6 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
             complement: data.complement,
             neighborhood: data.neighborhood,
             city: city as ICity,
-            addressType: data.addressType as
-               | "RESIDENCIAL"
-               | "COBRANCA"
-               | "ENTREGA",
             residenceType: data.residenceType as
                | "CASA"
                | "APARTAMENTO"
@@ -114,9 +107,9 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
          };
          await createAddress(address as IAddress);
          reset();
-         setIsOpen(false);
+         closeModal();
          await getCustomer(customer?.id || 0);
-         successModal("Endereço cadastrado com sucesso!");
+         successModal("Endereço alterado com sucesso!");
       } catch (error: any) {
          errorModal(error.response.data);
       }
@@ -153,7 +146,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
    return (
       <ModalBackground>
          <ModalContainer $width="40rem">
-            <ModalHeader>Cadastrar endereço</ModalHeader>
+            <ModalHeader>Alterar endereço</ModalHeader>
             <ModalForm>
                <InputField
                   id="nickname"
@@ -173,18 +166,6 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
                      setValue("cep", value.replace(/[-]/g, ""));
                   }}
                   error={errors.cep?.message}
-               />
-               <InputField
-                  id="addressType"
-                  label="Tipo de endereço"
-                  type="select"
-                  error={errors.addressType?.message}
-                  selectOptions={[
-                     { value: "RESIDENCIAL", label: "Residencial" },
-                     { value: "COBRANCA", label: "Cobrança" },
-                     { value: "ENTREGA", label: "Entrega" },
-                  ]}
-                  register={register}
                />
                <InputField
                   id="residenceType"
@@ -295,4 +276,4 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
    );
 };
 
-export default ModalAddressCreate;
+export default ModalAddressUpdate;

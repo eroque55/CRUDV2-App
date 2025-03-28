@@ -13,11 +13,7 @@ import Loading from "@/src/components/Loading";
 import { Title, TitleContainer } from "@/src/components/Title";
 import BackButton from "@/src/components/BackButton";
 
-import {
-   useCreateAddress,
-   useCreateCard,
-   useUpdatePassword,
-} from "@/src/store/CustomerDetailsStore";
+import { useUpdatePassword } from "@/src/store/CustomerDetailsStore";
 import { useCustomerDetails } from "@/src/hooks/useCustomerDetails";
 import ButtonComponent from "@/src/components/Button";
 import IAddress from "@/src/interfaces/IAddress";
@@ -25,15 +21,19 @@ import ICard from "@/src/interfaces/ICard";
 import CardCard from "@/src/components/CardCard";
 import CardAddress from "@/src/components/CardAddress";
 import CardPersonalData from "@/src/components/CardPersonalData";
+import ModalAddressCreate from "@/src/components/ModalAddressCreate";
+import ModalCardCreate from "@/src/components/ModalCardCreate";
+import ModalAddressUpdate from "@/src/components/ModalAddressUpdate";
 
 const CustomerDetails = () => {
    const params = useParams();
    const id = params.id ? parseInt(params.id as string) : NaN;
    const { customer, loading } = useCustomerDetails(id);
    const [page, setPage] = useState(0);
+   const [createAddressIsOpen, setCreateAddressIsOpen] = useState(false);
+   const [updateAddressIsOpen, setUpdateAddressIsOpen] = useState(false);
+   const [createCardIsOpen, setCreateCardIsOpen] = useState(false);
 
-   const { openModal: openCreateAddress } = useCreateAddress();
-   const { openModal: openCreateCard } = useCreateCard();
    const { openModal: openUpdatePassword } = useUpdatePassword();
 
    if (loading || !customer) return <Loading />;
@@ -42,8 +42,8 @@ const CustomerDetails = () => {
 
    const handleAddClick = () => {
       if (page === 0) openUpdatePassword(id);
-      if (page === 1) openCreateAddress(id);
-      if (page === 2) openCreateCard(id);
+      if (page === 1) setCreateAddressIsOpen(true);
+      if (page === 2) setCreateCardIsOpen(true);
    };
 
    const buttonContent = () => {
@@ -59,6 +59,15 @@ const CustomerDetails = () => {
 
    return (
       <>
+         <ModalAddressCreate
+            isOpen={createAddressIsOpen}
+            setIsOpen={setCreateAddressIsOpen}
+         />
+         <ModalCardCreate
+            isOpen={createCardIsOpen}
+            setIsOpen={setCreateCardIsOpen}
+         />
+         <ModalAddressUpdate />
          <StyledHeader>
             <TitleContainer>
                <BackButton />

@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
-export type IUpdateCustomerSchema = yup.InferType<typeof updateCustomerSchema>;
+export type ICustomerUpdateSchema = yup.InferType<typeof CustomerUpdateSchema>;
 
-export const updateCustomerSchema = yup.object().shape({
+export const CustomerUpdateSchema = yup.object().shape({
    name: yup
       .string()
       .required("Nome é obrigatório")

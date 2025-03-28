@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
-export type IFilterCustomerSchema = yup.InferType<typeof filterCustomerSchema>;
+export type ICustomerFilterSchema = yup.InferType<typeof CustomerFilterSchema>;
 
-export const filterCustomerSchema = yup.object().shape({
+export const CustomerFilterSchema = yup.object().shape({
    name: yup.string().optional(),
 
    birthDate: yup.date().optional().nullable(),

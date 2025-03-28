@@ -9,14 +9,14 @@ import {
    StyledFieldTitle,
    StyledInputMask,
 } from "@/src/components/Fields/styles";
-import { IUpdateCustomerSchema } from "@/src/validations/updateCustomerSchema";
+import { ICustomerUpdateSchema } from "@/src/validations/CustomerUpdateSchema";
 import { useCustomerState } from "@/src/store/CustomerDetailsStore";
 import { useEffect } from "react";
 
 interface Props {
-   register: UseFormRegister<IUpdateCustomerSchema>;
-   errors: FieldErrors<IUpdateCustomerSchema>;
-   setValue: UseFormSetValue<IUpdateCustomerSchema>;
+   register: UseFormRegister<ICustomerUpdateSchema>;
+   errors: FieldErrors<ICustomerUpdateSchema>;
+   setValue: UseFormSetValue<ICustomerUpdateSchema>;
 }
 
 export default function CustomerForm({ register, errors, setValue }: Props) {

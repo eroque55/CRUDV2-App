@@ -22,7 +22,7 @@ import { useEffect, useState } from "react";
 import { Title } from "../components/Title";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ILoginSchema, loginSchema } from "../validations/loginSchema";
+import { ILoginSchema, LoginSchema } from "../validations/LoginSchema";
 import { toast, ToastContainer } from "react-toastify";
 import ICustomer from "../interfaces/ICustomer";
 import CreateCustomerFlow from "../components/CreateCustomerFlow";
@@ -50,7 +50,7 @@ export default function Login() {
       reset,
       formState: { errors },
    } = useForm<ILoginSchema>({
-      resolver: yupResolver(loginSchema),
+      resolver: yupResolver(LoginSchema),
       mode: "onBlur",
    });
 

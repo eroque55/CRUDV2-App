@@ -9,12 +9,12 @@ import {
    StyledFieldTitle,
    StyledInputMask,
 } from "@/src/components/Fields/styles";
-import { ICustomerSchema } from "@/src/validations/customerSchema";
+import { ICustomerCreateSchema } from "@/src/validations/CustomerCreateSchema";
 
 interface Props {
-   register: UseFormRegister<ICustomerSchema>;
-   errors: FieldErrors<ICustomerSchema>;
-   setValue: UseFormSetValue<ICustomerSchema>;
+   register: UseFormRegister<ICustomerCreateSchema>;
+   errors: FieldErrors<ICustomerCreateSchema>;
+   setValue: UseFormSetValue<ICustomerCreateSchema>;
 }
 
 export default function CustomerForm({ register, errors, setValue }: Props) {

@@ -11,10 +11,10 @@ export const ModalFooterButton = styled.button`
    justify-content: center;
    align-items: center;
    flex: 1 0 0;
-   border: 1px solid ${({ theme }) => theme.colors.neutral.color2};
+   border: 1px solid ${({ theme }) => theme.colors.neutral.color3};
    background-color: ${({ theme }) => theme.colors.neutral.color};
 
-   color: ${({ theme }) => theme.colors.primary.color3};
+   color: ${({ theme }) => theme.colors.primary.color2};
    font-size: 1rem;
 
    cursor: pointer;

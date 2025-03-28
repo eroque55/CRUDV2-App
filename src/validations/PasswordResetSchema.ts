@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
-export type IResetPasswordSchema = yup.InferType<typeof resetPasswordSchema>;
+export type IPasswordResetSchema = yup.InferType<typeof PasswordResetSchema>;
 
-export const resetPasswordSchema = yup.object().shape({
+export const PasswordResetSchema = yup.object().shape({
    lastPassword: yup.string().required("Senha atual é obrigatória"),
 
    newPassword: yup

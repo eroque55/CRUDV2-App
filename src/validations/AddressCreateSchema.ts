@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
-export type IAddressSchema = yup.InferType<typeof addressSchema>;
+export type IAddressCreateSchema = yup.InferType<typeof AddressCreateSchema>;
 
-export const addressSchema = yup.object().shape({
+export const AddressCreateSchema = yup.object().shape({
    nickname: yup
       .string()
       .required("Apelido é obrigatório")
@@ -17,21 +17,25 @@ export const addressSchema = yup.object().shape({
 
    addressType: yup
       .string()
+      .required("Tipo de endereço é obrigatório")
       .oneOf(
-         ["RESIDENCIAL", "COBRANCA", "ENTREGA"],
+         ["", "RESIDENCIAL", "COBRANCA", "ENTREGA"],
          "Tipo de endereço inválido"
       ),
 
    residenceType: yup
       .string()
       .required("Tipo de residência é obrigatório")
-      .oneOf(["CASA", "APARTAMENTO", "OUTRO"], "Tipo de residência inválido"),
+      .oneOf(
+         ["", "CASA", "APARTAMENTO", "OUTRO"],
+         "Tipo de residência inválido"
+      ),
 
    streetType: yup
       .string()
       .required("Tipo de logradouro é obrigatório")
       .oneOf(
-         ["RUA", "AVENIDA", "TRAVESSA", "ALAMEDA", "ESTRADA", "OUTRO"],
+         ["", "RUA", "AVENIDA", "TRAVESSA", "ALAMEDA", "ESTRADA", "OUTRO"],
          "Tipo de rua inválido"
       ),
 
@@ -55,11 +59,11 @@ export const addressSchema = yup.object().shape({
       .min(3, "Bairro deve ter pelo menos 3 caracteres")
       .max(50, "Bairro pode ter no máximo 50 caracteres"),
 
-   countryId: yup.number().required("País é obrigatório"),
+   countryId: yup.string().required("País é obrigatório"),
 
-   stateId: yup.number().required("Estado é obrigatório"),
+   stateId: yup.string().required("Estado é obrigatório"),
 
-   cityId: yup.number().required("Cidade é obrigatória"),
+   cityId: yup.string().required("Cidade é obrigatória"),
 
    complement: yup
       .string()

@@ -8,9 +8,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "./form";
 import {
-   IUpdateCustomerSchema,
-   updateCustomerSchema,
-} from "@/src/validations/updateCustomerSchema";
+   ICustomerUpdateSchema,
+   CustomerUpdateSchema,
+} from "@/src/validations/CustomerUpdateSchema";
 import { updateCustomer } from "@/src/services/Customer.service";
 import { toast } from "react-toastify";
 import {
@@ -31,12 +31,12 @@ export default function UpdatePersonalDataModal() {
       handleSubmit,
       formState: { errors },
       setValue,
-   } = useForm<IUpdateCustomerSchema>({
-      resolver: yupResolver(updateCustomerSchema),
+   } = useForm<ICustomerUpdateSchema>({
+      resolver: yupResolver(CustomerUpdateSchema),
       mode: "onBlur",
    });
 
-   const submit: SubmitHandler<IUpdateCustomerSchema> = async (data) => {
+   const submit: SubmitHandler<ICustomerUpdateSchema> = async (data) => {
       try {
          if (!customer) {
             throw new Error("Cliente não encontrado");

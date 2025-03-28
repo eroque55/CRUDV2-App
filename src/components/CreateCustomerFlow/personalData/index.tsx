@@ -3,9 +3,9 @@ import ModalHeader from "@/src/components/Modalzz/modalHeader";
 import ModalFooter from "@/src/components/Modalzz/modalFooter";
 import CustomerForm from "./form";
 import {
-   ICustomerSchema,
-   customerSchema,
-} from "@/src/validations/customerSchema";
+   ICustomerCreateSchema,
+   CustomerCreateSchema,
+} from "@/src/validations/CustomerCreateSchema";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Dispatch, SetStateAction } from "react";
@@ -28,12 +28,12 @@ export default function CreateCustomerModal({
       handleSubmit,
       setValue,
       formState: { errors },
-   } = useForm<ICustomerSchema>({
-      resolver: yupResolver(customerSchema),
+   } = useForm<ICustomerCreateSchema>({
+      resolver: yupResolver(CustomerCreateSchema),
       mode: "onBlur",
    });
 
-   const onSubmit: SubmitHandler<ICustomerSchema> = async (data) => {
+   const onSubmit: SubmitHandler<ICustomerCreateSchema> = async (data) => {
       const phone: Partial<Phone> = {
          ddd: data.number.substring(0, 2),
          number: data.number.substring(2),
