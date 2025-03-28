@@ -12,13 +12,7 @@ interface IAddress {
    complement?: string;
    city: ICity;
    addressType: "RESIDENCIAL" | "COBRANCA" | "ENTREGA";
-   streetType:
-      | "RUA"
-      | "AVENIDA"
-      | "TRAVESSA"
-      | "ALAMENDA"
-      | "ESTRADA"
-      | "OUTRO";
+   streetType: "RUA" | "AVENIDA" | "TRAVESSA" | "ALAMEDA" | "ESTRADA" | "OUTRO";
    residenceType: "CASA" | "APARTAMENTO" | "OUTRO";
 }
 

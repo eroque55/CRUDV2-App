@@ -35,6 +35,18 @@ const InputField = ({
    selectOptions = [],
    radioOptions = [],
 }: Props) => {
+   if (type === "radio" && radioOptions.length === 0) {
+      throw new Error("Radio options are required");
+   }
+
+   if (type === "select" && selectOptions.length === 0) {
+      throw new Error("Select options are required");
+   }
+
+   if (type === "maskedInput" && !mask) {
+      throw new Error("Mask is required for masked input");
+   }
+
    return (
       <FieldContent>
          <FieldHeaderContent>

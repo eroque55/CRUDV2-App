@@ -71,6 +71,7 @@ export const CreateAccount = styled.h3`
    border: none;
    cursor: pointer;
    text-decoration: underline;
+   text-align: center;
 `;
 
 export const StyledButton = styled(Link)`
