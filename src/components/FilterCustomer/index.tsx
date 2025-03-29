@@ -9,9 +9,9 @@ import {
 } from "./styles";
 
 import {
-   filterCustomerSchema,
-   IFilterCustomerSchema,
-} from "@/src/validations/filterCustomerSchema";
+   CustomerFilterSchema,
+   ICustomerFilterSchema,
+} from "@/src/validations/CustomerFilterSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ICustomer from "@/src/interfaces/ICustomer";
 import {
@@ -28,8 +28,8 @@ const FilterCustomer = () => {
    const { fetchCustomers } = useCustomerStore();
    const { filterIsOpen, filterCloseModal } = useFilterModalStore();
    const { register, handleSubmit, reset, setValue } =
-      useForm<IFilterCustomerSchema>({
-         resolver: yupResolver(filterCustomerSchema),
+      useForm<ICustomerFilterSchema>({
+         resolver: yupResolver(CustomerFilterSchema),
          mode: "onBlur",
          defaultValues: {
             status: "",
@@ -37,7 +37,7 @@ const FilterCustomer = () => {
          },
       });
 
-   const onSubmit = async (data: IFilterCustomerSchema) => {
+   const onSubmit = async (data: ICustomerFilterSchema) => {
       const customerFilter: Partial<ICustomer> = {
          name: data.name,
          cpf: data.cpf,
@@ -77,7 +77,7 @@ const FilterCustomer = () => {
    }
 
    return (
-      <ModalBackground align="left">
+      <ModalBackground $align="left">
          <StyledFilterContainer>
             <SyledFilterHeader>
                <StyledFilterTitle>Filtrar clientes</StyledFilterTitle>

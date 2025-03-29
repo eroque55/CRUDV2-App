@@ -17,6 +17,7 @@ interface Props {
    error?: string;
    type?: "input" | "maskedInput" | "select" | "radio" | "password";
    inputType?: "text" | "email" | "date" | "number";
+   defaultValue?: string;
    mask?: string;
    selectOptions?: OptionProps[];
    radioOptions?: RadioProps[];
@@ -37,6 +38,7 @@ const InputField = ({
    radioOptions = [],
    onAccept,
    onChange,
+   defaultValue,
 }: Props) => {
    if (type === "radio" && radioOptions.length === 0) {
       throw new Error("Radio options are required");
@@ -57,6 +59,7 @@ const InputField = ({
                type={inputType}
                id={id}
                placeholder={placeholder}
+               defaultValue={defaultValue}
                {...register(id)}
             />
          )}
@@ -65,12 +68,18 @@ const InputField = ({
                mask={mask}
                id={id}
                placeholder={placeholder}
+               defaultValue={defaultValue}
                onAccept={onAccept}
                {...register(id)}
             />
          )}
          {type === "select" && (
-            <InputSelect id={id} {...register(id)} onChange={onChange}>
+            <InputSelect
+               id={id}
+               {...register(id)}
+               onChange={onChange}
+               defaultValue={defaultValue}
+            >
                <option value="">Selecione</option>
                {selectOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -84,6 +93,7 @@ const InputField = ({
                register={register}
                radios={radioOptions}
                registerId={id}
+               defaultValue={defaultValue}
             />
          )}
          {type === "password" && (

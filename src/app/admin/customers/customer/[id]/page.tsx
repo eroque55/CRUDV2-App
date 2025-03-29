@@ -8,7 +8,7 @@ import {
    PageContainer,
 } from "./styles";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "@/src/components/Loading";
 import { Title, TitleContainer } from "@/src/components/Title";
 import BackButton from "@/src/components/BackButton";
@@ -24,6 +24,7 @@ import CardPersonalData from "@/src/components/CardPersonalData";
 import ModalAddressCreate from "@/src/components/ModalAddressCreate";
 import ModalCardCreate from "@/src/components/ModalCardCreate";
 import ModalAddressUpdate from "@/src/components/ModalAddressUpdate";
+import { useCountries } from "@/src/store/CountryStore";
 
 const CustomerDetails = () => {
    const params = useParams();
@@ -31,8 +32,12 @@ const CustomerDetails = () => {
    const { customer, loading } = useCustomerDetails(id);
    const [page, setPage] = useState(0);
    const [createAddressIsOpen, setCreateAddressIsOpen] = useState(false);
-   const [updateAddressIsOpen, setUpdateAddressIsOpen] = useState(false);
    const [createCardIsOpen, setCreateCardIsOpen] = useState(false);
+   const { fetchCountries } = useCountries();
+
+   useEffect(() => {
+      fetchCountries();
+   }, []);
 
    const { openModal: openUpdatePassword } = useUpdatePassword();
 

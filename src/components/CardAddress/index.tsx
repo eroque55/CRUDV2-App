@@ -47,6 +47,18 @@ const CardAddress = ({ address }: Props) => {
          children: capitalizeFirstLetter(address.residenceType),
       },
       {
+         title: "Tipo de logradouro",
+         children: capitalizeFirstLetter(address.streetType),
+      },
+      {
+         title: "Logradouro",
+         children: address.street,
+      },
+      {
+         title: "Número",
+         children: address.number,
+      },
+      {
          title: "Bairro",
          children: address.neighborhood,
       },

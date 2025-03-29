@@ -2,7 +2,7 @@ import { ModalContainer } from "../Modal/styles";
 import ModalForm from "../ModalForm";
 import ModalFooter from "../ModalFooter";
 import ModalHeader from "../ModalHeader";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import {
    confirmationModal,
    errorModal,
@@ -26,12 +26,12 @@ import {
    AddressUpdateSchema,
    IAddressUpdateSchema,
 } from "@/src/validations/AddressUpdateSchema";
+import { useCountries } from "@/src/store/CountryStore";
 
 const ModalAddressUpdate = () => {
-   const { closeModal, isOpen } = useUpdateAddress();
-   const [countries, setCountries] = useState<ICountry[]>([]);
-   const [states, setStates] = useState<IState[]>([]);
-   const [cities, setCities] = useState<ICity[]>([]);
+   const { address, closeModal, isOpen } = useUpdateAddress();
+   const { cities, countries, states, getCitiesByState, getStatesByCountry } =
+      useCountries();
    const { customer, getCustomer } = useCustomerState();
 
    const {
@@ -46,12 +46,15 @@ const ModalAddressUpdate = () => {
    });
 
    useEffect(() => {
-      const fetchCountries = async () => {
-         const fetchedCountries = await getCountries();
-         setCountries(fetchedCountries);
-      };
-      fetchCountries();
-   }, [setValue]);
+      (async () => {
+         setValue("countryId", String(address?.city.state.country.id));
+         await getStatesByCountry(address?.city.state.country.id);
+         setValue("stateId", String(address?.city.state.id));
+
+         await getCitiesByState(address?.city.state.id);
+         setValue("cityId", String(address?.city.id));
+      })();
+   }, [isOpen]);
 
    const confModal: IConfirmationToast = {
       title: "Cancelar alterações?",
@@ -69,76 +72,51 @@ const ModalAddressUpdate = () => {
    };
 
    const onSubmit = async (data: IAddressUpdateSchema) => {
-      try {
-         const country: Partial<ICountry> = {
-            id: Number(data.countryId),
-         };
+      console.log(data);
+      // try {
+      //    const country: Partial<ICountry> = {
+      //       id: Number(data.countryId),
+      //    };
 
-         const state: Partial<IState> = {
-            id: Number(data.stateId),
-            country: country as ICountry,
-         };
+      //    const state: Partial<IState> = {
+      //       id: Number(data.stateId),
+      //       country: country as ICountry,
+      //    };
 
-         const city: Partial<ICity> = {
-            id: Number(data.cityId),
-            state: state as IState,
-         };
+      //    const city: Partial<ICity> = {
+      //       id: Number(data.cityId),
+      //       state: state as IState,
+      //    };
 
-         const address: Partial<IAddress> = {
-            customer: customer as ICustomer,
-            nickname: data.nickname,
-            cep: data.cep,
-            street: data.street,
-            number: data.number,
-            complement: data.complement,
-            neighborhood: data.neighborhood,
-            city: city as ICity,
-            residenceType: data.residenceType as
-               | "CASA"
-               | "APARTAMENTO"
-               | "OUTRO",
-            streetType: data.streetType as
-               | "RUA"
-               | "AVENIDA"
-               | "TRAVESSA"
-               | "ALAMEDA"
-               | "ESTRADA"
-               | "OUTRO",
-         };
-         await createAddress(address as IAddress);
-         reset();
-         closeModal();
-         await getCustomer(customer?.id || 0);
-         successModal("Endereço alterado com sucesso!");
-      } catch (error: any) {
-         errorModal(error.response.data);
-      }
-   };
-
-   const getStatesByCountry = (countryId: number) => {
-      const selectedCountry = countries.find(
-         (country) => country.id === countryId
-      );
-      if (selectedCountry) {
-         const statesList = selectedCountry.states;
-         setStates(statesList);
-         setCities([]);
-         setValue("stateId", "");
-         setValue("cityId", "");
-
-         if (statesList.length > 0) {
-            getCitiesByState(statesList[0].id);
-         }
-      }
-   };
-
-   const getCitiesByState = (stateId: number) => {
-      const selectedState = states.find((state) => state.id === stateId);
-      if (selectedState) {
-         const citiesList = selectedState.cities;
-         setCities(citiesList);
-         setValue("cityId", "");
-      }
+      //    const address: Partial<IAddress> = {
+      //       customer: customer as ICustomer,
+      //       nickname: data.nickname,
+      //       cep: data.cep,
+      //       street: data.street,
+      //       number: data.number,
+      //       complement: data.complement,
+      //       neighborhood: data.neighborhood,
+      //       city: city as ICity,
+      //       residenceType: data.residenceType as
+      //          | "CASA"
+      //          | "APARTAMENTO"
+      //          | "OUTRO",
+      //       streetType: data.streetType as
+      //          | "RUA"
+      //          | "AVENIDA"
+      //          | "TRAVESSA"
+      //          | "ALAMEDA"
+      //          | "ESTRADA"
+      //          | "OUTRO",
+      //    };
+      //    await createAddress(address as IAddress);
+      //    reset();
+      //    closeModal();
+      //    await getCustomer(customer?.id || 0);
+      //    successModal("Endereço alterado com sucesso!");
+      // } catch (error: any) {
+      //    errorModal(error.response.data);
+      // }
    };
 
    if (!isOpen) return null;
@@ -154,6 +132,7 @@ const ModalAddressUpdate = () => {
                   register={register}
                   placeholder="Insira um apelido"
                   error={errors.nickname?.message}
+                  defaultValue={address?.nickname}
                />
                <InputField
                   id="cep"
@@ -166,6 +145,7 @@ const ModalAddressUpdate = () => {
                      setValue("cep", value.replace(/[-]/g, ""));
                   }}
                   error={errors.cep?.message}
+                  defaultValue={address?.cep}
                />
                <InputField
                   id="residenceType"
@@ -178,6 +158,7 @@ const ModalAddressUpdate = () => {
                      { value: "OUTRO", label: "Outro" },
                   ]}
                   register={register}
+                  defaultValue={address?.residenceType}
                />
                <InputField
                   id="streetType"
@@ -193,6 +174,7 @@ const ModalAddressUpdate = () => {
                      { value: "OUTRO", label: "Outro" },
                   ]}
                   register={register}
+                  defaultValue={address?.streetType}
                />
                <InputField
                   id="street"
@@ -200,6 +182,7 @@ const ModalAddressUpdate = () => {
                   register={register}
                   placeholder="Insira o logradouro"
                   error={errors.street?.message}
+                  defaultValue={address?.street}
                />
                <InputField
                   id="number"
@@ -208,6 +191,7 @@ const ModalAddressUpdate = () => {
                   placeholder="Insira o número"
                   inputType="number"
                   error={errors.number?.message}
+                  defaultValue={String(address?.number)}
                />
                <InputField
                   id="neighborhood"
@@ -215,6 +199,7 @@ const ModalAddressUpdate = () => {
                   register={register}
                   placeholder="Insira o bairro"
                   error={errors.neighborhood?.message}
+                  defaultValue={address?.neighborhood}
                />
                <InputField
                   id="countryId"
@@ -229,6 +214,7 @@ const ModalAddressUpdate = () => {
                   onChange={(e) => {
                      getStatesByCountry(Number(e.target.value));
                   }}
+                  // defaultValue={String(address?.city.state.country.id)}
                />
                <InputField
                   id="stateId"
@@ -243,6 +229,7 @@ const ModalAddressUpdate = () => {
                   onChange={(e) => {
                      getCitiesByState(Number(e.target.value));
                   }}
+                  // defaultValue={String(address?.city.state.id)}
                />
                <InputField
                   id="cityId"
@@ -254,6 +241,7 @@ const ModalAddressUpdate = () => {
                      label: city.name,
                   }))}
                   register={register}
+                  // defaultValue={String(address?.city.id)}
                />
                <InputField
                   id="complement"
@@ -261,6 +249,7 @@ const ModalAddressUpdate = () => {
                   register={register}
                   placeholder="Insira o complemento"
                   error={errors.complement?.message}
+                  defaultValue={address?.complement}
                />
             </ModalForm>
             <ModalFooter
