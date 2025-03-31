@@ -1,5 +1,11 @@
-import { StyledSearchBar } from "./index.styles";
+import IconComponent from "../Icon";
+import { StyledSearchConatiner, StyledSearchInput } from "./styles";
 
 export default function SearchBar() {
-   return <StyledSearchBar placeholder="Pesquisar" type="search" />;
+   return (
+      <StyledSearchConatiner>
+         <IconComponent name="SearchIcon" />
+         <StyledSearchInput type="search" placeholder="Pesquisar produtos..." />
+      </StyledSearchConatiner>
+   );
 }

@@ -1,4 +1,4 @@
-import { StyledMain, StyledText } from "./index.styles";
+import { StyledMain, StyledText } from "./styles";
 
 export default function Loading() {
    return (

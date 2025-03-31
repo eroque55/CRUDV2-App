@@ -1,7 +1,7 @@
 import Card from "../Card";
 import { capitalizeFirstLetter, formatCep } from "@/src/utils";
 import { CardContentProps } from "../CardContentContainer";
-import { useCustomerState } from "@/src/store/CustomerDetailsStore";
+import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import { confirmationModal, errorModal } from "@/src/utils/Toasts";
 import { CardButtonProps } from "../CardButton";
 import IAddress from "@/src/interfaces/IAddress";
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const CardAddress = ({ address }: Props) => {
-   const { getCustomer, customer } = useCustomerState();
+   const { fetchCustomer: getCustomer, customer } = useCustomerDetailsStore();
    const { openModal } = useUpdateAddress();
 
    async function handleDelete() {
@@ -98,7 +98,7 @@ const CardAddress = ({ address }: Props) => {
             confirmButton: "Deletar",
             cancelButton: "Cancelar",
             confirmAction: handleDelete,
-            succesMessage: "Endereço deletado com sucesso!",
+            successMessage: "Endereço deletado com sucesso!",
          }),
    };
 

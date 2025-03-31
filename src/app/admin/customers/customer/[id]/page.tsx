@@ -13,8 +13,7 @@ import Loading from "@/src/components/Loading";
 import { Title, TitleContainer } from "@/src/components/Title";
 import BackButton from "@/src/components/BackButton";
 
-import { useUpdatePassword } from "@/src/store/CustomerDetailsStore";
-import { useCustomerDetails } from "@/src/hooks/useCustomerDetails";
+import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import ButtonComponent from "@/src/components/Button";
 import IAddress from "@/src/interfaces/IAddress";
 import ICard from "@/src/interfaces/ICard";
@@ -25,28 +24,31 @@ import ModalAddressCreate from "@/src/components/ModalAddressCreate";
 import ModalCardCreate from "@/src/components/ModalCardCreate";
 import ModalAddressUpdate from "@/src/components/ModalAddressUpdate";
 import { useCountries } from "@/src/store/CountryStore";
+import ModalCustomerUpdate from "@/src/components/ModalCustomerUpdate";
+import ModalCustomerPasswordUpdate from "@/src/components/ModalCustomerPasswordUpdate";
 
 const CustomerDetails = () => {
    const params = useParams();
    const id = params.id ? parseInt(params.id as string) : NaN;
-   const { customer, loading } = useCustomerDetails(id);
+   const { customer, loading, fetchCustomer } = useCustomerDetailsStore();
    const [page, setPage] = useState(0);
+   const [updateCustomerIsOpen, setUpdateCustomerIsOpen] = useState(false);
+   const [updatePasswordIsOpen, setUpdatePasswordIsOpen] = useState(false);
    const [createAddressIsOpen, setCreateAddressIsOpen] = useState(false);
    const [createCardIsOpen, setCreateCardIsOpen] = useState(false);
    const { fetchCountries } = useCountries();
 
    useEffect(() => {
+      fetchCustomer(id);
       fetchCountries();
    }, []);
-
-   const { openModal: openUpdatePassword } = useUpdatePassword();
 
    if (loading || !customer) return <Loading />;
 
    const handlePageChange = (newPage: number) => setPage(newPage);
 
    const handleAddClick = () => {
-      if (page === 0) openUpdatePassword(id);
+      if (page === 0) setUpdatePasswordIsOpen(true);
       if (page === 1) setCreateAddressIsOpen(true);
       if (page === 2) setCreateCardIsOpen(true);
    };
@@ -73,6 +75,14 @@ const CustomerDetails = () => {
             setIsOpen={setCreateCardIsOpen}
          />
          <ModalAddressUpdate />
+         <ModalCustomerUpdate
+            isOpen={updateCustomerIsOpen}
+            setIsOpen={setUpdateCustomerIsOpen}
+         />
+         <ModalCustomerPasswordUpdate
+            isOpen={updatePasswordIsOpen}
+            setIsOpen={setUpdatePasswordIsOpen}
+         />
          <StyledHeader>
             <TitleContainer>
                <BackButton />
@@ -102,7 +112,9 @@ const CustomerDetails = () => {
             </ActionsContainer>
          </StyledHeader>
          <PageContainer>
-            {page === 0 && <CardPersonalData customer={customer} />}
+            {page === 0 && (
+               <CardPersonalData setUpdateIsOpen={setUpdateCustomerIsOpen} />
+            )}
             {page === 1 &&
                customer.addresses.map((address: IAddress) => (
                   <CardAddress key={address.id} address={address} />

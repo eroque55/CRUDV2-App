@@ -2,7 +2,7 @@ import ICard from "@/src/interfaces/ICard";
 import Card from "../Card";
 import { capitalizeFirstLetter } from "@/src/utils";
 import { CardContentProps } from "../CardContentContainer";
-import { useCustomerState } from "@/src/store/CustomerDetailsStore";
+import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import { deleteCard, updateCard } from "@/src/services/Card.service";
 import { confirmationModal, errorModal } from "@/src/utils/Toasts";
 import { CardButtonProps } from "../CardButton";
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const CardCard = ({ card }: Props) => {
-   const { getCustomer, customer } = useCustomerState();
+   const { fetchCustomer: getCustomer, customer } = useCustomerDetailsStore();
 
    async function handleDeleteCard() {
       try {
@@ -69,7 +69,7 @@ const CardCard = ({ card }: Props) => {
             cancelButton: "Cancelar",
             confirmAction: handleDeleteCard,
             notice: "Essa ação não poderá ser desfeita.",
-            succesMessage: "Cartão excluído com sucesso!",
+            successMessage: "Cartão excluído com sucesso!",
          }),
    };
 

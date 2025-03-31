@@ -6,10 +6,9 @@ import {
    deleteCustomer,
    updateCustomer,
 } from "@/src/services/Customer.service";
-import { useCustomerStore } from "@/src/store/CustomerListingStore";
-import { toast } from "react-toastify";
-import { ConfirmationToast } from "../ConfirmationToast";
 import { useRouter } from "next/navigation";
+import { confirmationModal } from "@/src/utils/Toasts";
+import { useCustomersListStore } from "@/src/store/CustomerListStore";
 
 interface Props {
    customer: ICustomer;
@@ -17,7 +16,7 @@ interface Props {
 
 const RowCustomer = ({ customer }: Props) => {
    const [status, setStatus] = useState(customer.status);
-   const { fetchCustomers } = useCustomerStore();
+   const { fetchCustomers } = useCustomersListStore();
    const router = useRouter();
 
    async function toggleStatus() {
@@ -44,19 +43,14 @@ const RowCustomer = ({ customer }: Props) => {
    }
 
    const trashAction = () => {
-      toast(ConfirmationToast, {
-         data: {
-            title: "Tem certeza?",
-            message: "Tem certeza que deseja excluir esse cliente?",
-            notice: "Essa ação não poderá ser desfeita",
-            successMessage: "Cliente excluído com sucesso!",
-            actionButton: "Excluir",
-            onSubmit: handleDelete,
-         },
-         autoClose: false,
-         position: "top-center",
-         closeButton: false,
-         hideProgressBar: true,
+      confirmationModal({
+         title: "Tem certeza?",
+         message: "Tem certeza que deseja excluir esse cliente?",
+         notice: "Essa ação não poderá ser desfeita",
+         successMessage: "Cliente excluído com sucesso!",
+         confirmButton: "Excluir",
+         confirmAction: handleDelete,
+         cancelButton: "Cancelar",
       });
    };
 

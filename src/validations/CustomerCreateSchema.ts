@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
-export type ICustomerCreateSchema = yup.InferType<typeof CustomerCreateSchema>;
+export type ICustomerSchema = yup.InferType<typeof CustomerSchema>;
 
-export const CustomerCreateSchema = yup.object().shape({
+export const CustomerSchema = yup.object().shape({
    name: yup
       .string()
       .required("Nome é obrigatório")
@@ -68,7 +68,7 @@ export const CustomerCreateSchema = yup.object().shape({
       .string()
       .required("Tipo de telefone é obrigatório")
       .oneOf(
-         ["CELULAR", "RESIDENCIAL", "COMERCIAL", "OUTRO"],
+         ["", "CELULAR", "RESIDENCIAL", "COMERCIAL", "OUTRO"],
          "Tipo de telefone inválido"
       ),
 });

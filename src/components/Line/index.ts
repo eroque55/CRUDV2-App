@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { theme } from "@/src/themes/client-layout";
 
-const fontColors = {
+const colors = {
    blue: theme.colors.primary.color3,
    bw1: theme.colors.neutral.color,
    bw2: theme.colors.neutral.color2,
@@ -15,13 +15,13 @@ const fontColors = {
 
 interface Props {
    $width?: string;
-   $color?: keyof typeof fontColors;
+   $color?: keyof typeof colors;
 }
 
 export const Line = styled.hr<Props>`
    margin: 0;
    width: ${({ $width }) => $width || "100%"};
-   color: ${({ $color }) => fontColors[$color || "bw3"]};
+   color: ${({ $color }) => colors[$color || "bw3"]};
    border-style: solid;
    border-width: 1px 0 0 0;
 `;

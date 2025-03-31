@@ -1,28 +1,26 @@
 import Card from "../Card";
-import {
-   capitalizeFirstLetter,
-   formatCep,
-   formatCpf,
-   formatPhone,
-} from "@/src/utils";
+import { capitalizeFirstLetter, formatCpf, formatPhone } from "@/src/utils";
 import { CardContentProps } from "../CardContentContainer";
-import { useUpdateCustomer } from "@/src/store/CustomerDetailsStore";
+import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import { CardButtonProps } from "../CardButton";
-import ICustomer from "@/src/interfaces/ICustomer";
 
 interface Props {
-   customer: ICustomer;
+   setUpdateIsOpen: (value: boolean) => void;
 }
 
-const CardPersonalData = ({ customer }: Props) => {
-   const { openModal } = useUpdateCustomer();
+const CardPersonalData = ({ setUpdateIsOpen }: Props) => {
+   const { customer } = useCustomerDetailsStore();
 
-   const birthDate = new Date(customer.birthDate).toLocaleDateString("pt-BR");
+   const birthDate = new Date(customer?.birthDate || "").toLocaleDateString(
+      "pt-BR"
+   );
+
+   const phone = (customer?.phone.ddd || "") + (customer?.phone.number || "");
 
    const cardContent: CardContentProps[] = [
       {
          title: "Nome",
-         children: customer.name,
+         children: customer?.name,
       },
       {
          title: "Data de nascimento",
@@ -30,37 +28,37 @@ const CardPersonalData = ({ customer }: Props) => {
       },
       {
          title: "CPF",
-         children: formatCpf(customer.cpf),
+         children: formatCpf(customer?.cpf || ""),
       },
       {
          title: "Gênero",
-         children: capitalizeFirstLetter(customer.gender),
+         children: capitalizeFirstLetter(customer?.gender || ""),
       },
       {
          title: "E-mail",
-         children: customer.email,
+         children: customer?.email,
       },
       {
          title: "Ranking",
-         children: customer.ranking,
+         children: customer?.ranking,
       },
       {
          title: "Status",
-         children: customer.status ? "Ativo" : "Inativo",
+         children: customer?.status ? "Ativo" : "Inativo",
       },
       {
          title: "Tipo de telefone",
-         children: capitalizeFirstLetter(customer.phone.phoneType),
+         children: capitalizeFirstLetter(customer?.phone.phoneType || ""),
       },
       {
          title: "Telefone",
-         children: formatPhone(customer.phone.ddd + customer.phone.number),
+         children: formatPhone(phone),
       },
    ];
 
    const updateButton: CardButtonProps = {
       icon: "EditIcon",
-      onClick: openModal,
+      onClick: () => setUpdateIsOpen(true),
    };
 
    return <Card cardContent={cardContent} cardButtons={[updateButton]} />;

@@ -2,7 +2,7 @@ import { ModalContainer } from "../Modal/styles";
 import ModalForm from "../ModalForm";
 import ModalFooter from "../ModalFooter";
 import ModalHeader from "../ModalHeader";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
    confirmationModal,
    errorModal,
@@ -13,26 +13,22 @@ import ICountry from "@/src/interfaces/ICountry";
 import IState from "@/src/interfaces/IState";
 import ICity from "@/src/interfaces/ICity";
 import IAddress from "@/src/interfaces/IAddress";
-import { createAddress } from "@/src/services/Address.service";
+import { updateAddress } from "@/src/services/Address.service";
 import InputField from "../InputField";
-import { useEffect, useState } from "react";
-import { getCountries } from "@/src/services/Country.service";
-import { useCustomerState } from "@/src/store/CustomerDetailsStore";
+import { useEffect } from "react";
+import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import ICustomer from "@/src/interfaces/ICustomer";
 import ModalBackground from "../ModalBackground";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useUpdateAddress } from "@/src/store/AddressUpdateStore";
-import {
-   AddressUpdateSchema,
-   IAddressUpdateSchema,
-} from "@/src/validations/AddressUpdateSchema";
+import { AddressSchema, IAddressSchema } from "@/src/validations/AddressSchema";
 import { useCountries } from "@/src/store/CountryStore";
 
 const ModalAddressUpdate = () => {
    const { address, closeModal, isOpen } = useUpdateAddress();
    const { cities, countries, states, getCitiesByState, getStatesByCountry } =
       useCountries();
-   const { customer, getCustomer } = useCustomerState();
+   const { customer, fetchCustomer: getCustomer } = useCustomerDetailsStore();
 
    const {
       register,
@@ -40,19 +36,23 @@ const ModalAddressUpdate = () => {
       setValue,
       reset,
       formState: { errors },
-   } = useForm<IAddressUpdateSchema>({
-      resolver: yupResolver(AddressUpdateSchema),
+   } = useForm<IAddressSchema>({
+      resolver: yupResolver(AddressSchema),
       mode: "onBlur",
    });
 
    useEffect(() => {
       (async () => {
+         setValue("addressType", address?.addressType || "");
+
          setValue("countryId", String(address?.city.state.country.id));
          await getStatesByCountry(address?.city.state.country.id);
          setValue("stateId", String(address?.city.state.id));
 
          await getCitiesByState(address?.city.state.id);
          setValue("cityId", String(address?.city.id));
+
+         await setValue("cep", address?.cep || "");
       })();
    }, [isOpen]);
 
@@ -71,52 +71,51 @@ const ModalAddressUpdate = () => {
       confirmationModal(confModal);
    };
 
-   const onSubmit = async (data: IAddressUpdateSchema) => {
-      console.log(data);
-      // try {
-      //    const country: Partial<ICountry> = {
-      //       id: Number(data.countryId),
-      //    };
+   const onSubmit = async (data: IAddressSchema) => {
+      try {
+         const country: Partial<ICountry> = {
+            id: Number(data.countryId),
+         };
 
-      //    const state: Partial<IState> = {
-      //       id: Number(data.stateId),
-      //       country: country as ICountry,
-      //    };
+         const state: Partial<IState> = {
+            id: Number(data.stateId),
+            country: country as ICountry,
+         };
 
-      //    const city: Partial<ICity> = {
-      //       id: Number(data.cityId),
-      //       state: state as IState,
-      //    };
+         const city: Partial<ICity> = {
+            id: Number(data.cityId),
+            state: state as IState,
+         };
 
-      //    const address: Partial<IAddress> = {
-      //       customer: customer as ICustomer,
-      //       nickname: data.nickname,
-      //       cep: data.cep,
-      //       street: data.street,
-      //       number: data.number,
-      //       complement: data.complement,
-      //       neighborhood: data.neighborhood,
-      //       city: city as ICity,
-      //       residenceType: data.residenceType as
-      //          | "CASA"
-      //          | "APARTAMENTO"
-      //          | "OUTRO",
-      //       streetType: data.streetType as
-      //          | "RUA"
-      //          | "AVENIDA"
-      //          | "TRAVESSA"
-      //          | "ALAMEDA"
-      //          | "ESTRADA"
-      //          | "OUTRO",
-      //    };
-      //    await createAddress(address as IAddress);
-      //    reset();
-      //    closeModal();
-      //    await getCustomer(customer?.id || 0);
-      //    successModal("Endereço alterado com sucesso!");
-      // } catch (error: any) {
-      //    errorModal(error.response.data);
-      // }
+         const updatedAddress: Partial<IAddress> = {
+            customer: customer as ICustomer,
+            nickname: data.nickname,
+            cep: data.cep,
+            street: data.street,
+            number: data.number,
+            complement: data.complement,
+            neighborhood: data.neighborhood,
+            city: city as ICity,
+            residenceType: data.residenceType as
+               | "CASA"
+               | "APARTAMENTO"
+               | "OUTRO",
+            streetType: data.streetType as
+               | "RUA"
+               | "AVENIDA"
+               | "TRAVESSA"
+               | "ALAMEDA"
+               | "ESTRADA"
+               | "OUTRO",
+         };
+         await updateAddress(address?.id || 0, updatedAddress as IAddress);
+         reset();
+         closeModal();
+         await getCustomer(customer?.id || 0);
+         successModal("Endereço alterado com sucesso!");
+      } catch (error: any) {
+         errorModal(error.response.data);
+      }
    };
 
    if (!isOpen) return null;
@@ -213,8 +212,10 @@ const ModalAddressUpdate = () => {
                   register={register}
                   onChange={(e) => {
                      getStatesByCountry(Number(e.target.value));
+                     getCitiesByState();
+                     setValue("stateId", "");
+                     setValue("cityId", "");
                   }}
-                  // defaultValue={String(address?.city.state.country.id)}
                />
                <InputField
                   id="stateId"
@@ -228,8 +229,8 @@ const ModalAddressUpdate = () => {
                   register={register}
                   onChange={(e) => {
                      getCitiesByState(Number(e.target.value));
+                     setValue("cityId", "");
                   }}
-                  // defaultValue={String(address?.city.state.id)}
                />
                <InputField
                   id="cityId"
@@ -241,7 +242,6 @@ const ModalAddressUpdate = () => {
                      label: city.name,
                   }))}
                   register={register}
-                  // defaultValue={String(address?.city.id)}
                />
                <InputField
                   id="complement"
@@ -258,7 +258,7 @@ const ModalAddressUpdate = () => {
                confirmAction={handleSubmit(onSubmit)}
                cancelAction={onCancel}
             >
-               Cadastrar
+               Alterar
             </ModalFooter>
          </ModalContainer>
       </ModalBackground>

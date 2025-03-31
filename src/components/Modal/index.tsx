@@ -13,7 +13,7 @@ type Props = ToastContentProps<{
    confirmAction?: () => void;
    cancelButton?: string;
    cancelAction?: () => void;
-   succesMessage?: string;
+   successMessage?: string;
 }>;
 
 const Modal = ({
@@ -25,14 +25,14 @@ const Modal = ({
       cancelButton,
       confirmAction,
       cancelAction,
-      succesMessage,
+      successMessage,
    },
    closeToast,
 }: Props) => {
    const handleConfirm = async () => {
       try {
          confirmAction && (await confirmAction());
-         succesMessage && successModal(succesMessage);
+         successMessage && successModal(successMessage);
       } catch (e: any) {
          errorModal(e.response.data);
       }

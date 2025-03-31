@@ -14,19 +14,20 @@ import {
 } from "@/src/validations/CustomerFilterSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ICustomer from "@/src/interfaces/ICustomer";
-import {
-   useCustomerStore,
-   useFilterModalStore,
-} from "@/src/store/CustomerListingStore";
 import ModalBackground from "../ModalBackground";
 import CloseButton from "../CloseButton";
 import ButtonComponent from "../Button";
 import InputField from "../InputField";
 import { Line } from "../Line";
+import { useCustomersListStore } from "@/src/store/CustomerListStore";
 
-const FilterCustomer = () => {
-   const { fetchCustomers } = useCustomerStore();
-   const { filterIsOpen, filterCloseModal } = useFilterModalStore();
+interface Props {
+   isOpen: boolean;
+   setIsOpen: (value: boolean) => void;
+}
+
+const FilterCustomer = ({ isOpen, setIsOpen }: Props) => {
+   const { fetchCustomers } = useCustomersListStore();
    const { register, handleSubmit, reset, setValue } =
       useForm<ICustomerFilterSchema>({
          resolver: yupResolver(CustomerFilterSchema),
@@ -72,16 +73,14 @@ const FilterCustomer = () => {
       await fetchCustomers();
    };
 
-   if (!filterIsOpen) {
-      return null;
-   }
+   if (!isOpen) return null;
 
    return (
       <ModalBackground $align="left">
          <StyledFilterContainer>
             <SyledFilterHeader>
                <StyledFilterTitle>Filtrar clientes</StyledFilterTitle>
-               <CloseButton onClick={filterCloseModal} />
+               <CloseButton onClick={() => setIsOpen(false)} />
             </SyledFilterHeader>
             <StyledFilterForm>
                <InputField

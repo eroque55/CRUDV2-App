@@ -1,6 +1,5 @@
 "use client";
 import {
-   BackIcon,
    LoginWaveLeftImg,
    LoginWaveRightImg,
    LogoFullWhiteImg,
@@ -25,22 +24,27 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ILoginSchema, LoginSchema } from "../validations/LoginSchema";
 import { toast, ToastContainer } from "react-toastify";
 import ICustomer from "../interfaces/ICustomer";
-import CreateCustomerFlow from "../components/CreateCustomerFlow";
-import { useCreateModalStore } from "../store/CustomerListingStore";
 import useAuthStore from "../store/CustomerShopStore";
 import { getCustomer } from "../services/Customer.service";
 import { useRouter } from "next/navigation";
 import BackButton from "../components/BackButton";
 import InputField from "../components/InputField";
+import ModalCreateCustomer from "../components/ModalCustomerCreate";
+import { errorModal } from "../utils/Toasts";
+import { useCountries, useCountries2 } from "../store/CountryStore";
 
 export default function Login() {
+   const { fetchCountries } = useCountries();
+   const { fetchCountries: fetchCountries2 } = useCountries2();
    const [loginType, setLoginType] = useState(0);
-   const { createOpenModal } = useCreateModalStore();
    const login = useAuthStore((state: any) => state.login);
+   const [isCreateCustomerOpen, setIsCreateCustomerOpen] = useState(false);
    const { customer, loadUser } = useAuthStore();
    const router = useRouter();
 
    useEffect(() => {
+      fetchCountries();
+      fetchCountries2();
       loadUser();
    }, []);
 
@@ -72,7 +76,7 @@ export default function Login() {
          login(customerData);
          router.push("/shop");
       } catch (error: any) {
-         toast.error(error.response.data);
+         errorModal(error.response.data);
       }
    };
 
@@ -83,7 +87,7 @@ export default function Login() {
       if (data.email === adminEmail && data.password === adminPassword) {
          router.push("/admin/customers");
       } else {
-         toast.error("Credenciais inválidas");
+         errorModal("Credenciais inválidas");
       }
    };
 
@@ -97,7 +101,10 @@ export default function Login() {
 
    return (
       <>
-         <CreateCustomerFlow />
+         <ModalCreateCustomer
+            isOpen={isCreateCustomerOpen}
+            setIsOpen={setIsCreateCustomerOpen}
+         />
          <StyledMain>
             <Wave1 src={LoginWaveLeftImg} alt="backgorund wave" />
             <Wave2 src={LoginWaveRightImg} alt="backgorund wave" />
@@ -161,7 +168,9 @@ export default function Login() {
                      </>
                   )}
                   {loginType === 1 && (
-                     <CreateAccount onClick={createOpenModal}>
+                     <CreateAccount
+                        onClick={() => setIsCreateCustomerOpen(true)}
+                     >
                         Cadastrar cliente
                      </CreateAccount>
                   )}

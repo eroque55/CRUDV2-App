@@ -4,7 +4,7 @@ import IState from "../interfaces/IState";
 import ICity from "../interfaces/ICity";
 import { getCountries } from "../services/Country.service";
 
-interface CountriesState {
+export interface CountriesState {
    countries: ICountry[];
    states: IState[];
    cities: ICity[];
@@ -14,6 +14,38 @@ interface CountriesState {
 }
 
 export const useCountries = create<CountriesState>((set, get) => ({
+   countries: [],
+   states: [],
+   cities: [],
+   fetchCountries: async () => {
+      const fetchedCountries = await getCountries();
+      set({ countries: fetchedCountries });
+   },
+   getStatesByCountry: (countryId?: number) => {
+      if (countryId) {
+         const { countries } = get();
+         const selectedCountryStates = countries.find(
+            (country) => country.id === countryId
+         )?.states;
+         set({ states: selectedCountryStates });
+      } else {
+         set({ states: [] });
+      }
+   },
+   getCitiesByState: (stateId?: number) => {
+      if (stateId) {
+         const { states } = get();
+         const selectedStateCities = states.find(
+            (state) => state.id === stateId
+         )?.cities;
+         set({ cities: selectedStateCities });
+      } else {
+         set({ cities: [] });
+      }
+   },
+}));
+
+export const useCountries2 = create<CountriesState>((set, get) => ({
    countries: [],
    states: [],
    cities: [],

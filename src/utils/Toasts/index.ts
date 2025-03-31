@@ -22,7 +22,7 @@ export interface IConfirmationToast {
    confirmButton: string;
    cancelButton: string;
    confirmAction: () => void;
-   succesMessage?: string;
+   successMessage?: string;
 }
 
 export const confirmationModal = ({
@@ -32,7 +32,7 @@ export const confirmationModal = ({
    confirmButton,
    confirmAction,
    cancelButton,
-   succesMessage,
+   successMessage,
 }: IConfirmationToast) => {
    toast(Modal, {
       data: {
@@ -42,7 +42,7 @@ export const confirmationModal = ({
          confirmButton,
          cancelButton,
          confirmAction,
-         succesMessage,
+         successMessage,
       },
       toastId: "confirmationModal",
       position: "top-center",

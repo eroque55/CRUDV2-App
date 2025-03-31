@@ -1,3 +1,4 @@
+import { errorModal } from "../utils/Toasts";
 import api from "./api";
 import ICustomer from "@/src/interfaces/ICustomer";
 
@@ -21,8 +22,12 @@ export const getCustomer = async (
 export const getCustomers = async (
    customer?: ICustomer
 ): Promise<ICustomer[]> => {
-   const response = await api.get(customersUrl, { params: customer });
-   return response.data;
+   try {
+      const response = await api.get(customersUrl, { params: customer });
+      return response.data;
+   } catch (e: any) {
+      throw errorModal(e.message);
+   }
 };
 
 export const updateCustomer = async (

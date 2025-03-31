@@ -10,7 +10,7 @@ import {
    successModal,
 } from "@/src/utils/Toasts";
 import InputField from "../InputField";
-import { useCustomerState } from "@/src/store/CustomerDetailsStore";
+import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import ICustomer from "@/src/interfaces/ICustomer";
 import ModalBackground from "../ModalBackground";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,7 +27,7 @@ interface Props {
 }
 
 const ModalCardCreate = ({ isOpen, setIsOpen }: Props) => {
-   const { customer, getCustomer } = useCustomerState();
+   const { customer, fetchCustomer: getCustomer } = useCustomerDetailsStore();
 
    const {
       register,

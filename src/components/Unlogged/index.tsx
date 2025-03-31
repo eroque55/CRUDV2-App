@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { StyledMessage, StyledLink, UnloggedContent } from "./index.styles";
+import { StyledMessage, StyledLink, UnloggedContent } from "./styles";
 import IconComponent from "../Icon";
 
 export default function Unlogged() {

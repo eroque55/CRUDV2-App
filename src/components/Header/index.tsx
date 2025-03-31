@@ -1,47 +1,20 @@
-import useAuthStore from "@/src/store/CustomerShopStore";
-import {
-   HelloContainer,
-   StyledHeader,
-   StyledHello,
-   StyledLogoutButton,
-} from "./styles";
-import { useRouter } from "next/navigation";
-import IconComponent from "../Icon";
-import { confirmationModal } from "@/src/utils/Toasts";
+import { HeaderContainer } from "./styles";
+import HeaderTop from "../HeaderTop";
+import HeaderMain from "../HeaderMain";
+import { Line } from "../Line";
+import HeaderCategories from "../HeaderCategories";
 
-export default function Header() {
-   const { customer, logout } = useAuthStore();
-   const router = useRouter();
+interface Props {
+   categories?: boolean;
+}
 
-   const handleLogout = () => {
-      logout();
-      router.push("/");
-   };
-
+export default function Header({ categories = true }: Props) {
    return (
-      <StyledHeader>
-         <HelloContainer>
-            <StyledHello>
-               Olá, <strong>{customer?.name}</strong>
-            </StyledHello>
-            <StyledLogoutButton
-               onClick={() => {
-                  confirmationModal({
-                     title: "Tem certeza?",
-                     message: "Tem certeza que deseja sair?",
-                     confirmButton: "Sair",
-                     confirmAction: () => {
-                        handleLogout();
-                     },
-                     cancelButton: "Cancelar",
-                  });
-               }}
-            >
-               Sair
-               <IconComponent name="ExitBlueIcon" />
-            </StyledLogoutButton>
-         </HelloContainer>
-         sdasda
-      </StyledHeader>
+      <HeaderContainer>
+         <HeaderTop />
+         <HeaderMain />
+         {categories && <HeaderCategories />}
+         <Line $width="80%" $color="bw3" />
+      </HeaderContainer>
    );
 }

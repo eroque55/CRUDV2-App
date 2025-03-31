@@ -9,22 +9,18 @@ import {
    IConfirmationToast,
    successModal,
 } from "@/src/utils/Toasts";
-import {
-   AddressCreateSchema,
-   IAddressCreateSchema,
-} from "@/src/validations/AddressCreateSchema";
+import { AddressSchema, IAddressSchema } from "@/src/validations/AddressSchema";
 import ICountry from "@/src/interfaces/ICountry";
 import IState from "@/src/interfaces/IState";
 import ICity from "@/src/interfaces/ICity";
 import IAddress from "@/src/interfaces/IAddress";
 import { createAddress } from "@/src/services/Address.service";
 import InputField from "../InputField";
-import { useEffect, useState } from "react";
-import { getCountries } from "@/src/services/Country.service";
-import { useCustomerState } from "@/src/store/CustomerDetailsStore";
+import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import ICustomer from "@/src/interfaces/ICustomer";
 import ModalBackground from "../ModalBackground";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useCountries } from "@/src/store/CountryStore";
 
 interface Props {
    isOpen: boolean;
@@ -32,10 +28,9 @@ interface Props {
 }
 
 const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
-   const [countries, setCountries] = useState<ICountry[]>([]);
-   const [states, setStates] = useState<IState[]>([]);
-   const [cities, setCities] = useState<ICity[]>([]);
-   const { customer, getCustomer } = useCustomerState();
+   const { cities, countries, states, getCitiesByState, getStatesByCountry } =
+      useCountries();
+   const { customer, fetchCustomer: getCustomer } = useCustomerDetailsStore();
 
    const {
       register,
@@ -43,18 +38,10 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
       setValue,
       reset,
       formState: { errors },
-   } = useForm<IAddressCreateSchema>({
-      resolver: yupResolver(AddressCreateSchema),
+   } = useForm<IAddressSchema>({
+      resolver: yupResolver(AddressSchema),
       mode: "onBlur",
    });
-
-   useEffect(() => {
-      const fetchCountries = async () => {
-         const fetchedCountries = await getCountries();
-         setCountries(fetchedCountries);
-      };
-      fetchCountries();
-   }, [setValue]);
 
    const confModal: IConfirmationToast = {
       title: "Cancelar Cadastro",
@@ -71,7 +58,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
       confirmationModal(confModal);
    };
 
-   const onSubmit = async (data: IAddressCreateSchema) => {
+   const onSubmit = async (data: IAddressSchema) => {
       try {
          const country: Partial<ICountry> = {
             id: Number(data.countryId),
@@ -119,32 +106,6 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
          successModal("Endereço cadastrado com sucesso!");
       } catch (error: any) {
          errorModal(error.response.data);
-      }
-   };
-
-   const getStatesByCountry = (countryId: number) => {
-      const selectedCountry = countries.find(
-         (country) => country.id === countryId
-      );
-      if (selectedCountry) {
-         const statesList = selectedCountry.states;
-         setStates(statesList);
-         setCities([]);
-         setValue("stateId", "");
-         setValue("cityId", "");
-
-         if (statesList.length > 0) {
-            getCitiesByState(statesList[0].id);
-         }
-      }
-   };
-
-   const getCitiesByState = (stateId: number) => {
-      const selectedState = states.find((state) => state.id === stateId);
-      if (selectedState) {
-         const citiesList = selectedState.cities;
-         setCities(citiesList);
-         setValue("cityId", "");
       }
    };
 
@@ -247,6 +208,9 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
                   register={register}
                   onChange={(e) => {
                      getStatesByCountry(Number(e.target.value));
+                     getCitiesByState();
+                     setValue("stateId", "");
+                     setValue("cityId", "");
                   }}
                />
                <InputField
@@ -261,6 +225,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
                   register={register}
                   onChange={(e) => {
                      getCitiesByState(Number(e.target.value));
+                     setValue("cityId", "");
                   }}
                />
                <InputField

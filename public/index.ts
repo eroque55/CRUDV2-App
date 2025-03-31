@@ -4,10 +4,12 @@ export { default as LoginWaveLeftImg } from "@/public/images/LoginWaveLeft.svg";
 export { default as LoginWaveRightImg } from "@/public/images/LoginWaveRight.svg";
 export { default as LogoFullWhiteImg } from "@/public/images/LogoFullWhite.svg";
 export { default as LogoRBlackImg } from "@/public/images/LogoRBlack.svg";
+export { default as LogoFullBlackImg } from "@/public/images/LogoFullBlack.svg";
 // export { default as } from "@/public/images/";
 
 //icons
 export { default as BackIcon } from "@/public/icons/Back.svg";
+export { default as CartIcon } from "@/public/icons/Cart.svg";
 export { default as CheckGreenIcon } from "@/public/icons/CheckGreen.svg";
 export { default as CheckWhiteIcon } from "@/public/icons/CheckWhite.svg";
 export { default as CustomersInactiveIcon } from "@/public/icons/CustomersInactive.svg";
@@ -23,6 +25,7 @@ export { default as FilterIcon } from "@/public/icons/Filter.svg";
 export { default as KeyIcon } from "@/public/icons/Key.svg";
 export { default as CloseIcon } from "@/public/icons/Close.svg";
 export { default as PlusIcon } from "@/public/icons/Plus.svg";
+export { default as ProfileIcon } from "@/public/icons/Profile.svg";
 export { default as SalesActiveIcon } from "@/public/icons/SalesActive.svg";
 export { default as SalesInactiveIcon } from "@/public/icons/SalesInactive.svg";
 export { default as SearchIcon } from "@/public/icons/Search.svg";

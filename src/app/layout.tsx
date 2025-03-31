@@ -21,10 +21,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <html lang="pt_BR">
          <body className={`${roboto.variable}`}>
             <StyledComponentsRegistry>
-               <ClientLayout>
-                  {children}
-                  <ToastContainer />
-               </ClientLayout>
+               <ClientLayout>{children}</ClientLayout>
             </StyledComponentsRegistry>
          </body>
       </html>

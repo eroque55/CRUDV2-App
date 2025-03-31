@@ -1,10 +1,10 @@
 import Row from "../Row";
 import { ListContainer } from "../List/styles";
 import RowCustomer from "../RowCustomer";
-import { useCustomerStore } from "@/src/store/CustomerListingStore";
+import { useCustomersListStore } from "@/src/store/CustomerListStore";
 
 const ListCustomers = () => {
-   const { customers } = useCustomerStore();
+   const { customers } = useCustomersListStore();
    const headerContent = ["Nome", "CPF", "E-mail"];
 
    return (

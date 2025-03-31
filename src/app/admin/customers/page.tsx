@@ -1,45 +1,49 @@
 "use client";
 
 import { StyledContentHeader, StyledContentHeaderOptions } from "../styles";
-import CreateCustomerFlow from "@/src/components/CreateCustomerFlow";
 import ButtonComponent from "@/src/components/Button";
-import {
-   useCreateModalStore,
-   useCustomerStore,
-   useFilterModalStore,
-} from "@/src/store/CustomerListingStore";
 import { Title } from "@/src/components/Title";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ListCustomers from "@/src/components/ListCustomers";
 import FilterCustomer from "@/src/components/FilterCustomer";
+import ModalCreateCustomer from "@/src/components/ModalCustomerCreate";
+import { useCountries, useCountries2 } from "@/src/store/CountryStore";
+import { useCustomersListStore } from "@/src/store/CustomerListStore";
 
 export default function Admin() {
-   const { filterOpenModal } = useFilterModalStore();
-   const { createOpenModal } = useCreateModalStore();
-   const { fetchCustomers } = useCustomerStore();
+   const [isCreateOpen, setIsCreateOpen] = useState(false);
+   const [isFilterOpen, setIsFilterOpen] = useState(false);
+   const { fetchCustomers } = useCustomersListStore();
+   const { fetchCountries } = useCountries();
+   const { fetchCountries: fetchCountries2 } = useCountries2();
 
    useEffect(() => {
       fetchCustomers();
+      fetchCountries();
+      fetchCountries2();
    }, []);
 
    return (
       <>
-         <CreateCustomerFlow />
-         <FilterCustomer />
+         <ModalCreateCustomer
+            isOpen={isCreateOpen}
+            setIsOpen={setIsCreateOpen}
+         />
+         <FilterCustomer isOpen={isFilterOpen} setIsOpen={setIsFilterOpen} />
          <StyledContentHeader>
             <Title>Clientes</Title>
             <StyledContentHeaderOptions>
                <ButtonComponent
                   width="15rem"
                   wired
-                  onClick={filterOpenModal}
+                  onClick={() => setIsFilterOpen(true)}
                   icon={"FilterIcon"}
                >
                   Filtrar
                </ButtonComponent>
                <ButtonComponent
                   width="15rem"
-                  onClick={createOpenModal}
+                  onClick={() => setIsCreateOpen(true)}
                   icon={"PlusIcon"}
                >
                   Cadastrar cliente
