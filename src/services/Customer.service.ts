@@ -1,4 +1,4 @@
-import { errorModal } from "../utils/Toasts";
+import { useQuery } from "@tanstack/react-query";
 import api from "./api";
 import ICustomer from "@/src/interfaces/ICustomer";
 
@@ -19,15 +19,21 @@ export const getCustomer = async (
    return response.data;
 };
 
-export const getCustomers = async (
-   customer?: ICustomer
-): Promise<ICustomer[]> => {
-   try {
-      const response = await api.get(customersUrl, { params: customer });
-      return response.data;
-   } catch (e: any) {
-      throw errorModal(e.message);
-   }
+export const getCustomers = (customer?: Partial<ICustomer>) => {
+   const getCustomers = async (customer?: ICustomer) => {
+      const { data } = await api.get<ICustomer[]>(customersUrl, {
+         params: customer,
+      });
+
+      if (data) {
+         return data;
+      }
+   };
+
+   return useQuery({
+      queryKey: ["customers", customer],
+      queryFn: () => getCustomers(customer as ICustomer),
+   });
 };
 
 export const updateCustomer = async (

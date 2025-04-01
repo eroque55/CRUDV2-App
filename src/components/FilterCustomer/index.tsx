@@ -19,7 +19,8 @@ import CloseButton from "../CloseButton";
 import ButtonComponent from "../Button";
 import InputField from "../InputField";
 import { Line } from "../Line";
-import { useCustomersListStore } from "@/src/store/CustomerListStore";
+import { getCustomers } from "@/src/services/Customer.service";
+import { useCustomerFilterStore } from "@/src/store/CustomerFilterStore";
 
 interface Props {
    isOpen: boolean;
@@ -27,7 +28,8 @@ interface Props {
 }
 
 const FilterCustomer = ({ isOpen, setIsOpen }: Props) => {
-   const { fetchCustomers } = useCustomersListStore();
+   const { setFilter, filter } = useCustomerFilterStore();
+   const { refetch } = getCustomers(filter);
    const { register, handleSubmit, reset, setValue } =
       useForm<ICustomerFilterSchema>({
          resolver: yupResolver(CustomerFilterSchema),
@@ -39,38 +41,27 @@ const FilterCustomer = ({ isOpen, setIsOpen }: Props) => {
       });
 
    const onSubmit = async (data: ICustomerFilterSchema) => {
-      const customerFilter: Partial<ICustomer> = {
-         name: data.name,
-         cpf: data.cpf,
-         email: data.email,
-      };
+      const newFilter: Partial<ICustomer> = {};
 
-      if (data.birthDate) {
-         customerFilter.birthDate = data.birthDate;
-      }
+      if (data.name) newFilter.name = data.name;
+      if (data.email) newFilter.email = data.email;
+      if (data.cpf) newFilter.cpf = data.cpf;
+      if (data.ranking) newFilter.ranking = Number(data.ranking);
+      if (data.birthDate) newFilter.birthDate = data.birthDate;
+      if (data.status) newFilter.status = data.status === "true";
+      if (data.gender)
+         newFilter.gender = data.gender as "FEMININO" | "MASCULINO" | "OUTRO";
 
-      if (data.ranking) {
-         customerFilter.ranking = parseInt(data.ranking);
-      }
+      setFilter(newFilter);
 
-      if (data.status) {
-         customerFilter.status = data.status === "true";
-      }
-
-      if (data.gender) {
-         customerFilter.gender = data.gender as
-            | "FEMININO"
-            | "MASCULINO"
-            | "OUTRO";
-      }
-
-      await fetchCustomers(customerFilter as ICustomer);
+      await refetch();
    };
 
    const handleReset = async () => {
       setValue("cpf", "");
       reset();
-      await fetchCustomers();
+      setFilter({});
+      await refetch();
    };
 
    if (!isOpen) return null;
@@ -147,6 +138,7 @@ const FilterCustomer = ({ isOpen, setIsOpen }: Props) => {
                   label="Ranking"
                   placeholder="Insira um ranking"
                   register={register}
+                  inputType="number"
                />
                <Line />
             </StyledFilterForm>

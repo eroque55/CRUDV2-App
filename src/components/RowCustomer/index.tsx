@@ -4,11 +4,12 @@ import { formatCpf } from "@/src/utils";
 import { useState } from "react";
 import {
    deleteCustomer,
+   getCustomers,
    updateCustomer,
 } from "@/src/services/Customer.service";
 import { useRouter } from "next/navigation";
 import { confirmationModal } from "@/src/utils/Toasts";
-import { useCustomersListStore } from "@/src/store/CustomerListStore";
+import { useCustomerFilterStore } from "@/src/store/CustomerFilterStore";
 
 interface Props {
    customer: ICustomer;
@@ -16,7 +17,8 @@ interface Props {
 
 const RowCustomer = ({ customer }: Props) => {
    const [status, setStatus] = useState(customer.status);
-   const { fetchCustomers } = useCustomersListStore();
+   const { filter } = useCustomerFilterStore();
+   const { refetch } = getCustomers(filter);
    const router = useRouter();
 
    async function toggleStatus() {
@@ -36,7 +38,7 @@ const RowCustomer = ({ customer }: Props) => {
    async function handleDelete() {
       try {
          await deleteCustomer(customer.id);
-         await fetchCustomers();
+         await refetch();
       } catch (error: any) {
          console.error("Erro ao excluir cliente", error);
       }

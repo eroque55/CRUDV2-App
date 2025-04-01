@@ -25,8 +25,8 @@ import IAddress from "@/src/interfaces/IAddress";
 import ICountry from "@/src/interfaces/ICountry";
 import IState from "@/src/interfaces/IState";
 import ICity from "@/src/interfaces/ICity";
-import { createCustomer } from "@/src/services/Customer.service";
-import { useCustomersListStore } from "@/src/store/CustomerListStore";
+import { createCustomer, getCustomers } from "@/src/services/Customer.service";
+import { useCustomerFilterStore } from "@/src/store/CustomerFilterStore";
 
 interface Props {
    isOpen: boolean;
@@ -34,7 +34,8 @@ interface Props {
 }
 
 const ModalCreateCustomer = ({ isOpen, setIsOpen }: Props) => {
-   const { fetchCustomers } = useCustomersListStore();
+   const { filter } = useCustomerFilterStore();
+   const { refetch } = getCustomers(filter);
    const [isSubmitting, setIsSubmitting] = useState(false);
    const [step, setStep] = useState(0);
    const [customer, setCustomer] = useState<Partial<ICustomer>>({});
@@ -243,9 +244,10 @@ const ModalCreateCustomer = ({ isOpen, setIsOpen }: Props) => {
    const finalSubmit = async () => {
       try {
          await createCustomer(customer as ICustomer);
-         fetchCustomers();
          successModal("Cliente cadastrado com sucesso!");
          setIsOpen(false);
+         await refetch();
+         setStep(0);
          customerReset();
          billingAddressReset();
          deliveryAddressReset();

@@ -1,11 +1,20 @@
 import Row from "../Row";
 import { ListContainer } from "../List/styles";
 import RowCustomer from "../RowCustomer";
-import { useCustomersListStore } from "@/src/store/CustomerListStore";
+import Loader from "../Loader/";
+import { getCustomers } from "@/src/services/Customer.service";
+import { errorModal } from "@/src/utils/Toasts";
+import { useCustomerFilterStore } from "@/src/store/CustomerFilterStore";
 
 const ListCustomers = () => {
-   const { customers } = useCustomersListStore();
+   const { filter } = useCustomerFilterStore();
+   const { data: customers, isLoading } = getCustomers(filter);
+
    const headerContent = ["Nome", "CPF", "E-mail"];
+
+   if (isLoading) return <Loader />;
+
+   if (!customers) throw errorModal("Erro ao carregar clientes");
 
    return (
       <ListContainer>
