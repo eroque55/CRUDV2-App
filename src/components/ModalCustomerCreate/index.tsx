@@ -26,7 +26,7 @@ import ICountry from "@/src/interfaces/ICountry";
 import IState from "@/src/interfaces/IState";
 import ICity from "@/src/interfaces/ICity";
 import { createCustomer, getCustomers } from "@/src/services/Customer.service";
-import { useCustomerFilterStore } from "@/src/store/CustomerFilterStore";
+import useCustomerFilter from "@/src/hooks/useCustomerFilter";
 
 interface Props {
    isOpen: boolean;
@@ -34,7 +34,7 @@ interface Props {
 }
 
 const ModalCreateCustomer = ({ isOpen, setIsOpen }: Props) => {
-   const { filter } = useCustomerFilterStore();
+   const { filter } = useCustomerFilter();
    const { refetch } = getCustomers(filter);
    const [isSubmitting, setIsSubmitting] = useState(false);
    const [step, setStep] = useState(0);

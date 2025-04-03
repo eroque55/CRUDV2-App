@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ReactNode } from "react";
+import { PropsWithChildren } from "react";
 import { Roboto } from "next/font/google";
 import StyledComponentsRegistry from "@/src/themes/styled-components-registry";
 import ClientLayout from "@/src/themes/client-layout";
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
    description: "Crud de engenharia de software 3 em nextjs",
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
+const RootLayout = ({ children }: PropsWithChildren) => {
    return (
       <html lang="pt_BR">
          <body className={`${roboto.variable}`}>

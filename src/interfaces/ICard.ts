@@ -1,3 +1,4 @@
+import ICardToSale from "./ICardToSale";
 import ICustomer from "./ICustomer";
 
 interface ICard {
@@ -16,6 +17,7 @@ interface ICard {
       | "DINNERS_CLUB"
       | "JCB"
       | "OUTRA";
+   cardToSales: ICardToSale[];
 }
 
 export default ICard;

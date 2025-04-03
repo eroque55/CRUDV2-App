@@ -5,16 +5,18 @@ import { Line } from "../Line";
 import HeaderCategories from "../HeaderCategories";
 
 interface Props {
-   categories?: boolean;
+   showCategories?: boolean;
 }
 
-export default function Header({ categories = true }: Props) {
+const Header = ({ showCategories = true }: Props) => {
    return (
       <HeaderContainer>
          <HeaderTop />
          <HeaderMain />
-         {categories && <HeaderCategories />}
+         {showCategories && <HeaderCategories />}
          <Line $width="80%" $color="bw3" />
       </HeaderContainer>
    );
-}
+};
+
+export default Header;

@@ -1,5 +1,6 @@
 import IAddress from "./IAddress";
 import ICard from "./ICard";
+import ICart from "./ICart";
 import IPhone from "./IPhone";
 
 interface ICustomer {
@@ -16,6 +17,7 @@ interface ICustomer {
    addresses: IAddress[];
    cards: ICard[];
    phone: IPhone;
+   carts: ICart[];
 }
 
 export default ICustomer;

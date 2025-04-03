@@ -9,7 +9,7 @@ import {
 } from "@/src/services/Customer.service";
 import { useRouter } from "next/navigation";
 import { confirmationModal } from "@/src/utils/Toasts";
-import { useCustomerFilterStore } from "@/src/store/CustomerFilterStore";
+import useCustomerFilter from "@/src/hooks/useCustomerFilter";
 
 interface Props {
    customer: ICustomer;
@@ -17,7 +17,7 @@ interface Props {
 
 const RowCustomer = ({ customer }: Props) => {
    const [status, setStatus] = useState(customer.status);
-   const { filter } = useCustomerFilterStore();
+   const { filter } = useCustomerFilter();
    const { refetch } = getCustomers(filter);
    const router = useRouter();
 

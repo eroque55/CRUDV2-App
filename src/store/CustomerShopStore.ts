@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { Customer } from "../interfaces/api";
+import ICustomer from "../interfaces/ICustomer";
 
 interface UseAuthStore {
-   customer: Customer | null;
-   login: (customer: Customer) => Promise<void>;
+   customer: ICustomer | null;
+   login: (customer: ICustomer) => Promise<void>;
    logout: () => void;
    loadUser: () => void;
 }
@@ -11,7 +11,7 @@ interface UseAuthStore {
 const useAuthStore = create<UseAuthStore>((set) => ({
    customer: null,
 
-   login: async (customer: Customer) => {
+   login: async (customer: ICustomer) => {
       localStorage.setItem("customer", JSON.stringify(customer));
       set({ customer: customer });
    },

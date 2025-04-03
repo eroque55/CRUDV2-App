@@ -20,18 +20,22 @@ const Product = ({ book }: Props) => {
             <StyledImage>
                <Image
                   src={`/books/${book.slug}.jpg`}
-                  alt="Imagem do produto"
+                  alt={`Imagem do livro ${book.title}`}
                   fill
-                  style={{ objectFit: "contain" }}
+                  style={{
+                     objectFit: "contain",
+                  }}
                />
             </StyledImage>
          </ImageContainer>
          <DescriptionContainer>
-            <StrongDescription>{book.nome}</StrongDescription>
-            <Description>{book.autor}</Description>
+            <StrongDescription>{book.title}</StrongDescription>
+            <Description>{book.synopsis}</Description>
             <StrongDescription>
                R${" "}
-               {parseFloat(book.preco.toString()).toFixed(2).replace(".", ",")}
+               {parseFloat(book.stock.stockMovement[0].cost.toString())
+                  .toFixed(2)
+                  .replace(".", ",")}
             </StrongDescription>
          </DescriptionContainer>
       </ProductContainer>

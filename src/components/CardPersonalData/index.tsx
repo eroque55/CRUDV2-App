@@ -3,13 +3,16 @@ import { capitalizeFirstLetter, formatCpf, formatPhone } from "@/src/utils";
 import { CardContentProps } from "../CardContentContainer";
 import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import { CardButtonProps } from "../CardButton";
+import { getCustomer } from "@/src/services/Customer.service";
+import { useParams } from "next/navigation";
 
 interface Props {
    setUpdateIsOpen: (value: boolean) => void;
 }
 
 const CardPersonalData = ({ setUpdateIsOpen }: Props) => {
-   const { customer } = useCustomerDetailsStore();
+   const params = useParams();
+   const { data: customer } = getCustomer(Number(params.id));
 
    const birthDate = new Date(customer?.birthDate || "").toLocaleDateString(
       "pt-BR"

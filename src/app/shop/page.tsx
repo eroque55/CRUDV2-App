@@ -8,64 +8,30 @@ import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import { MainContainer, BodyContainer } from "./styles";
 import Product from "@/src/components/Product";
-import IBook from "@/src/interfaces/IBook";
+import useBookFilter from "@/src/hooks/useCustomerFilter copy";
+import { getBooks } from "@/src/services/Book.service";
+import Loader from "@/src/components/Loader";
 
 export default function Shop() {
    const { customer, loadUser } = useAuthStore();
+   const { filter } = useBookFilter();
+   const { data: books, isLoading } = getBooks(filter);
 
    useEffect(() => {
       loadUser();
    }, []);
 
-   if (!customer) {
-      return <Unlogged />;
-   }
-
-   const book1: IBook = {
-      nome: "O Senhor dos Anéis",
-      autor: "J. R. R. Tolkien",
-      slug: "senhor-dos-aneis",
-      preco: 50.0,
-   };
-
-   const book2: IBook = {
-      nome: "O pequeno príncipe",
-      autor: "Antoine de Saint-Exupéry",
-      slug: "o-pequeno-principe",
-      preco: 25.0,
-   };
-
-   const book3: IBook = {
-      nome: "Harry Potter",
-      autor: "J. K. Rowling",
-      slug: "harry-potter",
-      preco: 250.0,
-   };
-
-   const book4: IBook = {
-      nome: "Orgulho e Preconceito",
-      autor: "Jane Austen",
-      slug: "orgulho-e-preconceito",
-      preco: 400.5,
-   };
+   if (!customer) return <Unlogged />;
 
    return (
       <BodyContainer>
          <ToastContainer />
          <Header />
          <MainContainer>
-            <Product book={book1} />
-            <Product book={book2} />
-            <Product book={book3} />
-            <Product book={book4} />
-            <Product book={book1} />
-            <Product book={book2} />
-            <Product book={book3} />
-            <Product book={book4} />
-            <Product book={book1} />
-            <Product book={book2} />
-            <Product book={book3} />
-            <Product book={book4} />
+            {isLoading && <Loader />}
+            {books?.map((book) => (
+               <Product book={book} key={book.id} />
+            ))}
          </MainContainer>
          <Footer />
       </BodyContainer>

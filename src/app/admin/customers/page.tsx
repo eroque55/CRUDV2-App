@@ -8,6 +8,7 @@ import ListCustomers from "@/src/components/ListCustomers";
 import FilterCustomer from "@/src/components/FilterCustomer";
 import ModalCreateCustomer from "@/src/components/ModalCustomerCreate";
 import { useCountries, useCountries2 } from "@/src/store/CountryStore";
+import { CustomerFilterProvider } from "@/src/context/CustomerFilterContext";
 
 export default function Admin() {
    const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -21,7 +22,7 @@ export default function Admin() {
    }, []);
 
    return (
-      <>
+      <CustomerFilterProvider>
          <ModalCreateCustomer
             isOpen={isCreateOpen}
             setIsOpen={setIsCreateOpen}
@@ -48,6 +49,6 @@ export default function Admin() {
             </StyledContentHeaderOptions>
          </StyledContentHeader>
          <ListCustomers />
-      </>
+      </CustomerFilterProvider>
    );
 }

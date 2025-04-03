@@ -1,13 +1,15 @@
+"use client";
+
 import Row from "../Row";
 import { ListContainer } from "../List/styles";
 import RowCustomer from "../RowCustomer";
 import Loader from "../Loader/";
 import { getCustomers } from "@/src/services/Customer.service";
 import { errorModal } from "@/src/utils/Toasts";
-import { useCustomerFilterStore } from "@/src/store/CustomerFilterStore";
+import useCustomerFilter from "@/src/hooks/useCustomerFilter";
 
 const ListCustomers = () => {
-   const { filter } = useCustomerFilterStore();
+   const { filter } = useCustomerFilter();
    const { data: customers, isLoading } = getCustomers(filter);
 
    const headerContent = ["Nome", "CPF", "E-mail"];

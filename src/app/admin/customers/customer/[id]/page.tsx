@@ -9,11 +9,9 @@ import {
 } from "./styles";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Loading from "@/src/components/Loading";
 import { Title, TitleContainer } from "@/src/components/Title";
 import BackButton from "@/src/components/BackButton";
 
-import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import ButtonComponent from "@/src/components/Button";
 import IAddress from "@/src/interfaces/IAddress";
 import ICard from "@/src/interfaces/ICard";
@@ -26,11 +24,12 @@ import ModalAddressUpdate from "@/src/components/ModalAddressUpdate";
 import { useCountries } from "@/src/store/CountryStore";
 import ModalCustomerUpdate from "@/src/components/ModalCustomerUpdate";
 import ModalCustomerPasswordUpdate from "@/src/components/ModalCustomerPasswordUpdate";
+import { getCustomer } from "@/src/services/Customer.service";
+import Loader from "@/src/components/Loader";
 
 const CustomerDetails = () => {
    const params = useParams();
-   const id = params.id ? parseInt(params.id as string) : NaN;
-   const { customer, loading, fetchCustomer } = useCustomerDetailsStore();
+   const { data: customer, isLoading } = getCustomer(Number(params.id));
    const [page, setPage] = useState(0);
    const [updateCustomerIsOpen, setUpdateCustomerIsOpen] = useState(false);
    const [updatePasswordIsOpen, setUpdatePasswordIsOpen] = useState(false);
@@ -39,11 +38,10 @@ const CustomerDetails = () => {
    const { fetchCountries } = useCountries();
 
    useEffect(() => {
-      fetchCustomer(id);
       fetchCountries();
    }, []);
 
-   if (loading || !customer) return <Loading />;
+   if (isLoading) return <Loader />;
 
    const handlePageChange = (newPage: number) => setPage(newPage);
 
@@ -116,11 +114,11 @@ const CustomerDetails = () => {
                <CardPersonalData setUpdateIsOpen={setUpdateCustomerIsOpen} />
             )}
             {page === 1 &&
-               customer.addresses.map((address: IAddress) => (
+               customer?.addresses.map((address: IAddress) => (
                   <CardAddress key={address.id} address={address} />
                ))}
             {page === 2 &&
-               customer.cards.map((card: ICard) => (
+               customer?.cards.map((card: ICard) => (
                   <CardCard key={card.id} card={card} />
                ))}
          </PageContainer>

@@ -20,7 +20,7 @@ import ButtonComponent from "../Button";
 import InputField from "../InputField";
 import { Line } from "../Line";
 import { getCustomers } from "@/src/services/Customer.service";
-import { useCustomerFilterStore } from "@/src/store/CustomerFilterStore";
+import useCustomerFilter from "@/src/hooks/useCustomerFilter";
 
 interface Props {
    isOpen: boolean;
@@ -28,7 +28,7 @@ interface Props {
 }
 
 const FilterCustomer = ({ isOpen, setIsOpen }: Props) => {
-   const { setFilter, filter } = useCustomerFilterStore();
+   const { filter, setFilter } = useCustomerFilter();
    const { refetch } = getCustomers(filter);
    const { register, handleSubmit, reset, setValue } =
       useForm<ICustomerFilterSchema>({
