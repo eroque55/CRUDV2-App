@@ -9,21 +9,15 @@ export const createCustomer = async (customer: ICustomer) => {
    return response.data;
 };
 
-export const getCustomer = (id?: number, customer?: ICustomer) => {
-   const getCustomer = async (id = 0, customer: Partial<ICustomer>) => {
-      const { data } = await api.get<ICustomer>(`${customersUrl}/${id}`, {
-         params: customer,
-      });
-
-      if (data) {
-         return data;
-      }
-   };
-
-   return useQuery({
-      queryKey: ["customer", id, customer],
-      queryFn: () => getCustomer(id, customer as ICustomer),
+export const getCustomer = async (
+   id: number = 0,
+   customer: Partial<ICustomer>
+): Promise<ICustomer> => {
+   const { data } = await api.get<ICustomer>(`${customersUrl}/${id}`, {
+      params: customer,
    });
+
+   return data;
 };
 
 export const getCustomers = (filter?: Partial<ICustomer>) => {

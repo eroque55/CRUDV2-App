@@ -22,7 +22,7 @@ import { Title } from "../components/Title";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ILoginSchema, LoginSchema } from "../validations/LoginSchema";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import ICustomer from "../interfaces/ICustomer";
 import useAuthStore from "../store/CustomerShopStore";
 import { getCustomer } from "../services/Customer.service";
@@ -37,9 +37,8 @@ export default function Login() {
    const { fetchCountries } = useCountries();
    const { fetchCountries: fetchCountries2 } = useCountries2();
    const [loginType, setLoginType] = useState(0);
-   const login = useAuthStore((state: any) => state.login);
+   const { customer, loadUser, login } = useAuthStore();
    const [isCreateCustomerOpen, setIsCreateCustomerOpen] = useState(false);
-   const { customer, loadUser } = useAuthStore();
    const router = useRouter();
 
    useEffect(() => {
@@ -72,7 +71,9 @@ export default function Login() {
             email: data.email,
             password: data.password,
          };
-         const customerData = await getCustomer(0, customer as ICustomer);
+
+         const customerData = await getCustomer(0, customer);
+
          login(customerData);
          router.push("/shop");
       } catch (error: any) {
