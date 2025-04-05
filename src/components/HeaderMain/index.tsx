@@ -18,7 +18,7 @@ const HeaderMain = () => {
          />
          <SearchBar />
          <ActionsContainer>
-            <StyledButton>
+            <StyledButton onClick={() => router.push("/shop/cart")}>
                <IconComponent name="CartIcon" />
                Carrinho
             </StyledButton>

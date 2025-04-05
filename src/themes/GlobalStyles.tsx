@@ -3,6 +3,8 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyles = createGlobalStyle`
   html,
   body {
+     display: flex;
+       flex-direction: column;
     font-family: ${({ theme }) => theme.fonts.roboto.fontFamily};
     width: 100vw;
     height: 100vh;

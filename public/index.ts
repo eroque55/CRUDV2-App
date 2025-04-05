@@ -35,4 +35,7 @@ export { default as TrashGrayIcon } from "@/public/icons/TrashGray.svg";
 export { default as TrashRedIcon } from "@/public/icons/TrashRed.svg";
 export { default as PasswordBlueIcon } from "@/public/icons/PasswordBlue.svg";
 export { default as PasswordGrayIcon } from "@/public/icons/PasswordGray.svg";
+export { default as CartWhiteIcon } from "@/public/icons/CartWhite.svg";
+export { default as PlusCartIcon } from "@/public/icons/PlusCart.svg";
+export { default as MinusCartIcon } from "@/public/icons/MinusCart.svg";
 // export { default as } from "@/public/icons/";

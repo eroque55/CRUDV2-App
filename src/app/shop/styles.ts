@@ -3,8 +3,7 @@ import styled from "styled-components";
 export const BodyContainer = styled.div`
    display: flex;
    flex-direction: column;
-   height: 100vh;
-   width: 100vw;
+   flex-grow: 1;
 `;
 
 export const MainContainer = styled.section`
@@ -12,6 +11,5 @@ export const MainContainer = styled.section`
    padding: 2rem 2.5rem;
    justify-content: center;
    gap: 2.5rem;
-   flex-wrap: wrap;
-   flex-grow: 1;
+   flex: 1;
 `;

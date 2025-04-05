@@ -8,14 +8,17 @@ import {
    StyledImage,
 } from "./styles";
 import IBook from "@/src/interfaces/IBook";
+import { useRouter } from "next/navigation";
+import { getMaxCostFormatted } from "@/src/utils";
 
 interface Props {
    book: IBook;
 }
 
 const Product = ({ book }: Props) => {
+   const router = useRouter();
    return (
-      <ProductContainer>
+      <ProductContainer onClick={() => router.push(`shop/book/${book.slug}`)}>
          <ImageContainer>
             <StyledImage>
                <Image
@@ -35,10 +38,7 @@ const Product = ({ book }: Props) => {
             <StrongDescription>{book.title}</StrongDescription>
             <Description>{book.synopsis}</Description>
             <StrongDescription>
-               R${" "}
-               {parseFloat(book.stock.stockMovement[0].cost.toString())
-                  .toFixed(2)
-                  .replace(".", ",")}
+               R$ {getMaxCostFormatted(book.stock.stockMovement)}
             </StrongDescription>
          </DescriptionContainer>
       </ProductContainer>

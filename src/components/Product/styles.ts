@@ -6,6 +6,7 @@ export const ProductContainer = styled.div`
    align-items: flex-start;
    gap: 1.25rem;
    width: 18rem;
+   cursor: pointer;
 `;
 
 export const ImageContainer = styled.div`

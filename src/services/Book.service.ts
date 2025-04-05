@@ -21,7 +21,17 @@ export const getBooks = (filter?: Partial<IBook>) => {
    });
 };
 
-export const getBook = async (id: number) => {
-   const response = await api.get<IBook>(`${booksUrl}${id}`);
-   return response.data;
+export const getBook = (slug: string) => {
+   const getBook = async (slug: string) => {
+      const { data } = await api.get<IBook>(`${booksUrl}/${slug}`);
+
+      if (data) {
+         return data;
+      }
+   };
+
+   return useQuery({
+      queryKey: ["book", slug],
+      queryFn: () => getBook(slug),
+   });
 };
