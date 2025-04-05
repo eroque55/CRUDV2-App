@@ -1,7 +1,6 @@
 import Card from "../Card";
 import { capitalizeFirstLetter, formatCpf, formatPhone } from "@/src/utils";
 import { CardContentProps } from "../CardContentContainer";
-import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import { CardButtonProps } from "../CardButton";
 import { getCustomer } from "@/src/services/Customer.service";
 import { useParams } from "next/navigation";

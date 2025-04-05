@@ -10,7 +10,6 @@ import {
    successModal,
 } from "@/src/utils/Toasts";
 import InputField from "../InputField";
-import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import ICustomer from "@/src/interfaces/ICustomer";
 import ModalBackground from "../ModalBackground";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -20,6 +19,8 @@ import {
 } from "@/src/validations/CardCreateSchema";
 import ICard from "@/src/interfaces/ICard";
 import { createCard } from "@/src/services/Card.service";
+import { useParams } from "next/navigation";
+import { getCustomer } from "@/src/services/Customer.service";
 
 interface Props {
    isOpen: boolean;
@@ -27,7 +28,8 @@ interface Props {
 }
 
 const ModalCardCreate = ({ isOpen, setIsOpen }: Props) => {
-   const { customer, fetchCustomer: getCustomer } = useCustomerDetailsStore();
+   const params = useParams();
+   const { data: customer, refetch } = getCustomer(Number(params.id));
 
    const {
       register,
@@ -77,7 +79,7 @@ const ModalCardCreate = ({ isOpen, setIsOpen }: Props) => {
          await createCard(card as ICard);
          reset();
          setIsOpen(false);
-         await getCustomer(customer?.id || 0);
+         await refetch();
          successModal("Cartão cadastrado com sucesso!");
       } catch (error: any) {
          errorModal(error.response.data);

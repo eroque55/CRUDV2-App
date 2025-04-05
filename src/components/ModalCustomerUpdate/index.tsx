@@ -1,4 +1,3 @@
-import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import ModalBackground from "../ModalBackground";
 import { ModalContainer } from "../Modal/styles";
 import ModalHeader from "../ModalHeader";
@@ -19,8 +18,9 @@ import {
 } from "@/src/utils/Toasts";
 import IPhone from "@/src/interfaces/IPhone";
 import ICustomer from "@/src/interfaces/ICustomer";
-import { updateCustomer } from "@/src/services/Customer.service";
+import { getCustomer, updateCustomer } from "@/src/services/Customer.service";
 import { updatePhone } from "@/src/services/Phone.service";
+import { useParams } from "next/navigation";
 
 interface Props {
    isOpen: boolean;
@@ -28,7 +28,8 @@ interface Props {
 }
 
 const ModalCustomerUpdate = ({ isOpen, setIsOpen }: Props) => {
-   const { customer, fetchCustomer: getCustomer } = useCustomerDetailsStore();
+   const params = useParams();
+   const { data: customer, refetch } = getCustomer(Number(params.id));
 
    const phone = String(customer?.phone.ddd + (customer?.phone.number || ""));
 
@@ -93,7 +94,7 @@ const ModalCustomerUpdate = ({ isOpen, setIsOpen }: Props) => {
             throw new Error("Cliente não encontrado");
          }
 
-         await getCustomer(customer.id);
+         await refetch();
          setIsOpen(false);
       } catch (error: any) {
          errorModal(error.response.data);

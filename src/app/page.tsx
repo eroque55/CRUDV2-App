@@ -25,7 +25,7 @@ import { ILoginSchema, LoginSchema } from "../validations/LoginSchema";
 import { ToastContainer } from "react-toastify";
 import ICustomer from "../interfaces/ICustomer";
 import useAuthStore from "../store/CustomerShopStore";
-import { getCustomer } from "../services/Customer.service";
+import { getCustomerToLogin } from "../services/Customer.service";
 import { useRouter } from "next/navigation";
 import BackButton from "../components/BackButton";
 import InputField from "../components/InputField";
@@ -72,7 +72,7 @@ export default function Login() {
             password: data.password,
          };
 
-         const customerData = await getCustomer(0, customer);
+         const customerData = await getCustomerToLogin(customer);
 
          login(customerData);
          router.push("/shop");

@@ -2,22 +2,24 @@ import ICard from "@/src/interfaces/ICard";
 import Card from "../Card";
 import { capitalizeFirstLetter } from "@/src/utils";
 import { CardContentProps } from "../CardContentContainer";
-import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import { deleteCard, updateCard } from "@/src/services/Card.service";
 import { confirmationModal, errorModal } from "@/src/utils/Toasts";
 import { CardButtonProps } from "../CardButton";
+import { getCustomer } from "@/src/services/Customer.service";
+import { useParams } from "next/navigation";
 
 interface Props {
    card: ICard;
 }
 
 const CardCard = ({ card }: Props) => {
-   const { fetchCustomer: getCustomer, customer } = useCustomerDetailsStore();
+   const params = useParams();
+   const { refetch } = getCustomer(Number(params.id));
 
    async function handleDeleteCard() {
       try {
          await deleteCard(card.id);
-         await getCustomer(customer?.id || 0);
+         await refetch();
       } catch (error: any) {
          errorModal(error.response.data);
       }
@@ -26,7 +28,7 @@ const CardCard = ({ card }: Props) => {
    async function handleSetPreferential() {
       try {
          await updateCard(card.id);
-         await getCustomer(customer?.id || 0);
+         await refetch();
       } catch (error: any) {
          errorModal(error.response.data);
       }

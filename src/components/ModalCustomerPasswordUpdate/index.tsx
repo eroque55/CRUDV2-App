@@ -1,4 +1,3 @@
-import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import ModalBackground from "../ModalBackground";
 import { ModalContainer } from "../Modal/styles";
 import ModalHeader from "../ModalHeader";
@@ -18,7 +17,8 @@ import {
    UpdatePasswordSchema,
 } from "@/src/validations/UpdatePasswordSchema";
 import ICustomer from "@/src/interfaces/ICustomer";
-import { updateCustomer } from "@/src/services/Customer.service";
+import { getCustomer, updateCustomer } from "@/src/services/Customer.service";
+import { useParams } from "next/navigation";
 
 interface Props {
    isOpen: boolean;
@@ -26,7 +26,8 @@ interface Props {
 }
 
 const ModalCustomerPasswordUpdate = ({ isOpen, setIsOpen }: Props) => {
-   const { customer } = useCustomerDetailsStore();
+   const params = useParams();
+   const { data: customer } = getCustomer(Number(params.id));
 
    const {
       register,

@@ -22,6 +22,9 @@ const Product = ({ book }: Props) => {
                   src={`/books/${book.slug}.jpg`}
                   alt={`Imagem do livro ${book.title}`}
                   fill
+                  sizes="(max-width: 768px) 100vw,
+                     (max-width: 1200px) 50vw,
+                     33vw"
                   style={{
                      objectFit: "contain",
                   }}

@@ -16,19 +16,21 @@ import IAddress from "@/src/interfaces/IAddress";
 import { updateAddress } from "@/src/services/Address.service";
 import InputField from "../InputField";
 import { useEffect } from "react";
-import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import ICustomer from "@/src/interfaces/ICustomer";
 import ModalBackground from "../ModalBackground";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useUpdateAddress } from "@/src/store/AddressUpdateStore";
 import { AddressSchema, IAddressSchema } from "@/src/validations/AddressSchema";
 import { useCountries } from "@/src/store/CountryStore";
+import { useParams } from "next/navigation";
+import { getCustomer } from "@/src/services/Customer.service";
 
 const ModalAddressUpdate = () => {
    const { address, closeModal, isOpen } = useUpdateAddress();
    const { cities, countries, states, getCitiesByState, getStatesByCountry } =
       useCountries();
-   const { customer, fetchCustomer: getCustomer } = useCustomerDetailsStore();
+   const params = useParams();
+   const { data: customer, refetch } = getCustomer(Number(params.id));
 
    const {
       register,
@@ -111,7 +113,7 @@ const ModalAddressUpdate = () => {
          await updateAddress(address?.id || 0, updatedAddress as IAddress);
          reset();
          closeModal();
-         await getCustomer(customer?.id || 0);
+         await refetch();
          successModal("Endereço alterado com sucesso!");
       } catch (error: any) {
          errorModal(error.response.data);

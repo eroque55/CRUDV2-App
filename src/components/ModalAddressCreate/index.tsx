@@ -16,11 +16,12 @@ import ICity from "@/src/interfaces/ICity";
 import IAddress from "@/src/interfaces/IAddress";
 import { createAddress } from "@/src/services/Address.service";
 import InputField from "../InputField";
-import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import ICustomer from "@/src/interfaces/ICustomer";
 import ModalBackground from "../ModalBackground";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCountries } from "@/src/store/CountryStore";
+import { useParams } from "next/navigation";
+import { getCustomer } from "@/src/services/Customer.service";
 
 interface Props {
    isOpen: boolean;
@@ -30,7 +31,9 @@ interface Props {
 const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
    const { cities, countries, states, getCitiesByState, getStatesByCountry } =
       useCountries();
-   const { customer, fetchCustomer: getCustomer } = useCustomerDetailsStore();
+
+   const params = useParams();
+   const { data: customer, refetch } = getCustomer(Number(params.id));
 
    const {
       register,
@@ -102,7 +105,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
          await createAddress(address as IAddress);
          reset();
          setIsOpen(false);
-         await getCustomer(customer?.id || 0);
+         await refetch();
          successModal("Endereço cadastrado com sucesso!");
       } catch (error: any) {
          errorModal(error.response.data);

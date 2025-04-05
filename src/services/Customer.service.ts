@@ -9,15 +9,19 @@ export const createCustomer = async (customer: ICustomer) => {
    return response.data;
 };
 
-export const getCustomer = async (
-   id: number = 0,
-   customer: Partial<ICustomer>
-): Promise<ICustomer> => {
-   const { data } = await api.get<ICustomer>(`${customersUrl}/${id}`, {
-      params: customer,
-   });
+export const getCustomer = (id: number) => {
+   const getCustomer = async (id: number) => {
+      const { data } = await api.get<ICustomer>(`${customersUrl}/${id}`);
 
-   return data;
+      if (data) {
+         return data;
+      }
+   };
+
+   return useQuery({
+      queryKey: ["customer", id],
+      queryFn: () => getCustomer(id),
+   });
 };
 
 export const getCustomers = (filter?: Partial<ICustomer>) => {
@@ -46,4 +50,14 @@ export const updateCustomer = async (
 
 export const deleteCustomer = async (id: number) => {
    return api.delete(`${customersUrl}/${id}`);
+};
+
+export const getCustomerToLogin = async (
+   customer: Partial<ICustomer>
+): Promise<ICustomer> => {
+   const { data } = await api.get<ICustomer>(`${customersUrl}/0`, {
+      params: customer,
+   });
+
+   return data;
 };

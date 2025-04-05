@@ -1,25 +1,27 @@
 import Card from "../Card";
 import { capitalizeFirstLetter, formatCep } from "@/src/utils";
 import { CardContentProps } from "../CardContentContainer";
-import { useCustomerDetailsStore } from "@/src/store/CustomerDetailsStore";
 import { confirmationModal, errorModal } from "@/src/utils/Toasts";
 import { CardButtonProps } from "../CardButton";
 import IAddress from "@/src/interfaces/IAddress";
 import { deleteAddress } from "@/src/services/Address.service";
 import { useUpdateAddress } from "@/src/store/AddressUpdateStore";
+import { getCustomer } from "@/src/services/Customer.service";
+import { useParams } from "next/navigation";
 
 interface Props {
    address: IAddress;
 }
 
 const CardAddress = ({ address }: Props) => {
-   const { fetchCustomer: getCustomer, customer } = useCustomerDetailsStore();
+   const params = useParams();
+   const { refetch } = getCustomer(Number(params.id));
    const { openModal } = useUpdateAddress();
 
    async function handleDelete() {
       try {
          await deleteAddress(address.id || 0);
-         await getCustomer(customer?.id || 0);
+         await refetch();
       } catch (error: any) {
          errorModal(error.response.data);
       }
