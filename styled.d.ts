@@ -1,4 +1,3 @@
-import { fail } from "assert";
 import "styled-components";
 
 declare module "styled-components" {
