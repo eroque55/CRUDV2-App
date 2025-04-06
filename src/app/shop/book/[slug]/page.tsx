@@ -28,16 +28,39 @@ import {
    TableColumn,
    TableCell,
 } from "./styles";
-import { getMaxCostFormatted } from "@/src/utils";
+import { getBookValue } from "@/src/utils";
 import ButtonComponent from "@/src/components/Button";
+import ICart from "@/src/interfaces/ICart";
+import ICustomer from "@/src/interfaces/ICustomer";
+import useAuthStore from "@/src/store/CustomerShopStore";
+import IBookToCart from "@/src/interfaces/IBookToCart";
+import { insertBook } from "@/src/services/Cart.service";
+import { errorModal, successModal } from "@/src/utils/Toasts";
 
 const BookPage = () => {
+   const { customer } = useAuthStore();
    const params = useParams();
    const { data: book, isLoading } = getBook(String(params.slug));
 
    if (isLoading) return <Loader />;
 
    if (!book) return <div>Livro não encontrado</div>;
+
+   const handleAddToCart = async () => {
+      try {
+         const bookToCart: Partial<IBookToCart> = {
+            book: book,
+         };
+         const cart: Partial<ICart> = {
+            customer: customer as ICustomer,
+            bookToCart: [bookToCart as IBookToCart],
+         };
+         await insertBook(cart as ICart);
+         successModal("Livro adicionado ao carrinho com sucesso");
+      } catch (error: any) {
+         errorModal(error.response.data);
+      }
+   };
 
    return (
       <BodyContainer>
@@ -74,15 +97,13 @@ const BookPage = () => {
                      </Edition>
                   </BookTitleContainer>
                   <ValueContainer>
-                     <Value>
-                        R$ {getMaxCostFormatted(book.stock.stockMovement)}
-                     </Value>
+                     <Value>R$ {getBookValue(book)}</Value>
                      <Stock>
                         Estoque: <strong>{book.stock.amount}</strong>
                      </Stock>
                   </ValueContainer>
                </BookInfoContentContainer>
-               <ButtonComponent icon="CartWhiteIcon">
+               <ButtonComponent onClick={handleAddToCart} icon="CartWhiteIcon">
                   Adicionar ao carrinho
                </ButtonComponent>
             </BookInfoContainer>

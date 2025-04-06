@@ -12,7 +12,6 @@ export default function Shop() {
 
    return (
       <BodyContainer>
-         <ToastContainer />
          <MainContainer>
             {isLoading && <Loader />}
             {books?.map((book) => (

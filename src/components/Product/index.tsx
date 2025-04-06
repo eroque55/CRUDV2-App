@@ -9,7 +9,7 @@ import {
 } from "./styles";
 import IBook from "@/src/interfaces/IBook";
 import { useRouter } from "next/navigation";
-import { getMaxCostFormatted } from "@/src/utils";
+import { getBookValue } from "@/src/utils";
 
 interface Props {
    book: IBook;
@@ -37,9 +37,7 @@ const Product = ({ book }: Props) => {
          <DescriptionContainer>
             <StrongDescription>{book.title}</StrongDescription>
             <Description>{book.synopsis}</Description>
-            <StrongDescription>
-               R$ {getMaxCostFormatted(book.stock.stockMovement)}
-            </StrongDescription>
+            <StrongDescription>R$ {getBookValue(book)}</StrongDescription>
          </DescriptionContainer>
       </ProductContainer>
    );

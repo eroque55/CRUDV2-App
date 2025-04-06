@@ -4,7 +4,7 @@ import ICart from "./ICart";
 interface IBookToCart {
    cart: ICart;
    book: IBook;
-   ammount: number;
+   amount: number;
    updatedAt: Date;
    status: boolean;
 }

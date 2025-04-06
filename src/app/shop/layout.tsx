@@ -6,6 +6,7 @@ import Unlogged from "@/src/components/Unlogged";
 import { BookFilterProvider } from "@/src/context/BookFilterContext";
 import useAuthStore from "@/src/store/CustomerShopStore";
 import { PropsWithChildren, useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 
 const ShopLayout = ({ children }: PropsWithChildren) => {
    const { customer, loadUser } = useAuthStore();
@@ -18,6 +19,7 @@ const ShopLayout = ({ children }: PropsWithChildren) => {
 
    return (
       <BookFilterProvider>
+         <ToastContainer />
          <Header />
          {children}
          <Footer />
