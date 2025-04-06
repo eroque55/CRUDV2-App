@@ -15,12 +15,16 @@ export const formatCep = (cep: string) => {
    return cep.replace(/(\d{5})(\d{3})/, "$1-$2");
 };
 
-export const getBookValue = (book: IBook) => {
+export const getBookValue = (book: IBook, qtd?: number) => {
    const maxCost = book.stock.stockMovement.reduce((max, current) =>
       Number(current.cost) > Number(max.cost) ? current : max
    ).cost;
 
-   const value = Number(maxCost) + book.priceGroup.tax;
+   let value = Number(maxCost) + book.priceGroup.tax;
+
+   if (qtd) {
+      value = value * qtd;
+   }
 
    return value.toFixed(2).replace(".", ",");
 };

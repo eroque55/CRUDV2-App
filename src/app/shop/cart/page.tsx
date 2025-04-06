@@ -53,6 +53,23 @@ const CartPage = () => {
       }
    }, [isUpdating]);
 
+   const totalValue =
+      cart?.bookToCart.reduce((acc, bookToCart) => {
+         const stockMovements = bookToCart.book.stock?.stockMovement || [];
+
+         if (stockMovements.length === 0) return acc;
+
+         const maxCost = stockMovements.reduce((max, current) =>
+            Number(current.cost) > Number(max.cost) ? current : max
+         ).cost;
+
+         const tax = Number(bookToCart.book.priceGroup?.tax || 0);
+         const unitValue = Number(maxCost) + tax;
+         const totalCost = unitValue * bookToCart.amount;
+
+         return acc + totalCost;
+      }, 0) ?? 0;
+
    if (isLoading) return <Loader />;
 
    if (!cart) return <div>Carrinho não encontrado</div>;
@@ -76,7 +93,9 @@ const CartPage = () => {
                <SumaryContent>
                   <SumaryItem>
                      <SumaryItemLabel>Subtotal</SumaryItemLabel>
-                     <SumaryItemValue>R$ 0,00</SumaryItemValue>
+                     <SumaryItemValue>
+                        R$ {totalValue.toFixed(2).replace(".", ",")}
+                     </SumaryItemValue>
                   </SumaryItem>
                   <SumaryItem>
                      <SumaryItemLabel>Descontos</SumaryItemLabel>
@@ -88,7 +107,9 @@ const CartPage = () => {
                   </SumaryItem>
                   <SumaryItem>
                      <SumaryItemLabel>Total</SumaryItemLabel>
-                     <SumaryItemTotal>R$ 0,00</SumaryItemTotal>
+                     <SumaryItemTotal>
+                        R$ {totalValue.toFixed(2).replace(".", ",")}
+                     </SumaryItemTotal>
                   </SumaryItem>
                </SumaryContent>
             </SumaryHeader>
