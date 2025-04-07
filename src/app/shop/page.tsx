@@ -5,6 +5,7 @@ import Product from "@/src/components/Product";
 import useBookFilter from "@/src/hooks/useCustomerFilter copy";
 import { getBooks } from "@/src/services/Book.service";
 import Loader from "@/src/components/Loader";
+import Header from "@/src/components/Header";
 
 export default function Shop() {
    const { filter } = useBookFilter();
@@ -12,6 +13,7 @@ export default function Shop() {
 
    return (
       <BodyContainer>
+         <Header />
          <MainContainer>
             {isLoading && <Loader />}
             {books?.map((book) => (

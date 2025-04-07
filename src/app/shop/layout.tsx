@@ -20,7 +20,6 @@ const ShopLayout = ({ children }: PropsWithChildren) => {
    return (
       <BookFilterProvider>
          <ToastContainer />
-         <Header />
          {children}
          <Footer />
       </BookFilterProvider>

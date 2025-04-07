@@ -36,6 +36,7 @@ import useAuthStore from "@/src/store/CustomerShopStore";
 import IBookToCart from "@/src/interfaces/IBookToCart";
 import { insertBook } from "@/src/services/Cart.service";
 import { errorModal, successModal } from "@/src/utils/Toasts";
+import Header from "@/src/components/Header";
 
 const BookPage = () => {
    const { customer } = useAuthStore();
@@ -63,75 +64,81 @@ const BookPage = () => {
    };
 
    return (
-      <BodyContainer>
-         <MainContainer>
-            <BookImageWrapper>
-               <Image
-                  src={`/books/${book.slug}.jpg`}
-                  alt={`Imagem do livro ${book.title}`}
-                  width={300}
-                  height={450}
-                  style={{
-                     objectFit: "contain",
-                  }}
-               />
-            </BookImageWrapper>
-            <BookInfoContainer>
-               <BookInfoContentContainer>
-                  <BookInfoHeader>
-                     <Publisher>{book.publisher}</Publisher>
-                     <Id>id: {book.id}</Id>
-                  </BookInfoHeader>
-                  <BookTitleContainer>
-                     <BookTitle>{book.title}</BookTitle>
-                     <CategoryContainer>
-                        {book.bookToCategory.map(({ category }) => (
-                           <Category key={category.id}>
-                              {category.name}
-                           </Category>
-                        ))}
-                     </CategoryContainer>
-                     <Author>{book.author}</Author>
-                     <Edition>
-                        {book.edition}ª Ediçao - {book.year}
-                     </Edition>
-                  </BookTitleContainer>
-                  <ValueContainer>
-                     <Value>R$ {getBookValue(book)}</Value>
-                     <Stock>
-                        Estoque: <strong>{book.stock.amount}</strong>
-                     </Stock>
-                  </ValueContainer>
-               </BookInfoContentContainer>
-               <ButtonComponent onClick={handleAddToCart} icon="CartWhiteIcon">
-                  Adicionar ao carrinho
-               </ButtonComponent>
-            </BookInfoContainer>
-         </MainContainer>
-         <DescriptionContainer>
-            <Synopsis dangerouslySetInnerHTML={{ __html: book.synopsis }} />
-            <DetailsTable>
-               <TableColumn>
-                  <TableCell>ISBN:</TableCell>
-                  <TableCell>Código de barras:</TableCell>
-                  <TableCell>Número de páginas:</TableCell>
-                  <TableCell>Peso (kg):</TableCell>
-                  <TableCell>Altura (cm):</TableCell>
-                  <TableCell>Largura (cm):</TableCell>
-                  <TableCell>Espessura (cm):</TableCell>
-               </TableColumn>
-               <TableColumn>
-                  <TableCell>{book.isbn}</TableCell>
-                  <TableCell>{book.barcode}</TableCell>
-                  <TableCell>{book.numberPages}</TableCell>
-                  <TableCell>{book.bookDimension.weight}</TableCell>
-                  <TableCell>{book.bookDimension.height}</TableCell>
-                  <TableCell>{book.bookDimension.width}</TableCell>
-                  <TableCell>{book.bookDimension.thickness}</TableCell>
-               </TableColumn>
-            </DetailsTable>
-         </DescriptionContainer>
-      </BodyContainer>
+      <>
+         <Header />
+         <BodyContainer>
+            <MainContainer>
+               <BookImageWrapper>
+                  <Image
+                     src={`/books/${book.slug}.jpg`}
+                     alt={`Imagem do livro ${book.title}`}
+                     width={300}
+                     height={450}
+                     style={{
+                        objectFit: "contain",
+                     }}
+                  />
+               </BookImageWrapper>
+               <BookInfoContainer>
+                  <BookInfoContentContainer>
+                     <BookInfoHeader>
+                        <Publisher>{book.publisher}</Publisher>
+                        <Id>id: {book.id}</Id>
+                     </BookInfoHeader>
+                     <BookTitleContainer>
+                        <BookTitle>{book.title}</BookTitle>
+                        <CategoryContainer>
+                           {book.bookToCategory.map(({ category }) => (
+                              <Category key={category.id}>
+                                 {category.name}
+                              </Category>
+                           ))}
+                        </CategoryContainer>
+                        <Author>{book.author}</Author>
+                        <Edition>
+                           {book.edition}ª Ediçao - {book.year}
+                        </Edition>
+                     </BookTitleContainer>
+                     <ValueContainer>
+                        <Value>R$ {getBookValue(book)}</Value>
+                        <Stock>
+                           Estoque: <strong>{book.stock.amount}</strong>
+                        </Stock>
+                     </ValueContainer>
+                  </BookInfoContentContainer>
+                  <ButtonComponent
+                     onClick={handleAddToCart}
+                     icon="CartWhiteIcon"
+                  >
+                     Adicionar ao carrinho
+                  </ButtonComponent>
+               </BookInfoContainer>
+            </MainContainer>
+            <DescriptionContainer>
+               <Synopsis dangerouslySetInnerHTML={{ __html: book.synopsis }} />
+               <DetailsTable>
+                  <TableColumn>
+                     <TableCell>ISBN:</TableCell>
+                     <TableCell>Código de barras:</TableCell>
+                     <TableCell>Número de páginas:</TableCell>
+                     <TableCell>Peso (kg):</TableCell>
+                     <TableCell>Altura (cm):</TableCell>
+                     <TableCell>Largura (cm):</TableCell>
+                     <TableCell>Espessura (cm):</TableCell>
+                  </TableColumn>
+                  <TableColumn>
+                     <TableCell>{book.isbn}</TableCell>
+                     <TableCell>{book.barcode}</TableCell>
+                     <TableCell>{book.numberPages}</TableCell>
+                     <TableCell>{book.bookDimension.weight}</TableCell>
+                     <TableCell>{book.bookDimension.height}</TableCell>
+                     <TableCell>{book.bookDimension.width}</TableCell>
+                     <TableCell>{book.bookDimension.thickness}</TableCell>
+                  </TableColumn>
+               </DetailsTable>
+            </DescriptionContainer>
+         </BodyContainer>
+      </>
    );
 };
 

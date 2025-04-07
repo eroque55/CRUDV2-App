@@ -21,6 +21,7 @@ import { getCart, updateCart } from "@/src/services/Cart.service";
 import useAuthStore from "@/src/store/CustomerShopStore";
 import { useEffect, useState } from "react";
 import ICart from "@/src/interfaces/ICart";
+import Header from "@/src/components/Header";
 
 const CartPage = () => {
    const router = useRouter();
@@ -75,52 +76,59 @@ const CartPage = () => {
    if (!cart) return <div>Carrinho não encontrado</div>;
 
    return (
-      <Container>
-         <CartContainer>
-            {cart.bookToCart.map((bookToCart) => (
-               <CartItem
-                  key={bookToCart.book.id}
-                  bookToCart={bookToCart}
-                  cart={cart}
-                  setCart={setCart}
-                  setIsUpdating={setIsUpdating}
-               />
-            ))}
-         </CartContainer>
-         <SumaryContainer>
-            <SumaryHeader>
-               <SumaryTitle>Carrinho</SumaryTitle>
-               <SumaryContent>
-                  <SumaryItem>
-                     <SumaryItemLabel>Subtotal</SumaryItemLabel>
-                     <SumaryItemValue>
-                        R$ {totalValue.toFixed(2).replace(".", ",")}
-                     </SumaryItemValue>
-                  </SumaryItem>
-                  <SumaryItem>
-                     <SumaryItemLabel>Descontos</SumaryItemLabel>
-                     <SumaryItemValue>-----</SumaryItemValue>
-                  </SumaryItem>
-                  <SumaryItem>
-                     <SumaryItemLabel>Frete</SumaryItemLabel>
-                     <SumaryItemValue>-----</SumaryItemValue>
-                  </SumaryItem>
-                  <SumaryItem>
-                     <SumaryItemLabel>Total</SumaryItemLabel>
-                     <SumaryItemTotal>
-                        R$ {totalValue.toFixed(2).replace(".", ",")}
-                     </SumaryItemTotal>
-                  </SumaryItem>
-               </SumaryContent>
-            </SumaryHeader>
-            <ButtonsContainer>
-               <ButtonComponent>Finalizar Compra</ButtonComponent>
-               <ButtonComponent onClick={() => router.push("/shop")} wired>
-                  Continuar Comprando
-               </ButtonComponent>
-            </ButtonsContainer>
-         </SumaryContainer>
-      </Container>
+      <>
+         <Header />
+         <Container>
+            <CartContainer>
+               {cart.bookToCart.map((bookToCart, index) => (
+                  <CartItem
+                     key={index}
+                     bookToCart={bookToCart}
+                     cart={cart}
+                     setCart={setCart}
+                     setIsUpdating={setIsUpdating}
+                  />
+               ))}
+            </CartContainer>
+            <SumaryContainer>
+               <SumaryHeader>
+                  <SumaryTitle>Carrinho</SumaryTitle>
+                  <SumaryContent>
+                     <SumaryItem>
+                        <SumaryItemLabel>Subtotal</SumaryItemLabel>
+                        <SumaryItemValue>
+                           R$ {totalValue.toFixed(2).replace(".", ",")}
+                        </SumaryItemValue>
+                     </SumaryItem>
+                     <SumaryItem>
+                        <SumaryItemLabel>Descontos</SumaryItemLabel>
+                        <SumaryItemValue>-----</SumaryItemValue>
+                     </SumaryItem>
+                     <SumaryItem>
+                        <SumaryItemLabel>Frete</SumaryItemLabel>
+                        <SumaryItemValue>-----</SumaryItemValue>
+                     </SumaryItem>
+                     <SumaryItem>
+                        <SumaryItemLabel>Total</SumaryItemLabel>
+                        <SumaryItemTotal>
+                           R$ {totalValue.toFixed(2).replace(".", ",")}
+                        </SumaryItemTotal>
+                     </SumaryItem>
+                  </SumaryContent>
+               </SumaryHeader>
+               <ButtonsContainer>
+                  <ButtonComponent
+                     onClick={() => router.push("/shop/checkout")}
+                  >
+                     Finalizar Compra
+                  </ButtonComponent>
+                  <ButtonComponent onClick={() => router.push("/shop")} wired>
+                     Continuar Comprando
+                  </ButtonComponent>
+               </ButtonsContainer>
+            </SumaryContainer>
+         </Container>
+      </>
    );
 };
 
