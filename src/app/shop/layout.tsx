@@ -1,9 +1,9 @@
 "use client";
 
 import Footer from "@/src/components/Footer";
-import Header from "@/src/components/Header";
 import Unlogged from "@/src/components/Unlogged";
 import { BookFilterProvider } from "@/src/context/BookFilterContext";
+import { CategoryFilterProvider } from "@/src/context/CategoryFilterContext";
 import useAuthStore from "@/src/store/CustomerShopStore";
 import { PropsWithChildren, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
@@ -19,9 +19,11 @@ const ShopLayout = ({ children }: PropsWithChildren) => {
 
    return (
       <BookFilterProvider>
-         <ToastContainer />
-         {children}
-         <Footer />
+         <CategoryFilterProvider>
+            <ToastContainer />
+            {children}
+            <Footer />
+         </CategoryFilterProvider>
       </BookFilterProvider>
    );
 };

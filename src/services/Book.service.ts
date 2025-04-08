@@ -4,10 +4,13 @@ import IBook from "@/src/interfaces/IBook";
 
 const booksUrl = "books/";
 
-export const getBooks = (filter?: Partial<IBook>) => {
-   const getBooks = async (book?: IBook) => {
+export const getBooks = (slug?: string, title?: string) => {
+   const getBooks = async (slug?: string, title?: string) => {
       const { data } = await api.get<IBook[]>(booksUrl, {
-         params: book,
+         params: {
+            slug,
+            title,
+         },
       });
 
       if (data) {
@@ -16,8 +19,8 @@ export const getBooks = (filter?: Partial<IBook>) => {
    };
 
    return useQuery({
-      queryKey: ["books", filter],
-      queryFn: () => getBooks(filter as IBook),
+      queryKey: ["books", slug, title],
+      queryFn: () => getBooks(slug, title),
    });
 };
 

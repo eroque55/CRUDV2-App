@@ -1,18 +1,17 @@
 import { createContext, PropsWithChildren, useState } from "react";
-import IBook from "../interfaces/IBook";
 
 export const BookFilterContext = createContext({
-   filter: {},
-   setFilter: (filter: Partial<IBook>) => {},
+   title: "",
+   setTitle: (title: string) => {},
 });
 
 BookFilterContext.displayName = "BookFilter";
 
 export const BookFilterProvider = ({ children }: PropsWithChildren) => {
-   const [filter, setFilter] = useState<Partial<IBook>>({});
+   const [title, setTitle] = useState<string>("");
 
    return (
-      <BookFilterContext.Provider value={{ filter, setFilter }}>
+      <BookFilterContext.Provider value={{ title, setTitle }}>
          {children}
       </BookFilterContext.Provider>
    );

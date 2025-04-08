@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { BookFilterContext } from "@/src/context/BookFilterContext";
 
 const useBookFilter = () => {
-   const { filter, setFilter } = useContext(BookFilterContext);
+   const { title, setTitle } = useContext(BookFilterContext);
 
-   return { filter, setFilter };
+   return { title, setTitle };
 };
 
 export default useBookFilter;

@@ -4,9 +4,15 @@ import { LogoFullBlackImg } from "@/public";
 import SearchBar from "../SearchBar";
 import IconComponent from "../Icon";
 import { useRouter } from "next/navigation";
+import useBookFilter from "@/src/hooks/useBookFilter";
+import useCategoryFilter from "@/src/hooks/useCategoryFilter";
+import { getBooks } from "@/src/services/Book.service";
 
 const HeaderMain = () => {
    const router = useRouter();
+   const { title, setTitle } = useBookFilter();
+   const { slug } = useCategoryFilter();
+   const { refetch } = getBooks(slug, title);
 
    return (
       <HeaderMainContainer>
@@ -16,7 +22,7 @@ const HeaderMain = () => {
             onClick={() => router.push("/shop")}
             style={{ cursor: "pointer" }}
          />
-         <SearchBar />
+         <SearchBar setTitle={setTitle} />
          <ActionsContainer>
             <StyledButton onClick={() => router.push("/shop/cart")}>
                <IconComponent name="CartIcon" />
