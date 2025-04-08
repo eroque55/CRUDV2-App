@@ -1,5 +1,5 @@
 import IAddress from "./IAddress";
-import ICarrier from "./ICarier";
+import ICarrier from "./ICarrier";
 import ISale from "./ISale";
 
 interface IFreight {

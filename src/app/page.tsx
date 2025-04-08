@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 import { Title } from "../components/Title";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ILoginSchema, LoginSchema } from "../validations/LoginSchema";
+import { ILoginSchema, LoginSchema } from "../validations/loginSchema";
 import { ToastContainer } from "react-toastify";
 import ICustomer from "../interfaces/ICustomer";
 import useAuthStore from "../store/CustomerShopStore";

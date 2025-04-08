@@ -1,8 +1,8 @@
-import IBook from "./IBook";
+import ICard from "./ICard";
 import ISale from "./ISale";
 
 interface ICardToSale {
-   book: IBook;
+   card: ICard;
    sale: ISale;
 }
 

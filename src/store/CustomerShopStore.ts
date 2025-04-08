@@ -8,7 +8,7 @@ interface UseAuthStore {
    loadUser: () => void;
 }
 
-const useAuthStore = create<UseAuthStore>((set) => ({
+const useAuthStore = create<UseAuthStore>((set, get) => ({
    customer: null,
 
    login: async (customer: ICustomer) => {

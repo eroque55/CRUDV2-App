@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
    Container,
    HeaderContainer,
@@ -42,10 +42,59 @@ import {
 } from "../cart/styles";
 import ButtonComponent from "@/src/components/Button";
 import { useRouter } from "next/navigation";
-import { confirmationModal, successModal } from "@/src/utils/Toasts";
+import {
+   confirmationModal,
+   errorModal,
+   successModal,
+} from "@/src/utils/Toasts";
 import IconComponent from "@/src/components/Icon";
+import useAuthStore from "@/src/store/CustomerShopStore";
+import { getCustomer } from "@/src/services/Customer.service";
+import { getCarriers } from "@/src/services/Carriers.service";
+import ICarrier from "@/src/interfaces/ICarrier";
+import IAddress from "@/src/interfaces/IAddress";
+import ICard from "@/src/interfaces/ICard";
+import { getCart } from "@/src/services/Cart.service";
+import { formatValue, getBookValue, getBookValueNumber } from "@/src/utils";
+import IFreight from "@/src/interfaces/IFreight";
+import ISale from "@/src/interfaces/ISale";
+import ICardToSale from "@/src/interfaces/ICardToSale";
+import ICart from "@/src/interfaces/ICart";
+import { createSale } from "@/src/services/Sale.service";
 
 const CheckoutPage = () => {
+   const { customer } = useAuthStore();
+   const { data: customerData } = getCustomer(customer?.id || 0);
+   const [carriers, setCarriers] = useState<ICarrier[]>([]);
+   const [selectedAddress, setSelectedAddress] = useState<IAddress | null>(
+      null
+   );
+   const [selectedCarrier, setSelectedCarrier] = useState<ICarrier | null>(
+      null
+   );
+   const [selectedCard, setSelectedCard] = useState<ICard | null>(null);
+   const { data: cart } = getCart(customer?.id || 0);
+   const finalValue = cart?.bookToCart.reduce((acc, bookToCart) => {
+      const stockMovements = bookToCart.book.stock?.stockMovement || [];
+
+      if (stockMovements.length === 0) return acc;
+
+      const bookValue = getBookValueNumber(bookToCart.book, bookToCart.amount);
+
+      return acc + bookValue;
+   }, 0);
+
+   useEffect(() => {
+      const fetchCarriers = async () => {
+         const data = await getCarriers();
+
+         if (data) {
+            setCarriers(data);
+         }
+      };
+      fetchCarriers();
+   }, []);
+
    const [step, setStep] = useState(0);
    const router = useRouter();
 
@@ -69,7 +118,44 @@ const CheckoutPage = () => {
          setStep(step + 1);
       }
       if (step === 2) {
-         successModal("Compra realizada com sucesso");
+         confirmationModal({
+            title: "Deseja finalizar a compra?",
+            message: "Você será redirecionado para a página de inicial",
+            confirmAction: async () => {
+               try {
+                  await handleSubmit();
+                  router.push("/shop");
+                  successModal("Compra finalizada com sucesso");
+               } catch (error: any) {
+                  return errorModal(error.message);
+               }
+            },
+            confirmButton: "Finalizar",
+            cancelButton: "Voltar",
+         });
+      }
+   };
+
+   const handleSubmit = async () => {
+      try {
+         const freight: Partial<IFreight> = {
+            address: selectedAddress as IAddress,
+            carrier: selectedCarrier as ICarrier,
+         };
+         const cardToSale: Partial<ICardToSale> = {
+            card: selectedCard as ICard,
+         };
+
+         const sale: Partial<ISale> = {
+            freight: freight as IFreight,
+            totalValue: Number(finalValue) + Number(selectedCarrier?.cost),
+            cardToSales: [cardToSale as ICardToSale],
+            cart: cart as ICart,
+            paymentMethod: "CARTAO",
+         };
+         await createSale(sale as ISale);
+      } catch (error) {
+         throw new Error("Erro ao finalizar a compra");
       }
    };
 
@@ -108,37 +194,57 @@ const CheckoutPage = () => {
                            {" "}
                            <CardContainer>
                               Endereço de entrega
-                              <OptionContainer $selected>
-                                 <OptionRadius $selected />
-                                 Minha casa
-                                 <OptionDescription>
-                                    Rua das Flores, 123 - Centro, São Paulo - SP
-                                 </OptionDescription>
-                              </OptionContainer>
-                              <OptionContainer>
-                                 <OptionRadius />
-                                 Meu trabalho
-                                 <OptionDescription>
-                                    Avenida Central, 456, Centro, Rio de
-                                    Janeiro, RJ, CEP 89012-345
-                                 </OptionDescription>
-                              </OptionContainer>
+                              {customerData?.addresses.map((address) => (
+                                 <OptionContainer
+                                    key={address.id}
+                                    $selected={
+                                       selectedAddress?.id === address.id
+                                    }
+                                    onClick={() => {
+                                       setSelectedAddress(address);
+                                    }}
+                                 >
+                                    <OptionRadius
+                                       $selected={
+                                          selectedAddress?.id === address.id
+                                       }
+                                    />
+                                    {address.nickname}
+                                    <OptionDescription>
+                                       {address.street}, {address.number} -{" "}
+                                       {address.neighborhood},{" "}
+                                       {address.city.name}
+                                    </OptionDescription>
+                                 </OptionContainer>
+                              ))}
                               <PlusOptionContainer>
                                  <IconComponent name="PlusCartIcon" />
                               </PlusOptionContainer>
                            </CardContainer>
                            <CardContainer>
                               Transportadora
-                              <OptionContainer $selected>
-                                 <OptionRadius $selected />
-                                 Rápido
-                                 <OptionValue>R$ 20,00</OptionValue>
-                              </OptionContainer>
-                              <OptionContainer>
-                                 <OptionRadius />
-                                 Padrão
-                                 <OptionValue>R$ 35,00</OptionValue>
-                              </OptionContainer>
+                              {carriers.map((carrier) => (
+                                 <OptionContainer
+                                    key={carrier.id}
+                                    onClick={() => setSelectedCarrier(carrier)}
+                                    $selected={
+                                       selectedCarrier?.id === carrier.id
+                                    }
+                                 >
+                                    <OptionRadius
+                                       $selected={
+                                          selectedCarrier?.id === carrier.id
+                                       }
+                                    />
+                                    {carrier.name}
+                                    <OptionValue>
+                                       R${" "}
+                                       {Number(carrier.cost)
+                                          .toFixed(2)
+                                          .replace(".", ",")}
+                                    </OptionValue>
+                                 </OptionContainer>
+                              ))}
                            </CardContainer>{" "}
                         </>
                      ) : (
@@ -154,14 +260,18 @@ const CheckoutPage = () => {
                            </CardContainer>
                            <CardContainer>
                               Cartao de credito
-                              <OptionContainer $selected>
-                                 <OptionRadius $selected />
-                                 MasterCard - 3456
-                              </OptionContainer>
-                              <OptionContainer>
-                                 <OptionRadius />
-                                 Visa - 3456
-                              </OptionContainer>
+                              {customerData?.cards.map((card) => (
+                                 <OptionContainer
+                                    key={card.id}
+                                    $selected={selectedCard?.id === card.id}
+                                    onClick={() => setSelectedCard(card)}
+                                 >
+                                    <OptionRadius
+                                       $selected={selectedCard?.id === card.id}
+                                    />
+                                    {card.cardBrand} - {card.number}
+                                 </OptionContainer>
+                              ))}
                               <PlusOptionContainer>
                                  <IconComponent name="PlusCartIcon" />
                               </PlusOptionContainer>
@@ -175,7 +285,9 @@ const CheckoutPage = () => {
                         <SumaryContent>
                            <SumaryItem>
                               <SumaryItemLabel>Subtotal</SumaryItemLabel>
-                              <SumaryItemValue>R$ 100,00</SumaryItemValue>
+                              <SumaryItemValue>
+                                 {formatValue(finalValue || 0)}
+                              </SumaryItemValue>
                            </SumaryItem>
                            <SumaryItem>
                               <SumaryItemLabel>Descontos</SumaryItemLabel>
@@ -187,7 +299,9 @@ const CheckoutPage = () => {
                            </SumaryItem>
                            <SumaryItem>
                               <SumaryItemLabel>Total</SumaryItemLabel>
-                              <SumaryItemTotal>R$ 100,00</SumaryItemTotal>
+                              <SumaryItemTotal>
+                                 {formatValue(finalValue || 0)}
+                              </SumaryItemTotal>
                            </SumaryItem>
                         </SumaryContent>
                      </SumaryHeader>
@@ -206,31 +320,45 @@ const CheckoutPage = () => {
                   <ResumeContainer>
                      <ResumeSection>
                         Produtos
-                        <ResumeContent>
-                           <BookContainer>
-                              <p>1x</p>
-                              <ImageContainer>
-                                 <Image
-                                    src={`/books/o-senhor-dos-aneis.jpg`}
-                                    alt={`Imagem do livro o senhor dos aneis`}
-                                    width={100}
-                                    height={100}
-                                    style={{ objectFit: "contain" }}
-                                 />
-                              </ImageContainer>
-                              <p>O Senhor dos Anéis</p>
-                           </BookContainer>
-                           <p>R$ 20,00</p>
-                        </ResumeContent>
+                        {cart?.bookToCart.map((bookToCart) => (
+                           <ResumeContent key={bookToCart.book.id}>
+                              <BookContainer>
+                                 <p>{bookToCart.amount}x</p>
+                                 <ImageContainer>
+                                    <Image
+                                       src={`/books/${bookToCart.book.slug}.jpg`}
+                                       alt={`Imagem do livro`}
+                                       width={100}
+                                       height={100}
+                                       style={{ objectFit: "contain" }}
+                                    />
+                                 </ImageContainer>
+                                 <p>{bookToCart.book.title}</p>
+                              </BookContainer>
+                              <p>
+                                 R${" "}
+                                 {getBookValue(
+                                    bookToCart.book,
+                                    bookToCart.amount
+                                 )}
+                              </p>
+                           </ResumeContent>
+                        ))}
                      </ResumeSection>
                      <ResumeSection>
                         Entrega
                         <ResumeContent>
                            <p>
-                              Minha casa - Rua das Flores, 123, Bairro Jardim,
-                              São Paulo, SP, CEP 01234-567(Entrega padrão)
+                              {selectedAddress?.nickname} -{" "}
+                              {selectedAddress?.street},{" "}
+                              {selectedAddress?.number}
                            </p>
-                           <p>R$ 20,00</p>
+                           <p>
+                              R${" "}
+                              {Number(selectedCarrier?.cost)
+                                 .toFixed(2)
+                                 .replace(".", ",")}
+                           </p>
                         </ResumeContent>
                      </ResumeSection>
                      <ResumeSection>
@@ -243,12 +371,18 @@ const CheckoutPage = () => {
                      <ResumeSection>
                         Pagamento
                         <ResumeContent>
-                           <p>MasterCard - 3456</p>
+                           <p>
+                              {selectedCard?.cardBrand} - {selectedCard?.number}
+                           </p>
                         </ResumeContent>
                      </ResumeSection>
                      <TotalValueContainer>
                         <p>Valor total</p>
-                        <p> R$ 493,00</p>
+                        <p>
+                           {formatValue(
+                              Number(finalValue) + Number(selectedCarrier?.cost)
+                           )}
+                        </p>
                      </TotalValueContainer>
                   </ResumeContainer>
                   <ResumeButtonsContainer>

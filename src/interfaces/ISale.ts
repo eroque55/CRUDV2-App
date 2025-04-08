@@ -1,4 +1,3 @@
-import IBook from "./IBook";
 import ICardToSale from "./ICardToSale";
 import ICart from "./ICart";
 import ICoupon from "./ICoupon";
@@ -14,7 +13,7 @@ interface ISale {
    coupons: ICoupon[];
    cart: ICart;
    freight: IFreight;
-   cartToSales: ICardToSale[];
+   cardToSales: ICardToSale[];
 }
 
 export default ISale;

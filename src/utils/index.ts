@@ -15,6 +15,10 @@ export const formatCep = (cep: string) => {
    return cep.replace(/(\d{5})(\d{3})/, "$1-$2");
 };
 
+export const formatValue = (value: number) => {
+   return "R$ " + value.toFixed(2).replace(".", ",");
+};
+
 export const getBookValue = (book: IBook, qtd?: number) => {
    const maxCost = book.stock.stockMovement.reduce((max, current) =>
       Number(current.cost) > Number(max.cost) ? current : max
@@ -27,4 +31,18 @@ export const getBookValue = (book: IBook, qtd?: number) => {
    }
 
    return value.toFixed(2).replace(".", ",");
+};
+
+export const getBookValueNumber = (book: IBook, qtd?: number) => {
+   const maxCost = book.stock.stockMovement.reduce((max, current) =>
+      Number(current.cost) > Number(max.cost) ? current : max
+   ).cost;
+
+   let value = Number(maxCost) + book.priceGroup.tax;
+
+   if (qtd) {
+      value = value * qtd;
+   }
+
+   return value;
 };
