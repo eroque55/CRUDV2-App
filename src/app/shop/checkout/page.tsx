@@ -26,6 +26,8 @@ import {
    PlusOptionContainer,
    CoupomContainer,
    CoupomInput,
+   OptionText,
+   CreditCardsContainer,
 } from "./styles";
 import Image from "next/image";
 import { LogoFullBlackImg } from "@/public";
@@ -61,6 +63,8 @@ import ISale from "@/src/interfaces/ISale";
 import ICardToSale from "@/src/interfaces/ICardToSale";
 import ICart from "@/src/interfaces/ICart";
 import { createSale } from "@/src/services/Sale.service";
+import Radius from "@/src/components/Radius";
+import CheckBox from "@/src/components/CheckBox";
 
 const CheckoutPage = () => {
    const { customer } = useAuthStore();
@@ -72,7 +76,7 @@ const CheckoutPage = () => {
    const [selectedCarrier, setSelectedCarrier] = useState<ICarrier | null>(
       null
    );
-   const [selectedCard, setSelectedCard] = useState<ICard | null>(null);
+   const [selectedCards, setSelectedCards] = useState<ICard[]>([]);
    const { data: cart } = getCart(customer?.id || 0);
    const finalValue = cart?.bookToCart.reduce((acc, bookToCart) => {
       const stockMovements = bookToCart.book.stock?.stockMovement || [];
@@ -94,6 +98,14 @@ const CheckoutPage = () => {
       };
       fetchCarriers();
    }, []);
+
+   useEffect(() => {
+      if (customerData?.cards) {
+         setSelectedCards(
+            customerData?.cards.filter((card) => card.preferential)
+         );
+      }
+   }, [customerData]);
 
    const [step, setStep] = useState(0);
    const router = useRouter();
@@ -204,12 +216,12 @@ const CheckoutPage = () => {
                                        setSelectedAddress(address);
                                     }}
                                  >
-                                    <OptionRadius
-                                       $selected={
+                                    <Radius
+                                       active={
                                           selectedAddress?.id === address.id
                                        }
                                     />
-                                    {address.nickname}
+                                    <OptionText>{address.nickname}</OptionText>
                                     <OptionDescription>
                                        {address.street}, {address.number} -{" "}
                                        {address.neighborhood},{" "}
@@ -231,12 +243,12 @@ const CheckoutPage = () => {
                                        selectedCarrier?.id === carrier.id
                                     }
                                  >
-                                    <OptionRadius
-                                       $selected={
+                                    <Radius
+                                       active={
                                           selectedCarrier?.id === carrier.id
                                        }
                                     />
-                                    {carrier.name}
+                                    <OptionText>{carrier.name}</OptionText>
                                     <OptionValue>
                                        R${" "}
                                        {Number(carrier.cost)
@@ -263,11 +275,32 @@ const CheckoutPage = () => {
                               {customerData?.cards.map((card) => (
                                  <OptionContainer
                                     key={card.id}
-                                    $selected={selectedCard?.id === card.id}
-                                    onClick={() => setSelectedCard(card)}
+                                    $selected={selectedCards.some(
+                                       (c) => c.id === card.id
+                                    )}
+                                    onClick={() => {
+                                       if (
+                                          selectedCards.some(
+                                             (c) => c.id === card.id
+                                          )
+                                       ) {
+                                          setSelectedCards(
+                                             selectedCards.filter(
+                                                (c) => c.id !== card.id
+                                             )
+                                          );
+                                       } else {
+                                          setSelectedCards([
+                                             ...selectedCards,
+                                             card,
+                                          ]);
+                                       }
+                                    }}
                                  >
-                                    <OptionRadius
-                                       $selected={selectedCard?.id === card.id}
+                                    <CheckBox
+                                       active={selectedCards.some(
+                                          (c) => c.id === card.id
+                                       )}
                                     />
                                     {card.cardBrand} - {card.number}
                                  </OptionContainer>
@@ -295,7 +328,11 @@ const CheckoutPage = () => {
                            </SumaryItem>
                            <SumaryItem>
                               <SumaryItemLabel>Frete</SumaryItemLabel>
-                              <SumaryItemValue>-----</SumaryItemValue>
+                              <SumaryItemValue>
+                                 {selectedCarrier?.cost
+                                    ? formatValue(Number(selectedCarrier?.cost))
+                                    : "-----"}
+                              </SumaryItemValue>
                            </SumaryItem>
                            <SumaryItem>
                               <SumaryItemLabel>Total</SumaryItemLabel>
@@ -371,9 +408,14 @@ const CheckoutPage = () => {
                      <ResumeSection>
                         Pagamento
                         <ResumeContent>
-                           <p>
-                              {selectedCard?.cardBrand} - {selectedCard?.number}
-                           </p>
+                           <CreditCardsContainer>
+                              {selectedCards.map((card, index) => (
+                                 <p>
+                                    {index + 1} - {card?.cardBrand} -{" "}
+                                    {card?.number}
+                                 </p>
+                              ))}
+                           </CreditCardsContainer>
                         </ResumeContent>
                      </ResumeSection>
                      <TotalValueContainer>

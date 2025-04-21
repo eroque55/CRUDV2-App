@@ -107,7 +107,6 @@ export const OptionContainer = styled.div<OptionProps>`
    gap: 0.75rem;
    border-radius: 0.5rem;
    cursor: pointer;
-   font-weight: 500;
 
    background-color: ${({ $selected }) =>
       $selected ? "#B5D2DF" : "transparent"};
@@ -115,6 +114,11 @@ export const OptionContainer = styled.div<OptionProps>`
    border: 1px solid
       ${({ theme, $selected }) =>
          $selected ? theme.colors.primary.color3 : theme.colors.neutral.color4};
+`;
+
+export const OptionText = styled.p`
+   font-weight: 500;
+   flex: 1;
 `;
 
 export const OptionRadius = styled.div<OptionProps>`
@@ -130,11 +134,11 @@ export const OptionRadius = styled.div<OptionProps>`
 `;
 
 export const OptionDescription = styled.p`
+   flex: 1;
    color: ${({ theme }) => theme.colors.neutral.color5};
 `;
 
 export const OptionValue = styled.p`
-   width: 100%;
    text-align: right;
    color: ${({ theme }) => theme.colors.primary.color3};
 `;
@@ -235,4 +239,10 @@ export const CoupomInput = styled.input`
    &:focus {
       outline: none;
    }
+`;
+
+export const CreditCardsContainer = styled.div`
+   display: flex;
+   gap: 0.5rem;
+   flex-direction: column;
 `;
