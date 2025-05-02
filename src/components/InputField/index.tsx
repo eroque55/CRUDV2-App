@@ -19,6 +19,7 @@ interface Props {
    inputType?: "text" | "email" | "date" | "number";
    defaultValue?: string;
    mask?: string;
+   disabled?: boolean;
    selectOptions?: OptionProps[];
    radioOptions?: RadioProps[];
    onAccept?: (value: string) => void;
@@ -34,6 +35,7 @@ const InputField = ({
    type = "input",
    inputType,
    mask,
+   disabled = false,
    selectOptions = [],
    radioOptions = [],
    onAccept,
@@ -60,6 +62,7 @@ const InputField = ({
                id={id}
                placeholder={placeholder}
                defaultValue={defaultValue}
+               disabled={disabled}
                {...register(id)}
             />
          )}
@@ -70,6 +73,7 @@ const InputField = ({
                placeholder={placeholder}
                defaultValue={defaultValue}
                onAccept={onAccept}
+               disabled={disabled}
                {...register(id)}
             />
          )}
@@ -79,6 +83,7 @@ const InputField = ({
                {...register(id)}
                onChange={onChange}
                defaultValue={defaultValue}
+               disabled={disabled}
             >
                <option value="">Selecione</option>
                {selectOptions.map((option) => (

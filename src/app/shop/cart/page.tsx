@@ -22,6 +22,7 @@ import useAuthStore from "@/src/store/CustomerShopStore";
 import { useEffect, useState } from "react";
 import ICart from "@/src/interfaces/ICart";
 import Header from "@/src/components/Header";
+import { errorModal } from "@/src/utils/Toasts";
 
 const CartPage = () => {
    const router = useRouter();
@@ -73,7 +74,24 @@ const CartPage = () => {
 
    if (isLoading) return <Loader />;
 
-   if (!cart) return <div>Carrinho não encontrado</div>;
+   const handleSubmit = () => {
+      if (!cart) return;
+      if (cart.bookToCart.length === 0) {
+         return errorModal(
+            "Seu carrinho está vazio, adicione livros para continuar."
+         );
+      }
+      router.push("/shop/checkout");
+   };
+
+   if (!cart)
+      return (
+         <div
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+         >
+            Carrinho não encontrado
+         </div>
+      );
 
    return (
       <>
@@ -117,9 +135,7 @@ const CartPage = () => {
                   </SumaryContent>
                </SumaryHeader>
                <ButtonsContainer>
-                  <ButtonComponent
-                     onClick={() => router.push("/shop/checkout")}
-                  >
+                  <ButtonComponent onClick={handleSubmit}>
                      Finalizar Compra
                   </ButtonComponent>
                   <ButtonComponent onClick={() => router.push("/shop")} wired>

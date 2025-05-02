@@ -210,15 +210,20 @@ export const ImageContainer = styled.div`
    padding: 0.75rem;
 `;
 
-export const PlusOptionContainer = styled.div`
+export const PlusOptionContainer = styled.button`
    display: flex;
    justify-content: center;
    align-items: center;
    padding: 0.75rem;
    border-radius: 0.5rem;
    cursor: pointer;
+   background-color: transparent;
 
    border: 1px solid ${({ theme }) => theme.colors.neutral.color4};
+
+   &:hover {
+      background-color: ${({ theme }) => theme.colors.neutral.color2};
+   }
 `;
 
 export const CoupomContainer = styled.div`

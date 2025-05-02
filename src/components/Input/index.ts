@@ -15,6 +15,12 @@ const Input = styled.input`
    &::placeholder {
       color: ${({ theme }) => theme.colors.neutral.color3};
    }
+
+   &:disabled {
+      background-color: ${({ theme }) => theme.colors.neutral.color3};
+      color: ${({ theme }) => theme.colors.neutral.color8};
+      cursor: not-allowed;
+   }
 `;
 
 export default Input;

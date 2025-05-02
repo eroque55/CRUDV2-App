@@ -65,6 +65,11 @@ import ICart from "@/src/interfaces/ICart";
 import { createSale } from "@/src/services/Sale.service";
 import Radius from "@/src/components/Radius";
 import CheckBox from "@/src/components/CheckBox";
+import ModalAddressCreate from "@/src/components/ModalAddressCreate";
+import ModalCardCreate from "@/src/components/ModalCardCreate";
+import ModalCheckoutAddressCreate from "@/src/components/ModalCheckoutAddressCreate";
+import ModalCheckoutCardCreate from "@/src/components/ModalCheckoutCardCreate";
+import { useCountries } from "@/src/store/CountryStore";
 
 const CheckoutPage = () => {
    const { customer } = useAuthStore();
@@ -77,7 +82,15 @@ const CheckoutPage = () => {
       null
    );
    const [selectedCards, setSelectedCards] = useState<ICard[]>([]);
+   const [createAddressIsOpen, setCreateAddressIsOpen] = useState(false);
+   const [createCardIsOpen, setCreateCardIsOpen] = useState(false);
    const { data: cart } = getCart(customer?.id || 0);
+   const { fetchCountries } = useCountries();
+
+   useEffect(() => {
+      fetchCountries();
+   }, []);
+
    const finalValue = cart?.bookToCart.reduce((acc, bookToCart) => {
       const stockMovements = bookToCart.book.stock?.stockMovement || [];
 
@@ -126,8 +139,20 @@ const CheckoutPage = () => {
    };
 
    const handleNext = () => {
-      if (step < 2) {
-         setStep(step + 1);
+      if (step === 0) {
+         if (!selectedAddress) {
+            return errorModal("Selecione um endereço");
+         }
+         if (!selectedCarrier) {
+            return errorModal("Selecione uma transportadora");
+         }
+         setStep(1);
+      }
+      if (step === 1) {
+         if (selectedCards.length === 0) {
+            return errorModal("Selecione pelo menos um cartão de crédito");
+         }
+         setStep(2);
       }
       if (step === 2) {
          confirmationModal({
@@ -154,17 +179,24 @@ const CheckoutPage = () => {
             address: selectedAddress as IAddress,
             carrier: selectedCarrier as ICarrier,
          };
-         const cardToSale: Partial<ICardToSale> = {
-            card: selectedCard as ICard,
-         };
+         const cardToSales: Partial<ICardToSale>[] = [];
+
+         selectedCards.map((card) => {
+            const cardToSale: Partial<ICardToSale> = {
+               card,
+            };
+
+            cardToSales.push(cardToSale);
+         });
 
          const sale: Partial<ISale> = {
             freight: freight as IFreight,
             totalValue: Number(finalValue) + Number(selectedCarrier?.cost),
-            cardToSales: [cardToSale as ICardToSale],
+            cardToSales: cardToSales as ICardToSale[],
             cart: cart as ICart,
             paymentMethod: "CARTAO",
          };
+
          await createSale(sale as ISale);
       } catch (error) {
          throw new Error("Erro ao finalizar a compra");
@@ -174,7 +206,6 @@ const CheckoutPage = () => {
    return (
       <Container>
          <HeaderContainer>
-            {" "}
             <Image src={LogoFullBlackImg} alt="Logo" />
          </HeaderContainer>
          <ContentContainer>
@@ -206,30 +237,38 @@ const CheckoutPage = () => {
                            {" "}
                            <CardContainer>
                               Endereço de entrega
-                              {customerData?.addresses.map((address) => (
-                                 <OptionContainer
-                                    key={address.id}
-                                    $selected={
-                                       selectedAddress?.id === address.id
-                                    }
-                                    onClick={() => {
-                                       setSelectedAddress(address);
-                                    }}
-                                 >
-                                    <Radius
-                                       active={
-                                          selectedAddress?.id === address.id
-                                       }
-                                    />
-                                    <OptionText>{address.nickname}</OptionText>
-                                    <OptionDescription>
-                                       {address.street}, {address.number} -{" "}
-                                       {address.neighborhood},{" "}
-                                       {address.city.name}
-                                    </OptionDescription>
-                                 </OptionContainer>
-                              ))}
-                              <PlusOptionContainer>
+                              {customerData?.addresses.map(
+                                 (address) =>
+                                    address.addressType === "ENTREGA" && (
+                                       <OptionContainer
+                                          key={address.id}
+                                          $selected={
+                                             selectedAddress?.id === address.id
+                                          }
+                                          onClick={() => {
+                                             setSelectedAddress(address);
+                                          }}
+                                       >
+                                          <Radius
+                                             active={
+                                                selectedAddress?.id ===
+                                                address.id
+                                             }
+                                          />
+                                          <OptionText>
+                                             {address.nickname}
+                                          </OptionText>
+                                          <OptionDescription>
+                                             {address.street}, {address.number}{" "}
+                                             - {address.neighborhood},{" "}
+                                             {address.city.name}
+                                          </OptionDescription>
+                                       </OptionContainer>
+                                    )
+                              )}
+                              <PlusOptionContainer
+                                 onClick={() => setCreateAddressIsOpen(true)}
+                              >
                                  <IconComponent name="PlusCartIcon" />
                               </PlusOptionContainer>
                            </CardContainer>
@@ -305,7 +344,9 @@ const CheckoutPage = () => {
                                     {card.cardBrand} - {card.number}
                                  </OptionContainer>
                               ))}
-                              <PlusOptionContainer>
+                              <PlusOptionContainer
+                                 onClick={() => setCreateCardIsOpen(true)}
+                              >
                                  <IconComponent name="PlusCartIcon" />
                               </PlusOptionContainer>
                            </CardContainer>
@@ -337,7 +378,10 @@ const CheckoutPage = () => {
                            <SumaryItem>
                               <SumaryItemLabel>Total</SumaryItemLabel>
                               <SumaryItemTotal>
-                                 {formatValue(finalValue || 0)}
+                                 {formatValue(
+                                    Number(finalValue) +
+                                       Number(selectedCarrier?.cost)
+                                 )}
                               </SumaryItemTotal>
                            </SumaryItem>
                         </SumaryContent>
@@ -410,10 +454,10 @@ const CheckoutPage = () => {
                         <ResumeContent>
                            <CreditCardsContainer>
                               {selectedCards.map((card, index) => (
-                                 <p>
+                                 <>
                                     {index + 1} - {card?.cardBrand} -{" "}
                                     {card?.number}
-                                 </p>
+                                 </>
                               ))}
                            </CreditCardsContainer>
                         </ResumeContent>
@@ -438,6 +482,16 @@ const CheckoutPage = () => {
                </>
             )}
          </ContentContainer>
+         <ModalCheckoutAddressCreate
+            isOpen={createAddressIsOpen}
+            setIsOpen={setCreateAddressIsOpen}
+            customerId={customer?.id}
+         />
+         <ModalCheckoutCardCreate
+            isOpen={createCardIsOpen}
+            setIsOpen={setCreateCardIsOpen}
+            customerId={customer?.id}
+         />
       </Container>
    );
 };

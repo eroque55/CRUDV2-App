@@ -67,5 +67,7 @@ export const AddressSchema = yup.object().shape({
 
    complement: yup
       .string()
-      .max(100, "Complemento pode ter no máximo 100 caracteres"),
+      .max(100, "Complemento pode ter no máximo 100 caracteres")
+      .optional()
+      .default(""),
 });

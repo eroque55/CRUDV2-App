@@ -1,0 +1,181 @@
+import { ModalContainer } from "../Modal/styles";
+import ModalForm from "../ModalForm";
+import ModalFooter from "../ModalFooter";
+import ModalHeader from "../ModalHeader";
+import { useForm } from "react-hook-form";
+import {
+   confirmationModal,
+   errorModal,
+   IConfirmationToast,
+   successModal,
+} from "@/src/utils/Toasts";
+import InputField from "../InputField";
+import ICustomer from "@/src/interfaces/ICustomer";
+import ModalBackground from "../ModalBackground";
+import { yupResolver } from "@hookform/resolvers/yup";
+import {
+   CardCreateSchema,
+   ICardCreateSchema,
+} from "@/src/validations/CardCreateSchema";
+import ICard from "@/src/interfaces/ICard";
+import { createCard } from "@/src/services/Card.service";
+import { getCustomer } from "@/src/services/Customer.service";
+
+interface Props {
+   isOpen: boolean;
+   setIsOpen: (value: boolean) => void;
+   customerId?: number;
+}
+
+const ModalCheckoutCardCreate = ({
+   isOpen,
+   setIsOpen,
+   customerId = 0,
+}: Props) => {
+   const { refetch } = getCustomer(customerId);
+
+   const {
+      register,
+      handleSubmit,
+      setValue,
+      reset,
+      formState: { errors },
+   } = useForm<ICardCreateSchema>({
+      resolver: yupResolver(CardCreateSchema),
+      mode: "onBlur",
+   });
+
+   const confModal: IConfirmationToast = {
+      title: "Cancelar Cadastro",
+      message: "Deseja realmente cancelar o cadastro?",
+      confirmButton: "Cancelar",
+      cancelButton: "Voltar",
+      confirmAction: () => {
+         setIsOpen(false);
+         reset();
+      },
+   };
+
+   const onCancel = () => {
+      confirmationModal(confModal);
+   };
+
+   const onSubmit = async (data: ICardCreateSchema) => {
+      const customer = { id: customerId };
+
+      try {
+         const card: Partial<ICard> = {
+            customer: customer as ICustomer,
+            number: data.number,
+            cardholder: data.cardholder,
+            cvv: data.cvv,
+            expirationDate: data.expirationDate,
+            cardBrand: data.cardBrand as
+               | "VISA"
+               | "MASTERCARD"
+               | "AMERICAN_EXPRESS"
+               | "DISCOVER"
+               | "DINNERS_CLUB"
+               | "JCB"
+               | "OUTRA",
+            preferential: false,
+         };
+
+         console.log(card);
+         await createCard(card as ICard);
+         reset();
+         setIsOpen(false);
+         await refetch();
+         successModal("Cartão cadastrado com sucesso!");
+      } catch (error: any) {
+         console.error(error);
+         errorModal(error.response.data);
+      }
+   };
+
+   if (!isOpen) return null;
+
+   if (!customerId || customerId === 0) {
+      errorModal("Cliente não encontrado.");
+      setIsOpen(false);
+   }
+
+   return (
+      <ModalBackground>
+         <ModalContainer $width="40rem">
+            <ModalHeader>Cadastrar contato</ModalHeader>
+            <ModalForm>
+               <InputField
+                  id="number"
+                  label="Número do cartão"
+                  mask="0000 0000 0000 0000"
+                  type="maskedInput"
+                  register={register}
+                  placeholder="Insira o número do cartão"
+                  error={errors.number?.message}
+                  onAccept={(value) => {
+                     setValue("number", value.replace(/[\ ]/g, ""));
+                  }}
+               />
+               <InputField
+                  id="expirationDate"
+                  label="Vencimento"
+                  mask="00/00"
+                  type="maskedInput"
+                  register={register}
+                  placeholder="Insira o vencimento"
+                  error={errors.expirationDate?.message}
+                  onAccept={(value) => {
+                     setValue("expirationDate", value.replace(/[\/]/g, ""));
+                  }}
+               />
+               <InputField
+                  id="cardholder"
+                  label="Nome do titular"
+                  register={register}
+                  placeholder="Insira o nome do titular"
+                  error={errors.cardholder?.message}
+               />
+               <InputField
+                  id="cvv"
+                  label="Código de segurança (CVV)"
+                  mask="000"
+                  type="maskedInput"
+                  register={register}
+                  placeholder="Insira o código de segurança"
+                  error={errors.expirationDate?.message}
+                  onAccept={(value) => {
+                     setValue("cvv", value);
+                  }}
+               />
+               <InputField
+                  id="cardBrand"
+                  label="Bandeira do cartão"
+                  register={register}
+                  type="select"
+                  selectOptions={[
+                     { value: "VISA", label: "Visa" },
+                     { value: "MASTERCARD", label: "Mastercard" },
+                     { value: "AMERICAN_EXPRESS", label: "American Express" },
+                     { value: "DISCOVER", label: "Discover" },
+                     { value: "DINERS_CLUB", label: "Diners Club" },
+                     { value: "JCB", label: "JCB" },
+                     { value: "OUTRA", label: "Outra" },
+                  ]}
+                  error={errors.cardBrand?.message}
+               />
+            </ModalForm>
+            <ModalFooter
+               confirmButtonType="submit"
+               cancelButton="Cancelar"
+               confirmAction={handleSubmit(onSubmit)}
+               cancelAction={onCancel}
+            >
+               Cadastrar
+            </ModalFooter>
+         </ModalContainer>
+      </ModalBackground>
+   );
+};
+
+export default ModalCheckoutCardCreate;
