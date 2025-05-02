@@ -1,10 +1,10 @@
-import { useContext } from "react";
-import { CategoryFilterContext } from "@/src/context/CategoryFilterContext";
+import { useContext } from 'react';
+import { CategoryFilterContext } from '@/src/context/CategoryFilterContext';
 
 const useCategoryFilter = () => {
-   const { slug, setSlug } = useContext(CategoryFilterContext);
+  const { slug, setSlug } = useContext(CategoryFilterContext);
 
-   return { slug, setSlug };
+  return { slug, setSlug };
 };
 
 export default useCategoryFilter;

@@ -1,11 +1,11 @@
-import IBook from "./IBook";
+import IBook from './IBook';
 
 interface IReasonCategory {
-   id: number;
-   description: string;
-   isActivation: boolean;
+  id: number;
+  description: string;
+  isActivation: boolean;
 
-   books: IBook[];
+  books: IBook[];
 }
 
 export default IReasonCategory;

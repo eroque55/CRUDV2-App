@@ -1,22 +1,22 @@
-import api from "./api";
-import ICard from "@/src/interfaces/ICard";
+import ICard from '@/src/interfaces/ICard';
+import api from './api';
 
-const cardsUrl = "cards/";
+const cardsUrl = 'cards/';
 
 export const createCard = async (card: ICard) => {
-   const response = await api.post<ICard>(cardsUrl, card);
-   return response.data;
+  const response = await api.post<ICard>(cardsUrl, card);
+  return response.data;
 };
 
 export const getCards = async () => {
-   const response = await api.get<ICard[]>(cardsUrl);
-   return response.data;
+  const response = await api.get<ICard[]>(cardsUrl);
+  return response.data;
 };
 
 export const updateCard = async (id: number) => {
-   return api.put<ICard>(`${cardsUrl}${id}`);
+  return api.put<ICard>(`${cardsUrl}${id}`);
 };
 
 export const deleteCard = async (id: number) => {
-   return api.delete(`${cardsUrl}${id}`);
+  return api.delete(`${cardsUrl}${id}`);
 };

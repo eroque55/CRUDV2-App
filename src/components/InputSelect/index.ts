@@ -1,32 +1,32 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export interface OptionProps {
-   value: string;
-   label: string;
+  value: string;
+  label: string;
 }
 
 const InputSelect = styled.select`
-   padding: 0.75rem;
-   border-radius: 0.75rem;
-   border: 1px solid ${({ theme }) => theme.colors.neutral.color4};
-   width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid ${({ theme }) => theme.colors.neutral.color4};
+  width: 100%;
 
-   color: ${({ theme }) => theme.colors.neutral.color6};
-   font-size: 1rem;
+  color: ${({ theme }) => theme.colors.neutral.color6};
+  font-size: 1rem;
 
-   &:focus {
-      outline: none;
-   }
+  &:focus {
+    outline: none;
+  }
 
-   &::placeholder {
-      color: ${({ theme }) => theme.colors.neutral.color3};
-   }
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.neutral.color3};
+  }
 
-   &:disabled {
-      background-color: ${({ theme }) => theme.colors.neutral.color3};
-      color: ${({ theme }) => theme.colors.neutral.color8};
-      cursor: not-allowed;
-   }
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.neutral.color3};
+    color: ${({ theme }) => theme.colors.neutral.color8};
+    cursor: not-allowed;
+  }
 `;
 
 export default InputSelect;

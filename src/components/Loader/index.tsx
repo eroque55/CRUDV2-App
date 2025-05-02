@@ -1,11 +1,11 @@
-import { LoaderContainer, StyledLoader } from "./styles";
+import { LoaderContainer, StyledLoader } from './styles';
 
 const Loader = () => {
-   return (
-      <LoaderContainer>
-         <StyledLoader />
-      </LoaderContainer>
-   );
+  return (
+    <LoaderContainer>
+      <StyledLoader />
+    </LoaderContainer>
+  );
 };
 
 export default Loader;

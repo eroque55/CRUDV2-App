@@ -1,11 +1,11 @@
-import IBook from "./IBook";
+import IBook from './IBook';
 
 interface IPriceGroup {
-   id: number;
-   name: string;
-   tax: number;
+  id: number;
+  name: string;
+  tax: number;
 
-   books: IBook[];
+  books: IBook[];
 }
 
 export default IPriceGroup;

@@ -1,9 +1,9 @@
-import { StyledMain, StyledText } from "./styles";
+import { StyledMain, StyledText } from './styles';
 
 export default function Loading() {
-   return (
-      <StyledMain>
-         <StyledText>Carregando...</StyledText>
-      </StyledMain>
-   );
+  return (
+    <StyledMain>
+      <StyledText>Carregando...</StyledText>
+    </StyledMain>
+  );
 }

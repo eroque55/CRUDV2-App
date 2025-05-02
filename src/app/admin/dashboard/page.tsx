@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
 const SalesPage = () => {
-   return <div></div>;
+  return <div />;
 };
 
 export default SalesPage;

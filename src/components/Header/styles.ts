@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
 `;

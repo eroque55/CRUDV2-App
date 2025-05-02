@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
 const DashboardPage = () => {
-   return <div></div>;
+  return <div />;
 };
 
 export default DashboardPage;

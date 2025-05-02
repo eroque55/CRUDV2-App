@@ -1,10 +1,10 @@
-import { useContext } from "react";
-import { CustomerFilterContext } from "@/src/context/CustomerFilterContext";
+import { useContext } from 'react';
+import { CustomerFilterContext } from '@/src/context/CustomerFilterContext';
 
 const useCustomerFilter = () => {
-   const { filter, setFilter } = useContext(CustomerFilterContext);
+  const { filter, setFilter } = useContext(CustomerFilterContext);
 
-   return { filter, setFilter };
+  return { filter, setFilter };
 };
 
 export default useCustomerFilter;

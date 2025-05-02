@@ -1,15 +1,15 @@
-import { Container, Circle } from "./styles";
+import { Container, Circle } from './styles';
 
 interface Props {
-   active?: boolean;
+  active?: boolean;
 }
 
 const Radius = ({ active = false }: Props) => {
-   return (
-      <Container $active={active}>
-         <Circle />
-      </Container>
-   );
+  return (
+    <Container $active={active}>
+      <Circle />
+    </Container>
+  );
 };
 
 export default Radius;

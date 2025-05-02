@@ -1,68 +1,68 @@
-import Modal from "@/src/components/Modal";
-import { toast } from "react-toastify";
+import Modal from '@/src/components/Modal';
+import { toast } from 'react-toastify';
 
 export const errorModal = (message: string) =>
-   toast(Modal, {
-      data: {
-         title: "Erro!",
-         message,
-         confirmButton: "OK",
-      },
-      toastId: "errorModal",
-      position: "top-center",
-      autoClose: false,
-      closeButton: false,
-      hideProgressBar: true,
-   });
+  toast(Modal, {
+    data: {
+      title: 'Erro!',
+      message,
+      confirmButton: 'OK',
+    },
+    toastId: 'errorModal',
+    position: 'top-center',
+    autoClose: false,
+    closeButton: false,
+    hideProgressBar: true,
+  });
 
 export interface IConfirmationToast {
-   title: string;
-   message: string;
-   notice?: string;
-   confirmButton: string;
-   cancelButton: string;
-   confirmAction: () => void;
-   successMessage?: string;
+  title: string;
+  message: string;
+  notice?: string;
+  confirmButton: string;
+  cancelButton: string;
+  confirmAction: () => void;
+  successMessage?: string;
 }
 
 export const confirmationModal = ({
-   title,
-   message,
-   notice,
-   confirmButton,
-   confirmAction,
-   cancelButton,
-   successMessage,
+  title,
+  message,
+  notice,
+  confirmButton,
+  confirmAction,
+  cancelButton,
+  successMessage,
 }: IConfirmationToast) => {
-   toast(Modal, {
-      data: {
-         title,
-         message,
-         notice,
-         confirmButton,
-         cancelButton,
-         confirmAction,
-         successMessage,
-      },
-      toastId: "confirmationModal",
-      position: "top-center",
-      autoClose: false,
-      closeButton: false,
-      hideProgressBar: true,
-   });
+  toast(Modal, {
+    data: {
+      title,
+      message,
+      notice,
+      confirmButton,
+      cancelButton,
+      confirmAction,
+      successMessage,
+    },
+    toastId: 'confirmationModal',
+    position: 'top-center',
+    autoClose: false,
+    closeButton: false,
+    hideProgressBar: true,
+  });
 };
 
 export const successModal = (message: string) => {
-   toast(Modal, {
-      data: {
-         title: "Sucesso!",
-         message,
-         confirmButton: "OK",
-      },
-      toastId: "succesModal",
-      position: "top-center",
-      autoClose: false,
-      closeButton: false,
-      hideProgressBar: true,
-   });
+  toast(Modal, {
+    data: {
+      title: 'Sucesso!',
+      message,
+      confirmButton: 'OK',
+    },
+    toastId: 'succesModal',
+    position: 'top-center',
+    autoClose: false,
+    closeButton: false,
+    hideProgressBar: true,
+  });
 };
