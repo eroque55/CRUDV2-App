@@ -8,7 +8,7 @@ import Header from '@/src/components/Header';
 import useBookFilter from '@/src/hooks/useBookFilter';
 import { MainContainer, BodyContainer } from './styles';
 
-export default function Shop() {
+const Shop = () => {
   const { slug } = useCategoryFilter();
   const { title } = useBookFilter();
   const { data: books, isLoading } = getBooks(slug, title);
@@ -22,4 +22,6 @@ export default function Shop() {
       </MainContainer>
     </BodyContainer>
   );
-}
+};
+
+export default Shop;

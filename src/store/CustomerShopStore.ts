@@ -8,10 +8,11 @@ interface UseAuthStore {
   loadUser: () => void;
 }
 
-const useAuthStore = create<UseAuthStore>(set => ({
+const useAuthStore = create<UseAuthStore>((set, get) => ({
   customer: null,
 
   login: async (customer: ICustomer) => {
+    get().logout();
     localStorage.setItem('customer', JSON.stringify(customer));
     set({ customer });
   },

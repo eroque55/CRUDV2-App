@@ -38,4 +38,5 @@ export { default as PasswordGrayIcon } from '@/public/icons/PasswordGray.svg';
 export { default as CartWhiteIcon } from '@/public/icons/CartWhite.svg';
 export { default as PlusCartIcon } from '@/public/icons/PlusCart.svg';
 export { default as MinusCartIcon } from '@/public/icons/MinusCart.svg';
+export { default as TradeIcon } from '@/public/icons/Trade.svg';
 // export { default as } from "@/public/icons/";

@@ -1,15 +1,64 @@
 'use client';
 
 import Header from '@/src/components/Header';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAuthStore from '@/src/store/CustomerShopStore';
-import CardAddress from '@/src/components/CardAddress';
-import CardCard from '@/src/components/CardCard';
+import CardShopPersonalData from '@/src/components/CardShopPersonalData';
+import Loader from '@/src/components/Loader';
+import { getCustomer } from '@/src/services/Customer.service';
+import CardShopCard from '@/src/components/CardShopCard';
+import CardShopAddress from '@/src/components/CardShopAddress';
+import { getSaleByCustomer } from '@/src/services/Sale.service';
+import ISale from '@/src/interfaces/ISale';
+import CardShopSale from '@/src/components/CardShopSale';
+import CardCreate from '@/src/components/CardCreate';
 import { Container, TabsContainer, Tab, ContentContainer } from './styles';
 
 const ProfilePage = () => {
-  const { customer } = useAuthStore();
+  const { customer, login } = useAuthStore();
   const [tab, setTab] = useState(0);
+  const [sales, setSales] = useState<ISale[]>([]);
+  const [updateSales, setUpdateSales] = useState(false);
+  const {
+    data: customerData,
+    refetch,
+    isLoading,
+  } = getCustomer(customer?.id || 0);
+  const [updateCustomer, setUpdateCustomer] = useState(false);
+
+  const fetchSales = async () => {
+    if (customer) {
+      const salesData = await getSaleByCustomer(customer.id);
+      setSales(salesData);
+    }
+  };
+
+  useEffect(() => {
+    if (customerData) {
+      login(customerData);
+    }
+
+    refetch();
+    fetchSales();
+  }, []);
+
+  useEffect(() => {
+    if (updateSales) {
+      fetchSales();
+      setUpdateSales(false);
+    }
+  }, [updateSales]);
+
+  useEffect(() => {
+    if (updateCustomer) {
+      refetch();
+      setUpdateCustomer(false);
+    }
+  }, [updateCustomer]);
+
+  if (!customerData || isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -30,18 +79,47 @@ const ProfilePage = () => {
           </Tab>
         </TabsContainer>
         <ContentContainer>
-          {tab === 2 &&
-            customer?.addresses.map(address => (
-              <CardAddress
-                key={address.id}
-                address={address}
-                style={{ width: '100%' }}
+          {tab === 0 && (
+            <CardShopPersonalData
+              customer={customerData}
+              style={{ width: '48%' }}
+            />
+          )}
+          {tab === 1 &&
+            sales.map(sale => (
+              <CardShopSale
+                key={sale.id}
+                sale={sale}
+                style={{ width: '48%' }}
+                setUpdate={setUpdateSales}
               />
             ))}
-          {tab === 3 &&
-            customer?.cards.map(card => (
-              <CardCard key={card.id} card={card} style={{ width: '100%' }} />
-            ))}
+          {tab === 2 && (
+            <>
+              {customerData?.addresses.map(address => (
+                <CardShopAddress
+                  key={address.id}
+                  address={address}
+                  style={{ width: '48%' }}
+                  setUpdate={setUpdateCustomer}
+                />
+              ))}
+              <CardCreate style={{ maxWidth: '48%', minHeight: 386 }} />
+            </>
+          )}
+          {tab === 3 && (
+            <>
+              {customerData?.cards.map(card => (
+                <CardShopCard
+                  key={card.id}
+                  card={card}
+                  style={{ width: '48%' }}
+                  setUpdate={setUpdateCustomer}
+                />
+              ))}
+              <CardCreate style={{ maxWidth: '48%', minHeight: 142 }} />
+            </>
+          )}
         </ContentContainer>
       </Container>
     </>

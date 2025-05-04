@@ -6,7 +6,17 @@ import IFreight from './IFreight';
 interface ISale {
   id: number;
   totalValue: number;
-  status: boolean;
+  status:
+    | 'EM_PROCESSAMENTO'
+    | 'APROVADA'
+    | 'TRANSPORTE_INICIADO'
+    | 'REPROVADA'
+    | 'ENTREGUE'
+    | 'TROCA_SOLICITADA'
+    | 'TROCA_APROVADA'
+    | 'TROCA_REPROVADA'
+    | 'TROCA_EM_TRANSPORTE'
+    | 'TROCA_FINALIZADA';
   createdAt: Date;
   paymentMethod: string;
 

@@ -2,17 +2,13 @@ import Image from 'next/image';
 import { LogoFullBlackImg } from '@/public';
 import { useRouter } from 'next/navigation';
 import useBookFilter from '@/src/hooks/useBookFilter';
-import useCategoryFilter from '@/src/hooks/useCategoryFilter';
-import { getBooks } from '@/src/services/Book.service';
 import IconComponent from '../Icon';
 import SearchBar from '../SearchBar';
 import { HeaderMainContainer, ActionsContainer, StyledButton } from './styles';
 
 const HeaderMain = () => {
   const router = useRouter();
-  const { title, setTitle } = useBookFilter();
-  const { slug } = useCategoryFilter();
-  const { refetch } = getBooks(slug, title);
+  const { setTitle } = useBookFilter();
 
   return (
     <HeaderMainContainer>

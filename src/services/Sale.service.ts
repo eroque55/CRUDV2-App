@@ -7,3 +7,16 @@ export const createSale = async (sale: ISale) => {
   const response = await api.post<ISale>(salesUrl, sale);
   return response.data;
 };
+
+export const getSaleByCustomer = async (customerId: number) => {
+  const response = await api.get<ISale[]>(`${salesUrl}/customer/${customerId}`);
+  return response.data;
+};
+
+export const updateStatus = async (saleId: number, status: string) => {
+  const response = await api.put<ISale>(`${salesUrl}${saleId}`, {
+    status,
+  });
+
+  return response.data;
+};

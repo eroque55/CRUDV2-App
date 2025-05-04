@@ -29,8 +29,8 @@ export const Tab = styled.h2<Props>`
 `;
 
 export const ContentContainer = styled.div`
-  display: grid;
+  display: flex;
   gap: 2rem;
-  grid-template-columns: 1fr 1fr;
+  flex-wrap: wrap;
   justify-content: center;
 `;

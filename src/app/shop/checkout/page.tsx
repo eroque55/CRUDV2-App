@@ -182,12 +182,14 @@ const CheckoutPage = () => {
         cardToSales.push(cardToSale);
       });
 
+      const paymentMethod = `${selectedCards.length > 1 ? 'cartões' : 'cartão'} de crédito, 0 cupons`;
+
       const sale: Partial<ISale> = {
         freight: freight as IFreight,
         totalValue: Number(finalValue) + Number(selectedCarrier?.cost),
         cardToSales: cardToSales as ICardToSale[],
         cart: cart as ICart,
-        paymentMethod: 'CARTAO',
+        paymentMethod,
       };
 
       await createSale(sale as ISale);

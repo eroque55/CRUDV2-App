@@ -10,7 +10,7 @@ import IAddress from '@/src/interfaces/IAddress';
 import ICard from '@/src/interfaces/ICard';
 import CardCard from '@/src/components/CardCard';
 import CardAddress from '@/src/components/CardAddress';
-import CardPersonalData from '@/src/components/CardPersonalData';
+import CardPersonalDataShop from '@/src/components/CardPersonalData';
 import ModalAddressCreate from '@/src/components/ModalAddressCreate';
 import ModalCardCreate from '@/src/components/ModalCardCreate';
 import ModalAddressUpdate from '@/src/components/ModalAddressUpdate';
@@ -125,7 +125,7 @@ const CustomerDetails = () => {
       </StyledHeader>
       <PageContainer>
         {page === 0 && (
-          <CardPersonalData setUpdateIsOpen={setUpdateCustomerIsOpen} />
+          <CardPersonalDataShop setUpdateIsOpen={setUpdateCustomerIsOpen} />
         )}
         {page === 1 &&
           customer?.addresses.map((address: IAddress) => (
