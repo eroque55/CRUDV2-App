@@ -8,6 +8,7 @@ interface IBook {
   id: number;
   title: string;
   slug: string;
+  value: number;
   author: string;
   status: boolean;
   year: number;

@@ -15,7 +15,6 @@ interface ISale {
     | 'TROCA_SOLICITADA'
     | 'TROCA_APROVADA'
     | 'TROCA_REPROVADA'
-    | 'TROCA_EM_TRANSPORTE'
     | 'TROCA_FINALIZADA';
   createdAt: Date;
   paymentMethod: string;

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import IBook from '@/src/interfaces/IBook';
 import { useRouter } from 'next/navigation';
-import { getBookValue } from '@/src/utils';
+import { formatCurrency } from '@/src/utils';
 import {
   ProductContainer,
   Description,
@@ -37,7 +37,7 @@ const Product = ({ book }: Props) => {
       <DescriptionContainer>
         <StrongDescription>{book.title}</StrongDescription>
         <Description>{book.synopsis}</Description>
-        <StrongDescription>R$ {getBookValue(book)}</StrongDescription>
+        <StrongDescription>{formatCurrency(book.value)}</StrongDescription>
       </DescriptionContainer>
     </ProductContainer>
   );

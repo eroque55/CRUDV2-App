@@ -9,7 +9,7 @@ export const createSale = async (sale: ISale) => {
 };
 
 export const getSaleByCustomer = async (customerId: number) => {
-  const response = await api.get<ISale[]>(`${salesUrl}/customer/${customerId}`);
+  const response = await api.get<ISale[]>(`${salesUrl}customer/${customerId}`);
   return response.data;
 };
 
@@ -18,5 +18,10 @@ export const updateStatus = async (saleId: number, status: string) => {
     status,
   });
 
+  return response.data;
+};
+
+export const getSales = async () => {
+  const response = await api.get<ISale[]>(salesUrl);
   return response.data;
 };

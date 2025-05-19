@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { getBook } from '@/src/services/Book.service';
 import Loader from '@/src/components/Loader';
 import Image from 'next/image';
-import { getBookValue } from '@/src/utils';
+import { formatCurrency } from '@/src/utils';
 import ButtonComponent from '@/src/components/Button';
 import ICart from '@/src/interfaces/ICart';
 import ICustomer from '@/src/interfaces/ICustomer';
@@ -102,7 +102,7 @@ const BookPage = () => {
                 </Edition>
               </BookTitleContainer>
               <ValueContainer>
-                <Value>R$ {getBookValue(book)}</Value>
+                <Value>{formatCurrency(book.value)}</Value>
                 <Stock>
                   Estoque: <strong>{book.stock.amount}</strong>
                 </Stock>

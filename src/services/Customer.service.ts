@@ -11,7 +11,7 @@ export const createCustomer = async (customer: ICustomer) => {
 
 export const getCustomer = (id: number) => {
   const getCustomer = async (id: number) => {
-    const { data } = await api.get<ICustomer>(`${customersUrl}/${id}`);
+    const { data } = await api.get<ICustomer>(`${customersUrl}${id}`);
 
     if (data) {
       return data;
@@ -45,7 +45,7 @@ export const updateCustomer = async (
   id: number,
   customer: Partial<ICustomer>,
 ) => {
-  return api.put(`${customersUrl}/${id}`, customer);
+  return api.put(`${customersUrl}${id}`, customer);
 };
 
 export const deleteCustomer = async (id: number) => {
@@ -55,7 +55,7 @@ export const deleteCustomer = async (id: number) => {
 export const getCustomerToLogin = async (
   customer: Partial<ICustomer>,
 ): Promise<ICustomer> => {
-  const { data } = await api.get<ICustomer>(`${customersUrl}/0`, {
+  const { data } = await api.get<ICustomer>(`${customersUrl}0`, {
     params: customer,
   });
 

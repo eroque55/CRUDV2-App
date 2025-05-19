@@ -39,4 +39,7 @@ export { default as CartWhiteIcon } from '@/public/icons/CartWhite.svg';
 export { default as PlusCartIcon } from '@/public/icons/PlusCart.svg';
 export { default as MinusCartIcon } from '@/public/icons/MinusCart.svg';
 export { default as TradeIcon } from '@/public/icons/Trade.svg';
-// export { default as } from "@/public/icons/";
+export { default as CheckCircleIcon } from '@/public/icons/CheckCircle.svg';
+export { default as XCircleIcon } from '@/public/icons/XCircle.svg';
+export { default as DeliveryCircleIcon } from '@/public/icons/DeliveryCircle.svg';
+// export { default as Icon } from "@/public/icons/";

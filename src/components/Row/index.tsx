@@ -11,14 +11,14 @@ const Row = ({ content, actions }: Props) => {
   return (
     <RowContainer>
       <ContentContainer>
-        {content.map((item, index) => (
-          <RowText key={index}>{item}</RowText>
+        {content.map(item => (
+          <RowText key={item}>{item}</RowText>
         ))}
       </ContentContainer>
       <ActionsContainer>
         {actions
-          ? actions.map((action, index) => (
-              <IconComponent key={index} icon={action} />
+          ? actions.map(action => (
+              <IconComponent key={action.name} icon={action} />
             ))
           : 'Ações'}
       </ActionsContainer>

@@ -10,7 +10,7 @@ import { useCountries, useCountries2 } from '@/src/store/CountryStore';
 import { CustomerFilterProvider } from '@/src/context/CustomerFilterContext';
 import { StyledContentHeader, StyledContentHeaderOptions } from '../styles';
 
-export default function Admin() {
+const Admin = () => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { fetchCountries } = useCountries();
@@ -48,4 +48,6 @@ export default function Admin() {
       <ListCustomers />
     </CustomerFilterProvider>
   );
-}
+};
+
+export default Admin;

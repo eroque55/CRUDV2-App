@@ -26,7 +26,7 @@ export const getBooks = (slug?: string, title?: string) => {
 
 export const getBook = (slug: string) => {
   const getBook = async (slug: string) => {
-    const { data } = await api.get<IBook>(`${booksUrl}/${slug}`);
+    const { data } = await api.get<IBook>(`${booksUrl}${slug}`);
 
     if (data) {
       return data;

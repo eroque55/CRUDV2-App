@@ -8,6 +8,7 @@ interface ICart {
   status: boolean;
   sale: ICardToSale;
   bookToCart: IBookToCart[];
+  total?: number;
 }
 
 export default ICart;

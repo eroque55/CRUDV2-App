@@ -3,7 +3,7 @@ import IBookToCart from '@/src/interfaces/IBookToCart';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import ICart from '@/src/interfaces/ICart';
 import { successModal } from '@/src/utils/Toasts';
-import { getBookValue } from '@/src/utils';
+import { formatCurrency } from '@/src/utils';
 import IconComponent from '../Icon';
 import {
   BookAuthor,
@@ -93,7 +93,7 @@ const CartItem = ({ bookToCart, setCart, cart, setIsUpdating }: Props) => {
             onClick={handlePlusClick}
           />
         </BookQtdContainer>
-        <Value>R$ {getBookValue(bookToCart.book)}</Value>
+        <Value>{formatCurrency(bookToCart.book.value)}</Value>
       </ValueContainer>
     </Container>
   );

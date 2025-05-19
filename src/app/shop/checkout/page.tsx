@@ -18,7 +18,7 @@ import ICarrier from '@/src/interfaces/ICarrier';
 import IAddress from '@/src/interfaces/IAddress';
 import ICard from '@/src/interfaces/ICard';
 import { getCart } from '@/src/services/Cart.service';
-import { formatValue, getBookValue, getBookValueNumber } from '@/src/utils';
+import { formatCurrency } from '@/src/utils';
 import IFreight from '@/src/interfaces/IFreight';
 import ISale from '@/src/interfaces/ISale';
 import ICardToSale from '@/src/interfaces/ICardToSale';
@@ -91,7 +91,7 @@ const CheckoutPage = () => {
       return acc;
     }
 
-    const bookValue = getBookValueNumber(bookToCart.book, bookToCart.amount);
+    const bookValue = bookToCart.book.value * bookToCart.amount;
 
     return acc + bookValue;
   }, 0);
@@ -182,7 +182,7 @@ const CheckoutPage = () => {
         cardToSales.push(cardToSale);
       });
 
-      const paymentMethod = `${selectedCards.length > 1 ? 'cartões' : 'cartão'} de crédito, 0 cupons`;
+      const paymentMethod = `${selectedCards.length > 1 ? `${selectedCards.length} cartões` : 'Cartão'} de crédito, 0 cupons`;
 
       const sale: Partial<ISale> = {
         freight: freight as IFreight,
@@ -324,7 +324,7 @@ const CheckoutPage = () => {
                   <SumaryItem>
                     <SumaryItemLabel>Subtotal</SumaryItemLabel>
                     <SumaryItemValue>
-                      {formatValue(finalValue || 0)}
+                      {formatCurrency(finalValue || 0)}
                     </SumaryItemValue>
                   </SumaryItem>
                   <SumaryItem>
@@ -335,14 +335,14 @@ const CheckoutPage = () => {
                     <SumaryItemLabel>Frete</SumaryItemLabel>
                     <SumaryItemValue>
                       {selectedCarrier?.cost
-                        ? formatValue(Number(selectedCarrier?.cost))
+                        ? formatCurrency(Number(selectedCarrier?.cost))
                         : '-----'}
                     </SumaryItemValue>
                   </SumaryItem>
                   <SumaryItem>
                     <SumaryItemLabel>Total</SumaryItemLabel>
                     <SumaryItemTotal>
-                      {formatValue(
+                      {formatCurrency(
                         Number(finalValue) + Number(selectedCarrier?.cost || 0),
                       )}
                     </SumaryItemTotal>
@@ -377,7 +377,11 @@ const CheckoutPage = () => {
                       </ImageContainer>
                       <p>{bookToCart.book.title}</p>
                     </BookContainer>
-                    <p>R$ {getBookValue(bookToCart.book, bookToCart.amount)}</p>
+                    <p>
+                      {formatCurrency(
+                        bookToCart.book.value * bookToCart.amount,
+                      )}
+                    </p>
                   </ResumeContent>
                 ))}
               </ResumeSection>
@@ -416,7 +420,7 @@ const CheckoutPage = () => {
               <TotalValueContainer>
                 <p>Valor total</p>
                 <p>
-                  {formatValue(
+                  {formatCurrency(
                     Number(finalValue) + Number(selectedCarrier?.cost),
                   )}
                 </p>

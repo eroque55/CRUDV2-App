@@ -7,7 +7,7 @@ const cartsUrl = 'carts/';
 
 export const getCart = (customerId: number) => {
   const fetchCart = async (id: number) => {
-    const { data } = await api.get<ICart>(`${cartsUrl}/${id}`);
+    const { data } = await api.get<ICart>(`${cartsUrl}${id}`);
 
     if (data) {
       return data;
@@ -22,7 +22,7 @@ export const getCart = (customerId: number) => {
 
 export const updateCart = async (cart: ICart) => {
   try {
-    const data = await api.put<ICart>(`${cartsUrl}/${cart.id}`, cart);
+    const data = await api.put<ICart>(`${cartsUrl}${cart.id}`, cart);
 
     return data;
   } catch (e) {

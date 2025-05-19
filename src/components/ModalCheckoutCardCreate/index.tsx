@@ -81,7 +81,6 @@ const ModalCheckoutCardCreate = ({
         preferential: false,
       };
 
-      console.log(card);
       await createCard(card as ICard);
       reset();
       setIsOpen(false);

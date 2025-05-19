@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter, formatValue } from '@/src/utils';
+import { capitalizeFirstLetter, formatCurrency } from '@/src/utils';
 import { CSSProperties } from 'styled-components';
 import ISale from '@/src/interfaces/ISale';
 import { updateStatus } from '@/src/services/Sale.service';
@@ -22,7 +22,7 @@ const CardShopSale = ({ sale, style, setUpdate }: Props) => {
     },
     {
       title: 'Valor total',
-      children: formatValue(value),
+      children: formatCurrency(value),
     },
     {
       title: 'Status',

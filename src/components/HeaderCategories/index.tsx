@@ -17,16 +17,16 @@ const HeaderCategories = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const categories = await getCategories();
+        const categoriesTemp = await getCategories();
 
-        setCategories(categories);
+        setCategories(categoriesTemp);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
     };
 
     fetchCategories();
-  });
+  }, []);
 
   return (
     <HeaderCategoriesContainer>

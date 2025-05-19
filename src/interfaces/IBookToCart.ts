@@ -7,6 +7,7 @@ interface IBookToCart {
   amount: number;
   updatedAt: Date;
   status: boolean;
+  subtotal?: number;
 }
 
 export default IBookToCart;
