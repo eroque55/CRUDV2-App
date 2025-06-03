@@ -6,6 +6,7 @@ import { getBooks } from '@/src/services/Book.service';
 import Loader from '@/src/components/Loader';
 import Header from '@/src/components/Header';
 import useBookFilter from '@/src/hooks/useBookFilter';
+import ChatBot from '@/src/components/ChatBot';
 import { MainContainer, BodyContainer } from './styles';
 
 const Shop = () => {
@@ -20,6 +21,7 @@ const Shop = () => {
         {isLoading && <Loader />}
         {books?.map(book => <Product book={book} key={book.id} />)}
       </MainContainer>
+      <ChatBot />
     </BodyContainer>
   );
 };
