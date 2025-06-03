@@ -43,4 +43,5 @@ export { default as CheckCircleIcon } from '@/public/icons/CheckCircle.svg';
 export { default as XCircleIcon } from '@/public/icons/XCircle.svg';
 export { default as DeliveryCircleIcon } from '@/public/icons/DeliveryCircle.svg';
 export { default as ChatIcon } from '@/public/icons/Chat.svg';
+export { default as SendIcon } from '@/public/icons/Send.svg';
 // export { default as Icon } from "@/public/icons/";
