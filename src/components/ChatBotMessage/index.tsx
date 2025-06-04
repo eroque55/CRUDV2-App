@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import ReactMarkdown from 'react-markdown';
 import { Container, MessageText, SendAtText } from './styles';
 
 export interface MessageProps {
@@ -10,7 +11,9 @@ export interface MessageProps {
 const ChatBotMessage = ({ message, sender, sendAt }: MessageProps) => {
   return (
     <Container $sender={sender}>
-      <MessageText>{message}</MessageText>
+      <MessageText>
+        <ReactMarkdown>{message}</ReactMarkdown>
+      </MessageText>
       <SendAtText>{format(sendAt, 'hh:mm')}</SendAtText>
     </Container>
   );

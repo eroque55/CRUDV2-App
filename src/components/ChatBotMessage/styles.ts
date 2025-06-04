@@ -22,10 +22,14 @@ export const Container = styled.div<Props>`
     $sender === 'user' ? 'flex-end' : 'flex-start'};
 `;
 
-export const MessageText = styled.p`
+export const MessageText = styled.div`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.neutral.color8};
   font-weight: 400;
+
+  strong {
+    font-weight: 700;
+  }
 `;
 
 export const SendAtText = styled.span`
