@@ -25,3 +25,13 @@ export const getSales = async () => {
   const response = await api.get<ISale[]>(salesUrl);
   return response.data;
 };
+
+export const getSaleByCategory = async (from?: Date, to?: Date) => {
+  const response = await api.get(`${salesUrl}byCategory`, {
+    params: {
+      from: from ? from.toISOString() : undefined,
+      to: to ? to.toISOString() : undefined,
+    },
+  });
+  return response.data;
+};

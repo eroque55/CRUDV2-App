@@ -41,7 +41,7 @@ export const theme: DefaultTheme = {
       bold: '700',
     },
   },
-};
+} as const;
 
 const ClientLayout = ({ children }: { children: ReactNode }) => {
   return (

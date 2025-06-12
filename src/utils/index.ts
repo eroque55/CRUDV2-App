@@ -1,5 +1,3 @@
-import IBook from '../interfaces/IBook';
-
 export const capitalizeFirstLetter = (str: string) => {
   const [...words] = str.split('_');
   const capitalizedWords = words.map(
@@ -21,5 +19,9 @@ export const formatCep = (cep: string) => {
 };
 
 export const formatCurrency = (value: number) => {
+  if (!value) {
+    return 'R$ 0,00';
+  }
+
   return `R$ ${value.toFixed(2).replace('.', ',')}`;
 };
