@@ -17,3 +17,17 @@ export const GraphContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const InputsContainer = styled.form`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+`;

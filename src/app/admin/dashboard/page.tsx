@@ -12,8 +12,16 @@ import {
 } from 'recharts';
 import { useEffect, useState } from 'react';
 import { getSaleByCategory } from '@/src/services/Sale.service';
+import ButtonComponent from '@/src/components/Button';
+import InputField from '@/src/components/InputField';
+import { useForm } from 'react-hook-form';
 import { StyledContentHeader } from '../styles';
-import { Container, GraphContainer } from './styles';
+import {
+  Container,
+  GraphContainer,
+  InputsContainer,
+  TitleContainer,
+} from './styles';
 
 const COLORS = [
   '#8884d8',
@@ -31,17 +39,33 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<string[]>([]);
 
+  const { register, handleSubmit, reset } = useForm<{
+    from: string;
+    to: string;
+  }>();
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  const fetchData = async () => {
+  const onReset = () => {
+    reset();
+    fetchData();
+  };
+
+  const onSubmit = (data: { from: string; to: string }) => {
+    const fromDate = data.from ? new Date(data.from) : undefined;
+    const toDate = data.to ? new Date(data.to) : undefined;
+    fetchData(fromDate, toDate);
+    setLoading(true);
+  };
+
+  const fetchData = async (from?: Date, to?: Date) => {
     try {
-      const result = await getSaleByCategory();
+      const result = await getSaleByCategory(from, to);
 
       setData(result);
 
-      // Extrair categorias dos dados
       if (result.length > 0) {
         const categoryNames = Object.keys(result[0]).filter(
           key => key !== 'month',
@@ -67,7 +91,33 @@ const DashboardPage = () => {
         <div style={{ height: 48 }} />
       </StyledContentHeader>
       <Container>
-        <Title $size={1.5}>Vendas por categoria</Title>
+        <TitleContainer>
+          <Title $size={1.5}>Vendas por categoria</Title>
+          <InputsContainer>
+            <InputField
+              id="from"
+              register={register}
+              label="De"
+              placeholder="dd/mm/aaaa"
+              inputType="date"
+            />
+
+            <InputField
+              id="to"
+              register={register}
+              label="Até"
+              placeholder="dd/mm/aaaa"
+              inputType="date"
+            />
+
+            <ButtonComponent onClick={handleSubmit(onSubmit)}>
+              Filtar
+            </ButtonComponent>
+            <ButtonComponent wired onClick={onReset}>
+              Limpar
+            </ButtonComponent>
+          </InputsContainer>
+        </TitleContainer>
         <GraphContainer>
           <LineChart data={data} width={800} height={400}>
             <CartesianGrid strokeDasharray="3 3" />

@@ -34,7 +34,7 @@ import ModalCreateCustomer from '../components/ModalCustomerCreate';
 import { errorModal } from '../utils/Toasts';
 import { useCountries, useCountries2 } from '../store/CountryStore';
 
-export default function Login() {
+const Login = () => {
   const { fetchCountries } = useCountries();
   const { fetchCountries: fetchCountries2 } = useCountries2();
   const [loginType, setLoginType] = useState(0);
@@ -176,4 +176,6 @@ export default function Login() {
       <ToastContainer />
     </>
   );
-}
+};
+
+export default Login;
