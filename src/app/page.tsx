@@ -68,12 +68,12 @@ const Login = () => {
 
   const customerLogin = async (data: ILoginSchema) => {
     try {
-      const customer: Partial<ICustomer> = {
+      const customerTemp: Partial<ICustomer> = {
         email: data.email,
         password: data.password,
       };
 
-      const customerData = await getCustomerToLogin(customer);
+      const customerData = await getCustomerToLogin(customerTemp);
 
       login(customerData);
       router.push('/shop');

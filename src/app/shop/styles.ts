@@ -13,4 +13,5 @@ export const MainContainer = styled.section`
   gap: 2.5rem;
   flex: 1;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  position: relative;
 `;

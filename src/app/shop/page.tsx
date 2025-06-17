@@ -8,6 +8,7 @@ import Header from '@/src/components/Header';
 import useBookFilter from '@/src/hooks/useBookFilter';
 import ChatBot from '@/src/components/ChatBot';
 import { MainContainer, BodyContainer } from './styles';
+import { LoaderContainer } from '../admin/dashboard/styles';
 
 const Shop = () => {
   const { slug } = useCategoryFilter();
@@ -18,8 +19,12 @@ const Shop = () => {
     <BodyContainer>
       <Header />
       <MainContainer>
-        {isLoading && <Loader />}
         {books?.map(book => <Product book={book} key={book.id} />)}
+        {isLoading && (
+          <LoaderContainer>
+            <Loader />
+          </LoaderContainer>
+        )}
       </MainContainer>
       <ChatBot />
     </BodyContainer>

@@ -15,11 +15,13 @@ import { getSaleByCategory } from '@/src/services/Sale.service';
 import ButtonComponent from '@/src/components/Button';
 import InputField from '@/src/components/InputField';
 import { useForm } from 'react-hook-form';
+import Loader from '@/src/components/Loader';
 import { StyledContentHeader } from '../styles';
 import {
   Container,
   GraphContainer,
   InputsContainer,
+  LoaderContainer,
   TitleContainer,
 } from './styles';
 
@@ -49,13 +51,14 @@ const DashboardPage = () => {
   }, []);
 
   const onReset = () => {
+    setLoading(true);
     reset();
     fetchData();
   };
 
-  const onSubmit = (data: { from: string; to: string }) => {
-    const fromDate = data.from ? new Date(data.from) : undefined;
-    const toDate = data.to ? new Date(data.to) : undefined;
+  const onSubmit = (formData: { from: string; to: string }) => {
+    const fromDate = formData.from ? new Date(formData.from) : undefined;
+    const toDate = formData.to ? new Date(formData.to) : undefined;
     fetchData(fromDate, toDate);
     setLoading(true);
   };
@@ -79,10 +82,6 @@ const DashboardPage = () => {
       setLoading(false);
     }
   };
-
-  if (loading && data.length === 0) {
-    return <div style={{ flex: 1 }}>Carregando dados...</div>;
-  }
 
   return (
     <>
@@ -110,7 +109,7 @@ const DashboardPage = () => {
               inputType="date"
             />
 
-            <ButtonComponent onClick={handleSubmit(onSubmit)}>
+            <ButtonComponent onClick={handleSubmit(onSubmit)} submit>
               Filtar
             </ButtonComponent>
             <ButtonComponent wired onClick={onReset}>
@@ -136,6 +135,11 @@ const DashboardPage = () => {
             ))}
           </LineChart>
         </GraphContainer>
+        {loading && (
+          <LoaderContainer>
+            <Loader />
+          </LoaderContainer>
+        )}
       </Container>
     </>
   );
