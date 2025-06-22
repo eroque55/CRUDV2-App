@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { generateResponse } from '@/src/services/Ai.service';
 import IconComponent from '../Icon';
 import {
@@ -15,9 +15,10 @@ import Loader from '../Loader';
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<MessageProps[]>([
     {
-      message: 'Olá! Como posso ajudar você hoje?',
+      message: 'Olá! Como eu posso te ajudar hoje?',
       sender: 'bot',
       sendAt: new Date(),
     },
@@ -43,6 +44,14 @@ const ChatBot = () => {
           { message: response, sender: 'bot', sendAt: new Date() },
         ]);
         setIsLoading(false);
+        if (ref.current) {
+          setTimeout(() => {
+            ref.current?.scrollTo({
+              top: ref.current.scrollHeight,
+              behavior: 'smooth',
+            });
+          }, 100);
+        }
       }
     } catch (error) {
       console.error('Error generating response:', error);
@@ -63,7 +72,7 @@ const ChatBot = () => {
         <ChatBotTitle>Fale conosco</ChatBotTitle>
         <IconComponent name="CloseIcon" size={24} onClick={toggleChatBot} />
       </ChatBotHeader>
-      <MessagesContainer>
+      <MessagesContainer ref={ref}>
         {messages.map(message => (
           <ChatBotMessage
             message={message.message}
