@@ -32,8 +32,6 @@ const CartPage = () => {
   const [cart, setCart] = useState<ICart | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
 
-  console.log('cart', cart);
-
   useEffect(() => {
     if (data) {
       setCart(data);

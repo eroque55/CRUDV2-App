@@ -93,7 +93,7 @@ const CartItem = ({ bookToCart, setCart, cart, setIsUpdating }: Props) => {
             onClick={handlePlusClick}
           />
         </BookQtdContainer>
-        <Value>{formatCurrency(bookToCart.book.value)}</Value>
+        <Value>{formatCurrency(bookToCart.book.value * qtd)}</Value>
       </ValueContainer>
     </Container>
   );
