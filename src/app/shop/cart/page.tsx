@@ -31,6 +31,19 @@ const CartPage = () => {
   const { data, isLoading } = getCart(customer?.id || 0);
   const [cart, setCart] = useState<ICart | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [total, setTotal] = useState(cart?.value || 0);
+
+  useEffect(() => {
+    if (cart) {
+      const cartValue = cart.bookToCart.reduce(
+        (acc, bookToCart) =>
+          acc + (bookToCart.book.value || 0) * bookToCart.amount,
+        0,
+      );
+
+      setTotal(cartValue);
+    }
+  }, [cart]);
 
   useEffect(() => {
     if (data) {
@@ -103,9 +116,7 @@ const CartPage = () => {
             <SumaryContent>
               <SumaryItem>
                 <SumaryItemLabel>Subtotal</SumaryItemLabel>
-                <SumaryItemValue>
-                  {formatCurrency(cart.total || 0)}
-                </SumaryItemValue>
+                <SumaryItemValue>{formatCurrency(total || 0)}</SumaryItemValue>
               </SumaryItem>
               <SumaryItem>
                 <SumaryItemLabel>Descontos</SumaryItemLabel>
@@ -117,9 +128,7 @@ const CartPage = () => {
               </SumaryItem>
               <SumaryItem>
                 <SumaryItemLabel>Total</SumaryItemLabel>
-                <SumaryItemTotal>
-                  {formatCurrency(cart.total || 0)}
-                </SumaryItemTotal>
+                <SumaryItemTotal>{formatCurrency(total || 0)}</SumaryItemTotal>
               </SumaryItem>
             </SumaryContent>
           </SumaryHeader>
