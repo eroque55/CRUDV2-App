@@ -232,6 +232,11 @@ export const CoupomInput = styled.input`
   &:focus {
     outline: none;
   }
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.neutral.color2};
+    color: ${({ theme }) => theme.colors.neutral.color5};
+  }
 `;
 
 export const CreditCardsContainer = styled.div`

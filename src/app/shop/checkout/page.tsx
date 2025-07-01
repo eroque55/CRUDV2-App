@@ -29,6 +29,8 @@ import CheckBox from '@/src/components/CheckBox';
 import ModalCheckoutAddressCreate from '@/src/components/ModalCheckoutAddressCreate';
 import ModalCheckoutCardCreate from '@/src/components/ModalCheckoutCardCreate';
 import { useCountries } from '@/src/store/CountryStore';
+import { getCoupon } from '@/src/services/Coupon.service';
+import ICoupon from '@/src/interfaces/ICoupon';
 import {
   ButtonsContainer,
   SumaryContainer,
@@ -79,6 +81,8 @@ const CheckoutPage = () => {
   const [createCardIsOpen, setCreateCardIsOpen] = useState(false);
   const { data: cart } = getCart(customer?.id || 0);
   const { fetchCountries } = useCountries();
+  const [couponName, setCouponName] = useState('');
+  const [selectedCoupon, setSelectedCoupon] = useState<ICoupon | null>(null);
 
   useEffect(() => {
     fetchCountries();
@@ -186,7 +190,10 @@ const CheckoutPage = () => {
 
       const sale: Partial<ISale> = {
         freight: freight as IFreight,
-        totalValue: Number(finalValue) + Number(selectedCarrier?.cost),
+        totalValue:
+          Number(finalValue) +
+          Number(selectedCarrier?.cost) -
+          Number(selectedCoupon?.discount),
         cardToSales: cardToSales as ICardToSale[],
         cart: cart as ICart,
         paymentMethod,
@@ -196,6 +203,31 @@ const CheckoutPage = () => {
     } catch (error) {
       console.error('Error creating sale:', error);
       throw new Error('Erro ao finalizar a compra');
+    }
+  };
+
+  const handleSearchCoupon = async () => {
+    try {
+      if (selectedCoupon) {
+        setSelectedCoupon(null);
+        setCouponName('');
+        return;
+      }
+
+      if (!couponName) {
+        errorModal('Digite o nome do cupom');
+        return;
+      }
+
+      const responseCoupon = await getCoupon(couponName);
+
+      if (!responseCoupon) {
+        errorModal('Cupom não encontrado');
+        return;
+      }
+      setSelectedCoupon(responseCoupon);
+    } catch {
+      errorModal('Cupom não encontrado');
     }
   };
 
@@ -282,8 +314,18 @@ const CheckoutPage = () => {
                   <CardContainer>
                     Cupom
                     <CoupomContainer>
-                      <CoupomInput placeholder="Digite seu cupom" />
-                      <ButtonComponent width="10rem">Adicionar</ButtonComponent>
+                      <CoupomInput
+                        placeholder="Digite seu cupom"
+                        onChange={e => setCouponName(e.target.value)}
+                        value={selectedCoupon?.name || couponName}
+                        disabled={!!selectedCoupon}
+                      />
+                      <ButtonComponent
+                        width="10rem"
+                        onClick={handleSearchCoupon}
+                      >
+                        {selectedCoupon ? 'Remover' : 'Aplicar cupom'}
+                      </ButtonComponent>
                     </CoupomContainer>
                   </CardContainer>
                   <CardContainer>
@@ -329,7 +371,11 @@ const CheckoutPage = () => {
                   </SumaryItem>
                   <SumaryItem>
                     <SumaryItemLabel>Descontos</SumaryItemLabel>
-                    <SumaryItemValue>-----</SumaryItemValue>
+                    <SumaryItemValue>
+                      {selectedCoupon?.discount
+                        ? formatCurrency(selectedCoupon.discount)
+                        : '-----'}
+                    </SumaryItemValue>
                   </SumaryItem>
                   <SumaryItem>
                     <SumaryItemLabel>Frete</SumaryItemLabel>
@@ -343,7 +389,9 @@ const CheckoutPage = () => {
                     <SumaryItemLabel>Total</SumaryItemLabel>
                     <SumaryItemTotal>
                       {formatCurrency(
-                        Number(finalValue) + Number(selectedCarrier?.cost || 0),
+                        Number(finalValue) +
+                          Number(selectedCarrier?.cost || 0) -
+                          Number(selectedCoupon?.discount || 0),
                       )}
                     </SumaryItemTotal>
                   </SumaryItem>
@@ -401,8 +449,12 @@ const CheckoutPage = () => {
               <ResumeSection>
                 Descontos
                 <ResumeContent>
-                  <p>Nenhum desconto aplicado</p>
-                  <p>-R$ 00,00</p>
+                  <p>
+                    {selectedCoupon
+                      ? selectedCoupon.name
+                      : 'Nenhum desconto aplicado'}
+                  </p>
+                  <p>-{formatCurrency(selectedCoupon?.discount || 0)}</p>
                 </ResumeContent>
               </ResumeSection>
               <ResumeSection>
@@ -421,7 +473,9 @@ const CheckoutPage = () => {
                 <p>Valor total</p>
                 <p>
                   {formatCurrency(
-                    Number(finalValue) + Number(selectedCarrier?.cost),
+                    Number(finalValue) +
+                      Number(selectedCarrier?.cost) -
+                      Number(selectedCoupon?.discount || 0),
                   )}
                 </p>
               </TotalValueContainer>
