@@ -186,7 +186,7 @@ const CheckoutPage = () => {
         cardToSales.push(cardToSale);
       });
 
-      const paymentMethod = `${selectedCards.length > 1 ? `${selectedCards.length} cartões` : 'Cartão'} de crédito, 0 cupons`;
+      const paymentMethod = `${selectedCards.length > 1 ? `${selectedCards.length} cartões` : 'Cartão'} de crédito, ${selectedCoupon ? `cupon: ${selectedCoupon.name}` : 'Nenhum cupom utilizado'}`;
 
       const sale: Partial<ISale> = {
         freight: freight as IFreight,

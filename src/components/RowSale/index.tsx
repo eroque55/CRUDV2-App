@@ -1,7 +1,10 @@
 import ISale from '@/src/interfaces/ISale';
 import { capitalizeFirstLetter } from '@/src/utils';
 import { confirmationModal } from '@/src/utils/Toasts';
-import { updateStatus } from '@/src/services/Sale.service';
+import {
+  acceptTradeGenerateCoupon,
+  updateStatus,
+} from '@/src/services/Sale.service';
 import Row from '../Row';
 import { IconProps } from '../Icon';
 
@@ -94,16 +97,26 @@ const RowSale = ({ sale, setUpdate }: Props) => {
       confirmationModal({
         title: 'Tem certeza?',
         message: 'Tem certeza que deseja definir o status como Troca Aprovada?',
-        successMessage: 'Status alterado com sucesso!',
         confirmButton: 'Alterar status',
         confirmAction: async () => {
-          await updateStatus(sale.id, 'TROCA_APROVADA');
+          const coupon = await acceptTradeGenerateCoupon(sale.id, 10);
           setUpdate(true);
+          setTimeout(() => {
+            confirmationModal({
+              title: 'Cupom gerado',
+              message: `Cupom gerado com sucesso! O cupom é:\n${coupon.name}`,
+              successMessage: 'Cupom gerado com sucesso!',
+              confirmButton: 'OK',
+              cancelButton: 'Cancelar',
+              confirmAction: () => {},
+            });
+          }, 3000);
         },
         cancelButton: 'Cancelar',
       }),
     height: 20,
   };
+
   const refuseTrade: IconProps = {
     name: 'XCircleIcon',
     onClick: () =>
