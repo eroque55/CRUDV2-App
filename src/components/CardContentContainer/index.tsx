@@ -13,6 +13,7 @@ const CardContent = ({ title, children }: CardContentProps) => {
   return (
     <StyledInfoContainer>
       <StyledInfoTitle>{title}</StyledInfoTitle>
+
       <StyledInfoContent>{children}</StyledInfoContent>
     </StyledInfoContainer>
   );

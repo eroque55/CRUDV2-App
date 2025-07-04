@@ -106,6 +106,7 @@ const ModalCustomerUpdate = ({ isOpen, setIsOpen }: Props) => {
     <ModalBackground>
       <ModalContainer $width="40rem">
         <ModalHeader>Alterar dados pessoais</ModalHeader>
+
         <ModalForm>
           <InputField
             id="name"
@@ -115,6 +116,7 @@ const ModalCustomerUpdate = ({ isOpen, setIsOpen }: Props) => {
             error={errors.name?.message}
             defaultValue={customer?.name}
           />
+
           <InputField
             id="birthDate"
             label="Data de nascimento"
@@ -123,6 +125,7 @@ const ModalCustomerUpdate = ({ isOpen, setIsOpen }: Props) => {
             inputType="date"
             defaultValue={customer?.birthDate.toString().split('T')[0]}
           />
+
           <InputField
             id="cpf"
             label="CPF"
@@ -136,6 +139,7 @@ const ModalCustomerUpdate = ({ isOpen, setIsOpen }: Props) => {
               setValue('cpf', value.replace(/[-.]/g, ''));
             }}
           />
+
           <InputField
             id="gender"
             label="Gênero"
@@ -149,6 +153,7 @@ const ModalCustomerUpdate = ({ isOpen, setIsOpen }: Props) => {
             error={errors.gender?.message}
             defaultValue={customer?.gender}
           />
+
           <InputField
             id="email"
             label="E-mail"
@@ -157,6 +162,7 @@ const ModalCustomerUpdate = ({ isOpen, setIsOpen }: Props) => {
             error={errors.email?.message}
             defaultValue={customer?.email}
           />
+
           <InputField
             id="ranking"
             label="Ranking"
@@ -166,6 +172,7 @@ const ModalCustomerUpdate = ({ isOpen, setIsOpen }: Props) => {
             error={errors.ranking?.message}
             defaultValue={String(customer?.ranking)}
           />
+
           <InputField
             id="number"
             label="Número do telefone"
@@ -179,6 +186,7 @@ const ModalCustomerUpdate = ({ isOpen, setIsOpen }: Props) => {
               setValue('number', value.replace(/[()-/ ]/g, ''));
             }}
           />
+
           <InputField
             id="phoneType"
             label="Tipo de telefone"
@@ -202,6 +210,7 @@ const ModalCustomerUpdate = ({ isOpen, setIsOpen }: Props) => {
             defaultValue={customer?.phone.phoneType}
           />
         </ModalForm>
+
         <ModalFooter
           confirmButtonType="submit"
           cancelButton="Cancelar"

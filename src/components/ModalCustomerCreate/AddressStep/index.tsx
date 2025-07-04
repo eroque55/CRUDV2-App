@@ -25,6 +25,7 @@ const AddressStep = ({ setValue, register, errors, useCountries }: Props) => {
         placeholder="Insira um apelido"
         error={errors.nickname?.message}
       />
+
       <InputField
         id="cep"
         label="CEP"
@@ -37,6 +38,7 @@ const AddressStep = ({ setValue, register, errors, useCountries }: Props) => {
         }}
         error={errors.cep?.message}
       />
+
       <InputField
         id="residenceType"
         label="Tipo de residência"
@@ -49,6 +51,7 @@ const AddressStep = ({ setValue, register, errors, useCountries }: Props) => {
         ]}
         register={register}
       />
+
       <InputField
         id="streetType"
         label="Tipo de logradouro"
@@ -64,6 +67,7 @@ const AddressStep = ({ setValue, register, errors, useCountries }: Props) => {
         ]}
         register={register}
       />
+
       <InputField
         id="street"
         label="Logradouro"
@@ -71,6 +75,7 @@ const AddressStep = ({ setValue, register, errors, useCountries }: Props) => {
         placeholder="Insira o logradouro"
         error={errors.street?.message}
       />
+
       <InputField
         id="number"
         label="Número"
@@ -79,6 +84,7 @@ const AddressStep = ({ setValue, register, errors, useCountries }: Props) => {
         inputType="number"
         error={errors.number?.message}
       />
+
       <InputField
         id="neighborhood"
         label="Bairro"
@@ -86,6 +92,7 @@ const AddressStep = ({ setValue, register, errors, useCountries }: Props) => {
         placeholder="Insira o bairro"
         error={errors.neighborhood?.message}
       />
+
       <InputField
         id="countryId"
         label="Pais"
@@ -103,6 +110,7 @@ const AddressStep = ({ setValue, register, errors, useCountries }: Props) => {
           setValue('cityId', '');
         }}
       />
+
       <InputField
         id="stateId"
         label="Estado"
@@ -118,6 +126,7 @@ const AddressStep = ({ setValue, register, errors, useCountries }: Props) => {
           setValue('cityId', '');
         }}
       />
+
       <InputField
         id="cityId"
         label="Cidade"
@@ -129,6 +138,7 @@ const AddressStep = ({ setValue, register, errors, useCountries }: Props) => {
         }))}
         register={register}
       />
+
       <InputField
         id="complement"
         label="Complemento (opcional)"

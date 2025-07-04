@@ -107,9 +107,12 @@ const Login = () => {
         isOpen={isCreateCustomerOpen}
         setIsOpen={setIsCreateCustomerOpen}
       />
+
       <StyledMain>
         <Wave1 src={LoginWaveLeftImg} alt="backgorund wave" />
+
         <Wave2 src={LoginWaveRightImg} alt="backgorund wave" />
+
         <StyledContent>
           {loginType !== 0 && (
             <BackContainer>
@@ -122,11 +125,14 @@ const Login = () => {
               Voltar
             </BackContainer>
           )}
+
           <Image src={LogoFullWhiteImg} alt="Logo" priority />
+
           <StyledButtonContainer>
             {loginType === 0 && (
               <>
                 <Button onClick={handleCustomerLogin}>Sou cliente</Button>
+
                 <Button
                   onClick={() => {
                     setLoginType(2);
@@ -137,10 +143,13 @@ const Login = () => {
                 </Button>
               </>
             )}
+
             {loginType === 1 && <Title $align="center">Área do cliente</Title>}
+
             {loginType === 2 && (
               <Title $align="center">Área do administrador</Title>
             )}
+
             {loginType !== 0 && (
               <>
                 <InputField
@@ -151,6 +160,7 @@ const Login = () => {
                   inputType="email"
                   error={errors.email?.message}
                 />
+
                 <InputField
                   id="password"
                   label="Senha"
@@ -165,6 +175,7 @@ const Login = () => {
                 </Button>
               </>
             )}
+
             {loginType === 1 && (
               <CreateAccount onClick={() => setIsCreateCustomerOpen(true)}>
                 Cadastrar cliente
@@ -173,6 +184,7 @@ const Login = () => {
           </StyledButtonContainer>
         </StyledContent>
       </StyledMain>
+
       <ToastContainer />
     </>
   );

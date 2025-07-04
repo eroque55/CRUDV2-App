@@ -54,8 +54,10 @@ const InputField = ({
     <FieldContent>
       <FieldHeaderContent>
         <InputLabel htmlFor={id}>{label}</InputLabel>
+
         <InputError>{error}</InputError>
       </FieldHeaderContent>
+
       {type === 'input' && (
         <Input
           type={inputType}
@@ -66,6 +68,7 @@ const InputField = ({
           {...register(id)}
         />
       )}
+
       {type === 'maskedInput' && (
         <InputMask
           mask={mask}
@@ -77,6 +80,7 @@ const InputField = ({
           {...register(id)}
         />
       )}
+
       {type === 'select' && (
         <InputSelect
           id={id}
@@ -86,6 +90,7 @@ const InputField = ({
           disabled={disabled}
         >
           <option value="">Selecione</option>
+
           {selectOptions.map(option => (
             <option key={option.value} value={option.value}>
               {option.label}
@@ -93,6 +98,7 @@ const InputField = ({
           ))}
         </InputSelect>
       )}
+
       {type === 'radio' && (
         <InputRadio
           register={register}
@@ -101,6 +107,7 @@ const InputField = ({
           defaultValue={defaultValue}
         />
       )}
+
       {type === 'password' && (
         <InputPassword id={id} placeholder={placeholder} register={register} />
       )}

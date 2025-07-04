@@ -86,8 +86,10 @@ const FilterCustomer = ({ isOpen, setIsOpen }: Props) => {
       <StyledFilterContainer>
         <SyledFilterHeader>
           <StyledFilterTitle>Filtrar clientes</StyledFilterTitle>
+
           <CloseButton onClick={() => setIsOpen(false)} />
         </SyledFilterHeader>
+
         <StyledFilterForm>
           <InputField
             id="name"
@@ -95,7 +97,9 @@ const FilterCustomer = ({ isOpen, setIsOpen }: Props) => {
             register={register}
             placeholder="Insira um nome"
           />
+
           <Line />
+
           <InputField
             id="cpf"
             label="CPF"
@@ -109,7 +113,9 @@ const FilterCustomer = ({ isOpen, setIsOpen }: Props) => {
               });
             }}
           />
+
           <Line />
+
           <InputField
             id="email"
             label="E-mail"
@@ -117,14 +123,18 @@ const FilterCustomer = ({ isOpen, setIsOpen }: Props) => {
             placeholder="Insira um e-mail"
             inputType="email"
           />
+
           <Line />
+
           <InputField
             id="birthDate"
             label="Data de nascimento"
             register={register}
             inputType="date"
           />
+
           <Line />
+
           <InputField
             id="gender"
             label="Gênero"
@@ -136,7 +146,9 @@ const FilterCustomer = ({ isOpen, setIsOpen }: Props) => {
             ]}
             register={register}
           />
+
           <Line />
+
           <InputField
             id="status"
             label="Status"
@@ -147,7 +159,9 @@ const FilterCustomer = ({ isOpen, setIsOpen }: Props) => {
             ]}
             register={register}
           />
+
           <Line />
+
           <InputField
             id="ranking"
             label="Ranking"
@@ -155,12 +169,15 @@ const FilterCustomer = ({ isOpen, setIsOpen }: Props) => {
             register={register}
             inputType="number"
           />
+
           <Line />
         </StyledFilterForm>
+
         <StyledFilterButtonsContainer>
           <ButtonComponent submit onClick={handleSubmit(onSubmit)}>
             Filtrar
           </ButtonComponent>
+
           <StyledFilterClear onClick={handleReset}>Limpar</StyledFilterClear>
         </StyledFilterButtonsContainer>
       </StyledFilterContainer>

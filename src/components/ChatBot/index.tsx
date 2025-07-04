@@ -70,8 +70,10 @@ const ChatBot = () => {
     <OpenContainer>
       <ChatBotHeader>
         <ChatBotTitle>Fale conosco</ChatBotTitle>
+
         <IconComponent name="CloseIcon" size={24} onClick={toggleChatBot} />
       </ChatBotHeader>
+
       <MessagesContainer ref={ref}>
         {messages.map(message => (
           <ChatBotMessage
@@ -81,12 +83,14 @@ const ChatBot = () => {
             key={message.sendAt.toISOString()}
           />
         ))}
+
         {isLoading && (
           <LoaderContainer>
             <Loader />
           </LoaderContainer>
         )}
       </MessagesContainer>
+
       <ChatBotInput sendMessage={sendMessage} isLoading={isLoading} />
     </OpenContainer>
   );

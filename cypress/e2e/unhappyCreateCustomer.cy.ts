@@ -3,7 +3,7 @@ import { customersToCreate } from '../fixtures/customers.json';
 
 describe('Unhappy create customer path', () => {
   beforeEach(() => {
-    cy.visit('/');
+    cy.visit('/admin/customers');
     cy.get('.index-styles__StyledAddButton-sc-2bd0f11a-0').click();
   });
 

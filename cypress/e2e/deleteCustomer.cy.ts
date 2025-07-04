@@ -1,6 +1,6 @@
 describe('Visit customer details', () => {
   it('Visit customer details', () => {
-    cy.visit('/');
+    cy.visit('/admin/customers');
     cy.intercept('GET', 'http://localhost:8000/customers', req => {
       delete req.headers['if-none-match'];
     }).as('getCustomers');
@@ -19,8 +19,8 @@ describe('Visit customer details', () => {
       cy.contains('Tem certeza?').should('be.visible');
       cy.get('.bfPXBo').click();
       cy.wait('@deleteCustomer');
-      cy.wait('@getCustomers').then(({ response }) => {
-        const newCustomers = response?.body;
+      cy.wait('@getCustomers').then(({ response: resp1 }) => {
+        const newCustomers = resp1?.body;
         expect(newCustomers.length).to.be.lessThan(lastCustomers.length);
       });
     });

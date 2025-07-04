@@ -29,6 +29,7 @@ export default function NavBar() {
   return (
     <StyledNav>
       <Image src={LogoRBlackImg} alt="Logo" height="43" />
+
       <StyledMenuList>
         <NavBarItem
           href={customersPath}
@@ -39,6 +40,7 @@ export default function NavBar() {
           }
           active={pathname.includes(customersPath)}
         />
+
         <NavBarItem
           href={salesPath}
           icon={
@@ -48,6 +50,7 @@ export default function NavBar() {
           }
           active={pathname.includes(salesPath)}
         />
+
         <NavBarItem
           href={dashboardPath}
           icon={
@@ -58,6 +61,7 @@ export default function NavBar() {
           active={pathname.includes(dashboardPath)}
         />
       </StyledMenuList>
+
       <NavBarItem icon="ExitGrayIcon" onClick={handleLogout} />
     </StyledNav>
   );

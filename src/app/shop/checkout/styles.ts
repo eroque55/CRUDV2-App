@@ -235,7 +235,7 @@ export const CoupomInput = styled.input`
 
   &:disabled {
     background-color: ${({ theme }) => theme.colors.neutral.color2};
-    color: ${({ theme }) => theme.colors.neutral.color5};
+    color: ${({ theme }) => theme.colors.primary.color3};
   }
 `;
 

@@ -9,6 +9,7 @@ export default function SearchBar({ setTitle }: Props) {
   return (
     <StyledSearchConatiner>
       <IconComponent name="SearchIcon" />
+
       <StyledSearchInput
         type="search"
         placeholder="Pesquisar produtos..."

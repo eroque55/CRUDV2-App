@@ -77,6 +77,7 @@ const ModalCustomerPasswordUpdate = ({ isOpen, setIsOpen }: Props) => {
     <ModalBackground>
       <ModalContainer $width="40rem">
         <ModalHeader>Alterar senha</ModalHeader>
+
         <ModalForm>
           <InputField
             id="lastPassword"
@@ -86,6 +87,7 @@ const ModalCustomerPasswordUpdate = ({ isOpen, setIsOpen }: Props) => {
             error={errors.lastPassword?.message}
             type="password"
           />
+
           <InputField
             id="newPassword"
             label="Nova senha"
@@ -94,6 +96,7 @@ const ModalCustomerPasswordUpdate = ({ isOpen, setIsOpen }: Props) => {
             error={errors.newPassword?.message}
             type="password"
           />
+
           <InputField
             id="confNewPassword"
             label="Confirme a nova senha"
@@ -103,6 +106,7 @@ const ModalCustomerPasswordUpdate = ({ isOpen, setIsOpen }: Props) => {
             type="password"
           />
         </ModalForm>
+
         <ModalFooter
           confirmButtonType="submit"
           cancelButton="Cancelar"

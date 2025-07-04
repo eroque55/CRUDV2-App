@@ -18,14 +18,17 @@ const Shop = () => {
   return (
     <BodyContainer>
       <Header />
+
       <MainContainer>
         {books?.map(book => <Product book={book} key={book.id} />)}
+
         {isLoading && (
           <LoaderContainer>
             <Loader />
           </LoaderContainer>
         )}
       </MainContainer>
+
       <ChatBot />
     </BodyContainer>
   );

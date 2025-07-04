@@ -114,6 +114,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
     <ModalBackground>
       <ModalContainer $width="40rem">
         <ModalHeader>Cadastrar endereço</ModalHeader>
+
         <ModalForm>
           <InputField
             id="nickname"
@@ -122,6 +123,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
             placeholder="Insira um apelido"
             error={errors.nickname?.message}
           />
+
           <InputField
             id="cep"
             label="CEP"
@@ -134,6 +136,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
             }}
             error={errors.cep?.message}
           />
+
           <InputField
             id="addressType"
             label="Tipo de endereço"
@@ -146,6 +149,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
             ]}
             register={register}
           />
+
           <InputField
             id="residenceType"
             label="Tipo de residência"
@@ -158,6 +162,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
             ]}
             register={register}
           />
+
           <InputField
             id="streetType"
             label="Tipo de logradouro"
@@ -173,6 +178,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
             ]}
             register={register}
           />
+
           <InputField
             id="street"
             label="Logradouro"
@@ -180,6 +186,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
             placeholder="Insira o logradouro"
             error={errors.street?.message}
           />
+
           <InputField
             id="number"
             label="Número"
@@ -188,6 +195,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
             inputType="number"
             error={errors.number?.message}
           />
+
           <InputField
             id="neighborhood"
             label="Bairro"
@@ -195,6 +203,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
             placeholder="Insira o bairro"
             error={errors.neighborhood?.message}
           />
+
           <InputField
             id="countryId"
             label="Pais"
@@ -212,6 +221,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
               setValue('cityId', '');
             }}
           />
+
           <InputField
             id="stateId"
             label="Estado"
@@ -227,6 +237,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
               setValue('cityId', '');
             }}
           />
+
           <InputField
             id="cityId"
             label="Cidade"
@@ -238,6 +249,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
             }))}
             register={register}
           />
+
           <InputField
             id="complement"
             label="Complemento (opcional)"
@@ -246,6 +258,7 @@ const ModalAddressCreate = ({ isOpen, setIsOpen }: Props) => {
             error={errors.complement?.message}
           />
         </ModalForm>
+
         <ModalFooter
           confirmButtonType="submit"
           cancelButton="Cancelar"

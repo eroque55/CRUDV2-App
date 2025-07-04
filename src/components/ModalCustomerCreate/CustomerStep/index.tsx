@@ -18,6 +18,7 @@ const CustomerStep = ({ register, errors, setValue }: Props) => {
         placeholder="Insira o nome"
         error={errors.name?.message}
       />
+
       <InputField
         id="birthDate"
         label="Data de nascimento"
@@ -25,6 +26,7 @@ const CustomerStep = ({ register, errors, setValue }: Props) => {
         error={errors.birthDate?.message}
         inputType="date"
       />
+
       <InputField
         id="cpf"
         label="CPF"
@@ -37,6 +39,7 @@ const CustomerStep = ({ register, errors, setValue }: Props) => {
           setValue('cpf', value.replace(/[-.]/g, ''));
         }}
       />
+
       <InputField
         id="gender"
         label="Gênero"
@@ -49,6 +52,7 @@ const CustomerStep = ({ register, errors, setValue }: Props) => {
         ]}
         error={errors.gender?.message}
       />
+
       <InputField
         id="email"
         label="E-mail"
@@ -56,6 +60,7 @@ const CustomerStep = ({ register, errors, setValue }: Props) => {
         placeholder="Insira o e-mail"
         error={errors.email?.message}
       />
+
       <InputField
         id="ranking"
         label="Ranking"
@@ -64,6 +69,7 @@ const CustomerStep = ({ register, errors, setValue }: Props) => {
         placeholder="Insira o ranking"
         error={errors.ranking?.message}
       />
+
       <InputField
         id="number"
         label="Número do telefone"
@@ -76,6 +82,7 @@ const CustomerStep = ({ register, errors, setValue }: Props) => {
           setValue('number', value.replace(/[()-/ ]/g, ''));
         }}
       />
+
       <InputField
         id="phoneType"
         label="Tipo de telefone"
@@ -97,6 +104,7 @@ const CustomerStep = ({ register, errors, setValue }: Props) => {
         register={register}
         error={errors.phoneType?.message}
       />
+
       <InputField
         id="password"
         label="Senha"
@@ -105,6 +113,7 @@ const CustomerStep = ({ register, errors, setValue }: Props) => {
         error={errors.password?.message}
         type="password"
       />
+
       <InputField
         id="confPassword"
         label="Confirme sua senha"

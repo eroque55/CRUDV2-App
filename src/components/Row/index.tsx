@@ -15,6 +15,7 @@ const Row = ({ content, actions }: Props) => {
           <RowText key={item}>{item}</RowText>
         ))}
       </ContentContainer>
+
       <ActionsContainer>
         {actions
           ? actions.map(action => (

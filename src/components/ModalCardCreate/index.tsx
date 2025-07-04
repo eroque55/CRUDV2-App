@@ -94,6 +94,7 @@ const ModalCardCreate = ({ isOpen, setIsOpen }: Props) => {
     <ModalBackground>
       <ModalContainer $width="40rem">
         <ModalHeader>Cadastrar contato</ModalHeader>
+
         <ModalForm>
           <InputField
             id="number"
@@ -107,6 +108,7 @@ const ModalCardCreate = ({ isOpen, setIsOpen }: Props) => {
               setValue('number', value.replace(/[\ ]/g, ''));
             }}
           />
+
           <InputField
             id="expirationDate"
             label="Vencimento"
@@ -119,6 +121,7 @@ const ModalCardCreate = ({ isOpen, setIsOpen }: Props) => {
               setValue('expirationDate', value.replace(/[\/]/g, ''));
             }}
           />
+
           <InputField
             id="cardholder"
             label="Nome do titular"
@@ -126,6 +129,7 @@ const ModalCardCreate = ({ isOpen, setIsOpen }: Props) => {
             placeholder="Insira o nome do titular"
             error={errors.cardholder?.message}
           />
+
           <InputField
             id="cvv"
             label="Código de segurança (CVV)"
@@ -138,6 +142,7 @@ const ModalCardCreate = ({ isOpen, setIsOpen }: Props) => {
               setValue('cvv', value);
             }}
           />
+
           <InputField
             id="cardBrand"
             label="Bandeira do cartão"
@@ -155,6 +160,7 @@ const ModalCardCreate = ({ isOpen, setIsOpen }: Props) => {
             error={errors.cardBrand?.message}
           />
         </ModalForm>
+
         <ModalFooter
           confirmButtonType="submit"
           cancelButton="Cancelar"

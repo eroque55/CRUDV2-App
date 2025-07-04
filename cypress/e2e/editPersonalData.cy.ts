@@ -3,7 +3,7 @@ import { customersToUpdate } from '../fixtures/customers.json';
 
 describe('Edit personal data', () => {
   it('Edit personal data', () => {
-    cy.visit('/');
+    cy.visit('/admin/customers');
     cy.get(
       ':nth-child(2) > .lists-styles__StyledRowBodyActions-sc-f0e62f7e-3 > .index-styles__StyledLink-sc-bfe3845a-0',
     ).click();
@@ -24,10 +24,10 @@ describe('Edit personal data', () => {
 
       cy.get('.modal-styles__StyledDialog-sc-c19ee1d0-1').should('be.visible');
 
-      cy.wait('@putCustomer').then(({ response }) => {
-        const updatedCustomer = response?.body;
-        cy.wait('@putPhone').then(({ response }) => {
-          const updatedPhone = response?.body;
+      cy.wait('@putCustomer').then(({ response: resp1 }) => {
+        const updatedCustomer = resp1?.body;
+        cy.wait('@putPhone').then(({ response: resp2 }) => {
+          const updatedPhone = resp2?.body;
           updatedCustomer.phone = updatedPhone;
           updatedCustomer.addresses = customer.addresses;
           updatedCustomer.cards = customer.cards;

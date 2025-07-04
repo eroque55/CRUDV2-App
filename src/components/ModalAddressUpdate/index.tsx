@@ -125,6 +125,7 @@ const ModalAddressUpdate = () => {
     <ModalBackground>
       <ModalContainer $width="40rem">
         <ModalHeader>Alterar endereço</ModalHeader>
+
         <ModalForm>
           <InputField
             id="nickname"
@@ -134,6 +135,7 @@ const ModalAddressUpdate = () => {
             error={errors.nickname?.message}
             defaultValue={address?.nickname}
           />
+
           <InputField
             id="cep"
             label="CEP"
@@ -147,6 +149,7 @@ const ModalAddressUpdate = () => {
             error={errors.cep?.message}
             defaultValue={address?.cep}
           />
+
           <InputField
             id="residenceType"
             label="Tipo de residência"
@@ -160,6 +163,7 @@ const ModalAddressUpdate = () => {
             register={register}
             defaultValue={address?.residenceType}
           />
+
           <InputField
             id="streetType"
             label="Tipo de logradouro"
@@ -176,6 +180,7 @@ const ModalAddressUpdate = () => {
             register={register}
             defaultValue={address?.streetType}
           />
+
           <InputField
             id="street"
             label="Logradouro"
@@ -184,6 +189,7 @@ const ModalAddressUpdate = () => {
             error={errors.street?.message}
             defaultValue={address?.street}
           />
+
           <InputField
             id="number"
             label="Número"
@@ -193,6 +199,7 @@ const ModalAddressUpdate = () => {
             error={errors.number?.message}
             defaultValue={String(address?.number)}
           />
+
           <InputField
             id="neighborhood"
             label="Bairro"
@@ -201,6 +208,7 @@ const ModalAddressUpdate = () => {
             error={errors.neighborhood?.message}
             defaultValue={address?.neighborhood}
           />
+
           <InputField
             id="countryId"
             label="Pais"
@@ -218,6 +226,7 @@ const ModalAddressUpdate = () => {
               setValue('cityId', '');
             }}
           />
+
           <InputField
             id="stateId"
             label="Estado"
@@ -233,6 +242,7 @@ const ModalAddressUpdate = () => {
               setValue('cityId', '');
             }}
           />
+
           <InputField
             id="cityId"
             label="Cidade"
@@ -244,6 +254,7 @@ const ModalAddressUpdate = () => {
             }))}
             register={register}
           />
+
           <InputField
             id="complement"
             label="Complemento (opcional)"
@@ -253,6 +264,7 @@ const ModalAddressUpdate = () => {
             defaultValue={address?.complement}
           />
         </ModalForm>
+
         <ModalFooter
           confirmButtonType="submit"
           cancelButton="Cancelar"

@@ -3,7 +3,7 @@ import { addressToUpdate } from '../fixtures/customers.json';
 
 describe('Edit address', () => {
   it('Edit address', () => {
-    cy.visit('/');
+    cy.visit('/admin/customers');
     cy.get(
       ':nth-child(2) > .lists-styles__StyledRowBodyActions-sc-f0e62f7e-3 > .index-styles__StyledLink-sc-bfe3845a-0',
     ).click();

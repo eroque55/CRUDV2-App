@@ -83,6 +83,7 @@ export default defineConfig([
       'no-param-reassign': 'off',
       'import/no-duplicates': 'off',
       camelcase: 'off',
+      'react/jsx-newline': ['error', { prevent: false }],
       'no-plusplus': 'off',
       'object-curly-newline': 'off',
       'consistent-return': 'off',

@@ -18,6 +18,7 @@ const HeaderTop = () => {
       <StyledHello>
         Olá, <strong>{customer?.name}</strong>
       </StyledHello>
+
       <StyledLogoutButton
         onClick={() =>
           confirmationModal({

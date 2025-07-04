@@ -70,6 +70,7 @@ const BookPage = () => {
   return (
     <>
       <Header />
+
       <BodyContainer>
         <MainContainer>
           <BookImageWrapper>
@@ -83,55 +84,79 @@ const BookPage = () => {
               }}
             />
           </BookImageWrapper>
+
           <BookInfoContainer>
             <BookInfoContentContainer>
               <BookInfoHeader>
                 <Publisher>{book.publisher}</Publisher>
+
                 <Id>id: {book.id}</Id>
               </BookInfoHeader>
+
               <BookTitleContainer>
                 <BookTitle>{book.title}</BookTitle>
+
                 <CategoryContainer>
                   {book.bookToCategory.map(({ category }) => (
                     <Category key={category.id}>{category.name}</Category>
                   ))}
                 </CategoryContainer>
+
                 <Author>{book.author}</Author>
+
                 <Edition>
                   {book.edition}ª Ediçao - {book.year}
                 </Edition>
               </BookTitleContainer>
+
               <ValueContainer>
                 <Value>{formatCurrency(book.value)}</Value>
+
                 <Stock>
                   Estoque: <strong>{book.stock.amount}</strong>
                 </Stock>
               </ValueContainer>
             </BookInfoContentContainer>
+
             <ButtonComponent onClick={handleAddToCart} icon="CartWhiteIcon">
               Adicionar ao carrinho
             </ButtonComponent>
           </BookInfoContainer>
         </MainContainer>
+
         <DescriptionContainer>
           <Synopsis dangerouslySetInnerHTML={{ __html: book.synopsis }} />
+
           <DetailsTable>
             <TableColumn>
               <TableCell>ISBN:</TableCell>
+
               <TableCell>Código de barras:</TableCell>
+
               <TableCell>Número de páginas:</TableCell>
+
               <TableCell>Peso (kg):</TableCell>
+
               <TableCell>Altura (cm):</TableCell>
+
               <TableCell>Largura (cm):</TableCell>
+
               <TableCell>Espessura (cm):</TableCell>
             </TableColumn>
+
             <TableColumn>
               <TableCell>{book.isbn}</TableCell>
+
               <TableCell>{book.barcode}</TableCell>
+
               <TableCell>{book.numberPages}</TableCell>
+
               <TableCell>{book.bookDimension.weight}</TableCell>
+
               <TableCell>{book.bookDimension.height}</TableCell>
+
               <TableCell>{book.bookDimension.width}</TableCell>
+
               <TableCell>{book.bookDimension.thickness}</TableCell>
             </TableColumn>
           </DetailsTable>

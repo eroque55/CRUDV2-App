@@ -3,7 +3,7 @@ import { cardToCreate } from '../fixtures/customers.json';
 
 describe('Happy create card', () => {
   it('Create a card and verify', () => {
-    cy.visit('/');
+    cy.visit('/admin/customers');
     cy.get(
       ':nth-child(2) > .lists-styles__StyledRowBodyActions-sc-f0e62f7e-3 > .index-styles__StyledLink-sc-bfe3845a-0',
     ).click();
@@ -12,9 +12,7 @@ describe('Happy create card', () => {
     }).as('getCustomer');
     cy.intercept('POST', 'http://localhost:8000/cards').as('createCard');
 
-    cy.wait('@getCustomer').then(({ response }) => {
-      const lastCards = response?.body.cards;
-
+    cy.wait('@getCustomer').then(() => {
       cy.get(
         '.page-styles__TabsContainer-sc-ecd5908a-5 > :nth-child(3)',
       ).click();

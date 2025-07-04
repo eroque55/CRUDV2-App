@@ -3,7 +3,7 @@ import { addressToUpdate } from '../fixtures/customers.json';
 
 describe('Happy create address', () => {
   beforeEach(() => {
-    cy.visit('/');
+    cy.visit('/admin/customers');
     cy.get(
       ':nth-child(2) > .lists-styles__StyledRowBodyActions-sc-f0e62f7e-3 > .index-styles__StyledLink-sc-bfe3845a-0',
     ).click();
@@ -14,9 +14,7 @@ describe('Happy create address', () => {
   });
 
   it('Create a address and verify', () => {
-    cy.wait('@getCustomer').then(({ response }) => {
-      const lastAdresses = response?.body.addresses;
-
+    cy.wait('@getCustomer').then(() => {
       cy.get(
         '.page-styles__TabsContainer-sc-ecd5908a-5 > :nth-child(2)',
       ).click();

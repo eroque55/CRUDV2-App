@@ -47,6 +47,7 @@ const ListSales = () => {
   return (
     <ListContainer>
       <Row content={headerContent} />
+
       {sales.map(sale => (
         <RowSale key={sale.id} sale={sale} setUpdate={setUpdate} />
       ))}

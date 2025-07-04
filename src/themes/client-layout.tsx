@@ -47,6 +47,7 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
+
       {children}
     </ThemeProvider>
   );

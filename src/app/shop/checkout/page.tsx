@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { LogoFullBlackImg } from '@/public';
 import ButtonComponent from '@/src/components/Button';
@@ -170,6 +170,24 @@ const CheckoutPage = () => {
     }
   };
 
+  const saleValue = useMemo(() => {
+    let val = 0;
+
+    if (finalValue) {
+      val += finalValue;
+    }
+
+    if (selectedCarrier?.cost) {
+      val += Number(selectedCarrier.cost);
+    }
+
+    if (selectedCoupon?.discount) {
+      val -= Number(selectedCoupon.discount);
+    }
+
+    return val;
+  }, [selectedCarrier, selectedCoupon, finalValue]);
+
   const handleSubmit = async () => {
     try {
       const freight: Partial<IFreight> = {
@@ -186,14 +204,11 @@ const CheckoutPage = () => {
         cardToSales.push(cardToSale);
       });
 
-      const paymentMethod = `${selectedCards.length > 1 ? `${selectedCards.length} cartões` : 'Cartão'} de crédito, ${selectedCoupon ? `cupon: ${selectedCoupon.name}` : 'Nenhum cupom utilizado'}`;
+      const paymentMethod = `${selectedCards.length > 1 ? `${selectedCards.length} cartões` : 'Cartão'} de crédito, ${selectedCoupon ? `cupom ${selectedCoupon.name} utilizado` : 'Nenhum cupom utilizado'}`;
 
       const sale: Partial<ISale> = {
         freight: freight as IFreight,
-        totalValue:
-          Number(finalValue) +
-          Number(selectedCarrier?.cost) -
-          Number(selectedCoupon?.discount),
+        totalValue: saleValue,
         cardToSales: cardToSales as ICardToSale[],
         cart: cart as ICart,
         paymentMethod,
@@ -236,6 +251,7 @@ const CheckoutPage = () => {
       <HeaderContainer>
         <Image src={LogoFullBlackImg} alt="Logo" />
       </HeaderContainer>
+
       <ContentContainer>
         <StepContainer>
           <Step $active={step === 0}>
@@ -244,12 +260,14 @@ const CheckoutPage = () => {
             </StepBallContainer>
             Entrega
           </Step>
+
           <Step $active={step === 1}>
             <StepBallContainer>
               <StepBall $active={step === 1}>{step === 1 && 2}</StepBall>
             </StepBallContainer>
             Pagamento
           </Step>
+
           <Step $active={step === 2}>
             <StepBallContainer>
               <StepBall $active={step === 2}>{step === 2 && 3}</StepBall>
@@ -257,6 +275,7 @@ const CheckoutPage = () => {
             Revisão
           </Step>
         </StepContainer>
+
         {step !== 2 ? (
           <MainContainer>
             <CardsContainer>
@@ -278,7 +297,9 @@ const CheckoutPage = () => {
                             <Radius
                               active={selectedAddress?.id === address.id}
                             />
+
                             <OptionText>{address.nickname}</OptionText>
+
                             <OptionDescription>
                               {address.street}, {address.number} -{' '}
                               {address.neighborhood}, {address.city.name}
@@ -301,7 +322,9 @@ const CheckoutPage = () => {
                         $selected={selectedCarrier?.id === carrier.id}
                       >
                         <Radius active={selectedCarrier?.id === carrier.id} />
+
                         <OptionText>{carrier.name}</OptionText>
+
                         <OptionValue>
                           R$ {Number(carrier.cost).toFixed(2).replace('.', ',')}
                         </OptionValue>
@@ -320,6 +343,7 @@ const CheckoutPage = () => {
                         value={selectedCoupon?.name || couponName}
                         disabled={!!selectedCoupon}
                       />
+
                       <ButtonComponent
                         width="10rem"
                         onClick={handleSearchCoupon}
@@ -328,6 +352,7 @@ const CheckoutPage = () => {
                       </ButtonComponent>
                     </CoupomContainer>
                   </CardContainer>
+
                   <CardContainer>
                     Cartao de credito
                     {customerData?.cards.map(card => (
@@ -359,46 +384,53 @@ const CheckoutPage = () => {
                 </>
               )}
             </CardsContainer>
+
             <SumaryContainer>
               <SumaryHeader>
                 <SumaryTitle>Carrinho</SumaryTitle>
+
                 <SumaryContent>
                   <SumaryItem>
                     <SumaryItemLabel>Subtotal</SumaryItemLabel>
+
                     <SumaryItemValue>
                       {formatCurrency(finalValue || 0)}
                     </SumaryItemValue>
                   </SumaryItem>
+
                   <SumaryItem>
                     <SumaryItemLabel>Descontos</SumaryItemLabel>
+
                     <SumaryItemValue>
                       {selectedCoupon?.discount
                         ? formatCurrency(selectedCoupon.discount)
                         : '-----'}
                     </SumaryItemValue>
                   </SumaryItem>
+
                   <SumaryItem>
                     <SumaryItemLabel>Frete</SumaryItemLabel>
+
                     <SumaryItemValue>
                       {selectedCarrier?.cost
                         ? formatCurrency(Number(selectedCarrier?.cost))
                         : '-----'}
                     </SumaryItemValue>
                   </SumaryItem>
+
                   <SumaryItem>
                     <SumaryItemLabel>Total</SumaryItemLabel>
+
                     <SumaryItemTotal>
-                      {formatCurrency(
-                        Number(finalValue) +
-                          Number(selectedCarrier?.cost || 0) -
-                          Number(selectedCoupon?.discount || 0),
-                      )}
+                      {formatCurrency(saleValue)}
                     </SumaryItemTotal>
                   </SumaryItem>
                 </SumaryContent>
               </SumaryHeader>
+
               <ButtonsContainer>
                 <ButtonComponent onClick={handleNext}>Proximo</ButtonComponent>
+
                 <ButtonComponent onClick={handleBack} wired>
                   Voltar
                 </ButtonComponent>
@@ -414,6 +446,7 @@ const CheckoutPage = () => {
                   <ResumeContent key={bookToCart.book.id}>
                     <BookContainer>
                       <p>{bookToCart.amount}x</p>
+
                       <ImageContainer>
                         <Image
                           src={`/books/${bookToCart.book.slug}.jpg`}
@@ -423,8 +456,10 @@ const CheckoutPage = () => {
                           style={{ objectFit: 'contain' }}
                         />
                       </ImageContainer>
+
                       <p>{bookToCart.book.title}</p>
                     </BookContainer>
+
                     <p>
                       {formatCurrency(
                         bookToCart.book.value * bookToCart.amount,
@@ -433,6 +468,7 @@ const CheckoutPage = () => {
                   </ResumeContent>
                 ))}
               </ResumeSection>
+
               <ResumeSection>
                 Entrega
                 <ResumeContent>
@@ -440,12 +476,14 @@ const CheckoutPage = () => {
                     {selectedAddress?.nickname} - {selectedAddress?.street},{' '}
                     {selectedAddress?.number}
                   </p>
+
                   <p>
                     R${' '}
                     {Number(selectedCarrier?.cost).toFixed(2).replace('.', ',')}
                   </p>
                 </ResumeContent>
               </ResumeSection>
+
               <ResumeSection>
                 Descontos
                 <ResumeContent>
@@ -454,9 +492,11 @@ const CheckoutPage = () => {
                       ? selectedCoupon.name
                       : 'Nenhum desconto aplicado'}
                   </p>
+
                   <p>-{formatCurrency(selectedCoupon?.discount || 0)}</p>
                 </ResumeContent>
               </ResumeSection>
+
               <ResumeSection>
                 Pagamento
                 <ResumeContent>
@@ -469,31 +509,31 @@ const CheckoutPage = () => {
                   </CreditCardsContainer>
                 </ResumeContent>
               </ResumeSection>
+
               <TotalValueContainer>
                 <p>Valor total</p>
-                <p>
-                  {formatCurrency(
-                    Number(finalValue) +
-                      Number(selectedCarrier?.cost) -
-                      Number(selectedCoupon?.discount || 0),
-                  )}
-                </p>
+
+                <p>{formatCurrency(saleValue)}</p>
               </TotalValueContainer>
             </ResumeContainer>
+
             <ResumeButtonsContainer>
               <ButtonComponent onClick={handleBack} wired>
                 Voltar
               </ButtonComponent>
+
               <ButtonComponent onClick={handleNext}>Comprar</ButtonComponent>
             </ResumeButtonsContainer>
           </>
         )}
       </ContentContainer>
+
       <ModalCheckoutAddressCreate
         isOpen={createAddressIsOpen}
         setIsOpen={setCreateAddressIsOpen}
         customerId={customer?.id}
       />
+
       <ModalCheckoutCardCreate
         isOpen={createCardIsOpen}
         setIsOpen={setCreateCardIsOpen}

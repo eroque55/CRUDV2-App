@@ -25,6 +25,7 @@ const InputRadio = ({ register, radios, registerId, defaultValue }: Props) => {
         {...register(registerId)}
         defaultValue={defaultValue}
       />
+
       <InputLabel htmlFor={id}>{label}</InputLabel>
     </InputRadioContent>
   ));

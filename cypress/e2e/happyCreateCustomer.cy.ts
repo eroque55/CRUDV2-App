@@ -3,7 +3,7 @@ import { customersToCreate } from '../fixtures/customers.json';
 
 describe('Happy create customer', () => {
   beforeEach(() => {
-    cy.visit('/');
+    cy.visit('/admin/customers');
     cy.intercept('GET', 'http://localhost:8000/customers').as('getCustomers');
     cy.intercept('POST', 'http://localhost:8000/customers').as(
       'succesCreateCustomer',

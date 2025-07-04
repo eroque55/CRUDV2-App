@@ -87,11 +87,14 @@ const DashboardPage = () => {
     <>
       <StyledContentHeader>
         <Title>Dashboard</Title>
+
         <div style={{ height: 48 }} />
       </StyledContentHeader>
+
       <Container>
         <TitleContainer>
           <Title $size={1.5}>Vendas por categoria</Title>
+
           <InputsContainer>
             <InputField
               id="from"
@@ -112,18 +115,25 @@ const DashboardPage = () => {
             <ButtonComponent onClick={handleSubmit(onSubmit)} submit>
               Filtar
             </ButtonComponent>
+
             <ButtonComponent wired onClick={onReset}>
               Limpar
             </ButtonComponent>
           </InputsContainer>
         </TitleContainer>
+
         <GraphContainer>
           <LineChart data={data} width={800} height={400}>
             <CartesianGrid strokeDasharray="3 3" />
+
             <XAxis dataKey="month" />
+
             <YAxis />
+
             <Tooltip />
+
             <Legend />
+
             {categories.map((category, index) => (
               <Line
                 key={category}
@@ -135,6 +145,7 @@ const DashboardPage = () => {
             ))}
           </LineChart>
         </GraphContainer>
+
         {loading && (
           <LoaderContainer>
             <Loader />

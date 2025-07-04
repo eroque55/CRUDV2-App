@@ -9,6 +9,7 @@ const ModalBody = ({ children, notice }: Props) => {
   return (
     <ModalBodyContainer>
       <ModalBodyTitle>{children}</ModalBodyTitle>
+
       <ModalBodyNotice>{notice}</ModalBodyNotice>
     </ModalBodyContainer>
   );

@@ -34,9 +34,12 @@ const Product = ({ book }: Props) => {
           />
         </StyledImage>
       </ImageContainer>
+
       <DescriptionContainer>
         <StrongDescription>{book.title}</StrongDescription>
+
         <Description>{book.synopsis}</Description>
+
         <StrongDescription>{formatCurrency(book.value)}</StrongDescription>
       </DescriptionContainer>
     </ProductContainer>

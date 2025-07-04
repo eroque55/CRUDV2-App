@@ -24,9 +24,12 @@ const Admin = () => {
   return (
     <CustomerFilterProvider>
       <ModalCreateCustomer isOpen={isCreateOpen} setIsOpen={setIsCreateOpen} />
+
       <FilterCustomer isOpen={isFilterOpen} setIsOpen={setIsFilterOpen} />
+
       <StyledContentHeader>
         <Title>Clientes</Title>
+
         <StyledContentHeaderOptions>
           <ButtonComponent
             width="15rem"
@@ -36,6 +39,7 @@ const Admin = () => {
           >
             Filtrar
           </ButtonComponent>
+
           <ButtonComponent
             width="15rem"
             onClick={() => setIsCreateOpen(true)}
@@ -45,6 +49,7 @@ const Admin = () => {
           </ButtonComponent>
         </StyledContentHeaderOptions>
       </StyledContentHeader>
+
       <ListCustomers />
     </CustomerFilterProvider>
   );

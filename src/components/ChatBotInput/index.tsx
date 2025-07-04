@@ -20,6 +20,7 @@ const ChatBotInput = ({ sendMessage, isLoading }: Props) => {
           onChange={e => setMessage(e.target.value)}
           disabled={isLoading}
         />
+
         <Button
           type="submit"
           onClick={e => {

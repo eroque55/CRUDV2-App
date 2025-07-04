@@ -18,12 +18,15 @@ const HeaderMain = () => {
         onClick={() => router.push('/shop')}
         style={{ cursor: 'pointer' }}
       />
+
       <SearchBar setTitle={setTitle} />
+
       <ActionsContainer>
         <StyledButton onClick={() => router.push('/shop/cart')}>
           <IconComponent name="CartIcon" />
           Carrinho
         </StyledButton>
+
         <StyledButton onClick={() => router.push('/shop/profile')}>
           <IconComponent name="ProfileIcon" />
           Meu perfil

@@ -25,6 +25,7 @@ const ListCustomers = () => {
   return (
     <ListContainer>
       <Row content={headerContent} />
+
       {customers.map(customer => (
         <RowCustomer key={customer.id} customer={customer} />
       ))}

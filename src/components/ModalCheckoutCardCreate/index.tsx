@@ -105,6 +105,7 @@ const ModalCheckoutCardCreate = ({
     <ModalBackground>
       <ModalContainer $width="40rem">
         <ModalHeader>Cadastrar contato</ModalHeader>
+
         <ModalForm>
           <InputField
             id="number"
@@ -118,6 +119,7 @@ const ModalCheckoutCardCreate = ({
               setValue('number', value.replace(/[\ ]/g, ''));
             }}
           />
+
           <InputField
             id="expirationDate"
             label="Vencimento"
@@ -130,6 +132,7 @@ const ModalCheckoutCardCreate = ({
               setValue('expirationDate', value.replace(/[\/]/g, ''));
             }}
           />
+
           <InputField
             id="cardholder"
             label="Nome do titular"
@@ -137,6 +140,7 @@ const ModalCheckoutCardCreate = ({
             placeholder="Insira o nome do titular"
             error={errors.cardholder?.message}
           />
+
           <InputField
             id="cvv"
             label="Código de segurança (CVV)"
@@ -149,6 +153,7 @@ const ModalCheckoutCardCreate = ({
               setValue('cvv', value);
             }}
           />
+
           <InputField
             id="cardBrand"
             label="Bandeira do cartão"
@@ -166,6 +171,7 @@ const ModalCheckoutCardCreate = ({
             error={errors.cardBrand?.message}
           />
         </ModalForm>
+
         <ModalFooter
           confirmButtonType="submit"
           cancelButton="Cancelar"

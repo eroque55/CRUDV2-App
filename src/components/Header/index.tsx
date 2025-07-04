@@ -12,8 +12,11 @@ const Header = ({ showCategories = true }: Props) => {
   return (
     <HeaderContainer>
       <HeaderTop />
+
       <HeaderMain />
+
       {showCategories && <HeaderCategories />}
+
       <Line $width="80%" $color="bw3" />
     </HeaderContainer>
   );

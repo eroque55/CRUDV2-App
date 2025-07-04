@@ -23,6 +23,7 @@ const ButtonComponent = ({
   return (
     <StyledButton type={type} onClick={onClick} $width={width} $wired={wired}>
       {icon && <IconComponent name={icon} size={20} />}
+
       {children}
     </StyledButton>
   );

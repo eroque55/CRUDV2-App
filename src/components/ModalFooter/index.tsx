@@ -22,6 +22,7 @@ const ModalFooter = ({
           {cancelButton}
         </ModalFooterButton>
       )}
+
       <ModalFooterButton
         type={confirmButtonType}
         onClick={e => {

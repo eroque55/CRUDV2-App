@@ -39,6 +39,7 @@ const HeaderCategories = () => {
       >
         Todos
       </StyledCategory>
+
       {categories.map(category => (
         <StyledCategory
           onClick={() => {

@@ -1,6 +1,6 @@
 describe('Visit customer details', () => {
   it('Visit customer details', () => {
-    cy.visit('/');
+    cy.visit('/admin/customers');
     cy.intercept('GET', 'http://localhost:8000/customers').as('getCustomers');
     cy.intercept('GET', 'http://localhost:8000/customers/*').as('getCustomer');
 

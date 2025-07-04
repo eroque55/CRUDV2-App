@@ -7,6 +7,7 @@ export default function Unlogged() {
       <StyledMessage>
         Por favor, inicie a seção para utilizar o sistema
       </StyledMessage>
+
       <StyledLink href="/">
         Voltar para a página inicial
         <IconComponent name="ExitBlueIcon" />

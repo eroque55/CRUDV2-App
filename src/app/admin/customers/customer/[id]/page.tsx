@@ -84,24 +84,31 @@ const CustomerDetails = () => {
         isOpen={createAddressIsOpen}
         setIsOpen={setCreateAddressIsOpen}
       />
+
       <ModalCardCreate
         isOpen={createCardIsOpen}
         setIsOpen={setCreateCardIsOpen}
       />
+
       <ModalAddressUpdate />
+
       <ModalCustomerUpdate
         isOpen={updateCustomerIsOpen}
         setIsOpen={setUpdateCustomerIsOpen}
       />
+
       <ModalCustomerPasswordUpdate
         isOpen={updatePasswordIsOpen}
         setIsOpen={setUpdatePasswordIsOpen}
       />
+
       <StyledHeader>
         <TitleContainer>
           <BackButton />
+
           <Title>Detalhes de cliente: {customer?.name}</Title>
         </TitleContainer>
+
         <ActionsContainer>
           <TabsContainer>
             {['Dados pessoais', 'Endereços', 'Cartões'].map((label, index) => (
@@ -114,6 +121,7 @@ const CustomerDetails = () => {
               </StyledTabs>
             ))}
           </TabsContainer>
+
           <ButtonComponent
             onClick={handleAddClick}
             icon={buttonIcon()}
@@ -123,14 +131,17 @@ const CustomerDetails = () => {
           </ButtonComponent>
         </ActionsContainer>
       </StyledHeader>
+
       <PageContainer>
         {page === 0 && (
           <CardPersonalDataShop setUpdateIsOpen={setUpdateCustomerIsOpen} />
         )}
+
         {page === 1 &&
           customer?.addresses.map((address: IAddress) => (
             <CardAddress key={address.id} address={address} />
           ))}
+
         {page === 2 &&
           customer?.cards.map((card: ICard) => (
             <CardCard key={card.id} card={card} />

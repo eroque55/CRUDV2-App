@@ -75,10 +75,13 @@ const CartItem = ({ bookToCart, setCart, cart, setIsUpdating }: Props) => {
           style={{ objectFit: 'contain' }}
         />
       </ImageContainer>
+
       <ContentContainer>
         <BookTitle>{bookToCart.book.title}</BookTitle>
+
         <BookAuthor>{bookToCart.book.author}</BookAuthor>
       </ContentContainer>
+
       <ValueContainer>
         <BookQtdContainer>
           <IconComponent
@@ -86,13 +89,16 @@ const CartItem = ({ bookToCart, setCart, cart, setIsUpdating }: Props) => {
             size={20}
             onClick={handleMinusClick}
           />
+
           {qtd}
+
           <IconComponent
             name="PlusCartIcon"
             size={20}
             onClick={handlePlusClick}
           />
         </BookQtdContainer>
+
         <Value>{formatCurrency(bookToCart.book.value * qtd)}</Value>
       </ValueContainer>
     </Container>

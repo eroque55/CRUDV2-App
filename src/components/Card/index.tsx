@@ -27,6 +27,7 @@ const Card = ({
           />
         ))}
       </ButtonsContainer>
+
       {cardContent.map(content => (
         <CardContent key={content.title} title={content.title}>
           {content.children}

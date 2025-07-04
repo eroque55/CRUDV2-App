@@ -14,6 +14,7 @@ const ChatBotMessage = ({ message, sender, sendAt }: MessageProps) => {
       <MessageText>
         <ReactMarkdown>{message}</ReactMarkdown>
       </MessageText>
+
       <SendAtText>{format(sendAt, 'hh:mm')}</SendAtText>
     </Container>
   );

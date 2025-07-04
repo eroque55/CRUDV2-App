@@ -98,6 +98,7 @@ const CartPage = () => {
   return (
     <>
       <Header />
+
       <Container>
         <CartContainer>
           {cart.bookToCart.map(bookToCart => (
@@ -110,32 +111,43 @@ const CartPage = () => {
             />
           ))}
         </CartContainer>
+
         <SumaryContainer>
           <SumaryHeader>
             <SumaryTitle>Carrinho</SumaryTitle>
+
             <SumaryContent>
               <SumaryItem>
                 <SumaryItemLabel>Subtotal</SumaryItemLabel>
+
                 <SumaryItemValue>{formatCurrency(total || 0)}</SumaryItemValue>
               </SumaryItem>
+
               <SumaryItem>
                 <SumaryItemLabel>Descontos</SumaryItemLabel>
+
                 <SumaryItemValue>-----</SumaryItemValue>
               </SumaryItem>
+
               <SumaryItem>
                 <SumaryItemLabel>Frete</SumaryItemLabel>
+
                 <SumaryItemValue>-----</SumaryItemValue>
               </SumaryItem>
+
               <SumaryItem>
                 <SumaryItemLabel>Total</SumaryItemLabel>
+
                 <SumaryItemTotal>{formatCurrency(total || 0)}</SumaryItemTotal>
               </SumaryItem>
             </SumaryContent>
           </SumaryHeader>
+
           <ButtonsContainer>
             <ButtonComponent onClick={handleSubmit}>
               Finalizar Compra
             </ButtonComponent>
+
             <ButtonComponent onClick={() => router.push('/shop')} wired>
               Continuar Comprando
             </ButtonComponent>

@@ -12,7 +12,9 @@ const AdminLayout = ({ children }: Props) => {
   return (
     <StyledMain>
       <ToastContainer />
+
       <NavBar />
+
       <StyledContent>{children}</StyledContent>
     </StyledMain>
   );

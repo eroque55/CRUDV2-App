@@ -23,6 +23,7 @@ const InputPassword = ({ id, placeholder, register }: Props) => {
         placeholder={placeholder}
         {...register(id)}
       />
+
       <IconComponent
         name={type === 'password' ? 'PasswordGrayIcon' : 'PasswordBlueIcon'}
         width={20}

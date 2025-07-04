@@ -9,8 +9,10 @@ const SalesPage = () => {
     <>
       <StyledContentHeader>
         <Title>Vendas</Title>
+
         <div style={{ height: 48 }} />
       </StyledContentHeader>
+
       <ListSales />
     </>
   );

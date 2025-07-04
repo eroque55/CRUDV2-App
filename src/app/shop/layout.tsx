@@ -23,7 +23,9 @@ const ShopLayout = ({ children }: PropsWithChildren) => {
     <BookFilterProvider>
       <CategoryFilterProvider>
         <ToastContainer />
+
         {children}
+
         <Footer />
       </CategoryFilterProvider>
     </BookFilterProvider>

@@ -46,7 +46,9 @@ const Modal = ({
   return (
     <ModalContainer $height="13rem">
       <ModalHeader>{title}</ModalHeader>
+
       <ModalBody notice={notice}>{message}</ModalBody>
+
       <ModalFooter
         confirmButtonType="button"
         cancelButton={cancelButton}

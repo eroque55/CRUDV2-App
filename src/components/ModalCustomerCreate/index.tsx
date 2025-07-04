@@ -268,6 +268,7 @@ const ModalCreateCustomer = ({ isOpen, setIsOpen }: Props) => {
         <ModalHeader>
           Cadastrar Cliente {step + 1}/3 - {stepName[step]}
         </ModalHeader>
+
         <ModalForm>
           {step === 0 && (
             <CustomerStep
@@ -276,6 +277,7 @@ const ModalCreateCustomer = ({ isOpen, setIsOpen }: Props) => {
               setValue={customeSetValue}
             />
           )}
+
           {step === 1 && (
             <AddressStep
               register={billingAddressRegister}
@@ -284,6 +286,7 @@ const ModalCreateCustomer = ({ isOpen, setIsOpen }: Props) => {
               useCountries={useBillingCountries}
             />
           )}
+
           {step === 2 && (
             <AddressStep
               register={deliveryAddressRegister}
@@ -293,6 +296,7 @@ const ModalCreateCustomer = ({ isOpen, setIsOpen }: Props) => {
             />
           )}
         </ModalForm>
+
         <ModalFooter
           confirmButtonType="submit"
           cancelButton={backButtonName[step]}
