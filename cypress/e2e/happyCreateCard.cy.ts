@@ -1,5 +1,5 @@
-import EditCustomer from '../support/details/editCustomer';
-import { cardToCreate } from '../fixtures/customers.json';
+import EditCustomer from '../cypress/support/details/editCustomer';
+import { cardToCreate } from '../cypress/fixtures/customers.json';
 
 describe('Happy create card', () => {
   it('Create a card and verify', () => {

@@ -5,10 +5,12 @@ interface Props {
   onClick: () => void;
 }
 
-export default function CloseButton({ onClick }: Props) {
+const CloseButton = ({ onClick }: Props) => {
   return (
     <CloseButtonContainer type="button" onClick={onClick}>
-      <IconComponent name="CloseIcon" />
+      <IconComponent name="XCircleIcon" />
     </CloseButtonContainer>
   );
-}
+};
+
+export default CloseButton;

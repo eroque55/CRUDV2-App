@@ -1,5 +1,5 @@
-import EditCustomer from '../support/details/editCustomer';
-import { customersToUpdate } from '../fixtures/customers.json';
+import EditCustomer from '../cypress/support/details/editCustomer';
+import { customersToUpdate } from '../cypress/fixtures/customers.json';
 
 describe('Edit personal data', () => {
   it('Edit personal data', () => {

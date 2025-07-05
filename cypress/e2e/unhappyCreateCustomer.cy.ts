@@ -1,5 +1,5 @@
-import createCustomer from '../support/listing/createCustomer';
-import { customersToCreate } from '../fixtures/customers.json';
+import createCustomer from '../cypress/support/listing/createCustomer';
+import { customersToCreate } from '../cypress/fixtures/customers.json';
 
 describe('Unhappy create customer path', () => {
   beforeEach(() => {

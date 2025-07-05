@@ -49,7 +49,7 @@ export const updateCustomer = async (
 };
 
 export const deleteCustomer = async (id: number) => {
-  return api.delete(`${customersUrl}/${id}`);
+  return api.delete(`${customersUrl}${id}`);
 };
 
 export const getCustomerToLogin = async (
